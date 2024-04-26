@@ -18,8 +18,8 @@ namespace TaskBoard.Application.Extensions
 
             services.AddScoped<ISieveProcessor, ApplicationSieveProcessor>();
             services.AddScoped<ICardService, CardService>();
-            //services.AddScoped<IListCardsService, ListCardsService>();
-            //services.AddScoped<IActionService, ActionService>();
+            services.AddScoped<IListCardsService, ListCardsService>();
+            services.AddScoped<IActionService, ActionService>();
             services.Configure<SieveOptions>(options => options.CaseSensitive = false);
 
             return services;

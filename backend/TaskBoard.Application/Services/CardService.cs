@@ -6,6 +6,7 @@ using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
 using TaskBoard.Common.Models.Card;
 using TaskBoard.Domain.Entities;
+using TaskBoard.Domain.Enum;
 using TaskBoard.Infrastructure;
 
 namespace TaskBoard.Application.Services
@@ -15,15 +16,18 @@ namespace TaskBoard.Application.Services
         private readonly AppDbContext _context;
         private readonly ICardRepository _cardRepository;
         private readonly IMapper _mapper;
+        private readonly IListCardsRepository _listCardsRepository;
 
         public CardService(
             AppDbContext context,
             ICardRepository cardRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IListCardsRepository listCardsRepository)
         {
             _context = context;
             _cardRepository = cardRepository;
             _mapper = mapper;
+            _listCardsRepository = listCardsRepository;
         }
 
         public async Task<IEnumerable<CardModel>> GetAllAsync()
@@ -65,10 +69,33 @@ namespace TaskBoard.Application.Services
             var card = await _cardRepository.GetByIdAsync(id)
                        ?? throw new NotFoundException($"Card with id {id} was not found");
 
-            //if (!string.IsNullOrWhiteSpace(updateCardModel.Name))
-            //{
-            //    club.Name = updateCardModel.Name;
-            //}
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Name))
+            {
+                card.Name = updateCardModel.Name;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Description))
+            {
+                card.Description = updateCardModel.Description;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Priority))
+            {
+                Enum.TryParse(updateCardModel.Priority, out Priority priority);
+                card.Priority = priority;
+            }
+
+            if (updateCardModel.DueDate>=DateTime.Now&&updateCardModel.DueDate.Year<=DateTime.Now.Year+1)
+            {
+                card.DueDate = updateCardModel.DueDate;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateCardModel.ListCardsName))
+            {
+                var listCards = await _listCardsRepository.GetByNameAsync(updateCardModel.ListCardsName);
+                card.ListCards = listCards;
+                card.ListCardsId = listCards.Id;
+            }
 
             _cardRepository.Update(card);
             await _context.SaveChangesAsync();
