@@ -17,5 +17,10 @@ namespace TaskBoard.Infrastructure.Repositories
         {
             return await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
         }
+
+        public async Task<IEnumerable<Card?>> GetAllWithoutParentListAsync()
+        {
+            return await _dbSet.Where(c => c.ListCardsId == null).ToListAsync();
+        }
     }
 }

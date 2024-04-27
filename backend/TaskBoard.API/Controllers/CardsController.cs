@@ -23,6 +23,13 @@ namespace TaskBoard.API.Controllers
             return Ok(cards);
         }
 
+        [HttpGet("allWithoutParentList")]
+        public async Task<IActionResult> GetAllWithoutParentList()
+        {
+            var cards = await _cardService.GetAllWithoutParentListAsync();
+            return Ok(cards);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllWithFilter([FromQuery] SieveModel sieveModel)
         {

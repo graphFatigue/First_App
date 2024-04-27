@@ -8,6 +8,8 @@ using TaskBoard.Common.Models.Card;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Domain.Enum;
 using TaskBoard.Infrastructure;
+using TaskBoard.Infrastructure.Extensions;
+using Action = TaskBoard.Domain.Entities.Action;
 
 namespace TaskBoard.Application.Services
 {
@@ -17,22 +19,31 @@ namespace TaskBoard.Application.Services
         private readonly ICardRepository _cardRepository;
         private readonly IMapper _mapper;
         private readonly IListCardsRepository _listCardsRepository;
+        private readonly IActionRepository _actionRepository;
 
         public CardService(
             AppDbContext context,
             ICardRepository cardRepository,
             IMapper mapper,
-            IListCardsRepository listCardsRepository)
+            IListCardsRepository listCardsRepository,
+            IActionRepository actionRepository)
         {
             _context = context;
             _cardRepository = cardRepository;
             _mapper = mapper;
             _listCardsRepository = listCardsRepository;
+            _actionRepository = actionRepository;
         }
 
         public async Task<IEnumerable<CardModel>> GetAllAsync()
         {
             var cards = await _cardRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<CardModel>>(cards);
+        }
+
+        public async Task<IEnumerable<CardModel>> GetAllWithoutParentListAsync()
+        {
+            var cards = await _cardRepository.GetAllWithoutParentListAsync();
             return _mapper.Map<IEnumerable<CardModel>>(cards);
         }
 
@@ -59,6 +70,15 @@ namespace TaskBoard.Application.Services
             var card = _mapper.Map<Card>(createCardModel);
 
             await _cardRepository.CreateAsync(card);
+
+            Action action = new Action()
+            {
+                ActionTime = DateTime.Now.SetKindUtc(),
+                ActionType = ActionType.Create,
+                Card = card,   
+            };
+
+            await _actionRepository.CreateAsync(action);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<CardModel>(card);
@@ -94,10 +114,20 @@ namespace TaskBoard.Application.Services
             {
                 var listCards = await _listCardsRepository.GetByNameAsync(updateCardModel.ListCardsName);
                 card.ListCards = listCards;
-                card.ListCardsId = listCards.Id;
+                card.ListCardsId = listCards?.Id;
             }
 
             _cardRepository.Update(card);
+
+            Action action = new Action()
+            {
+                ActionTime = DateTime.Now.SetKindUtc(),
+                ActionType = ActionType.Update,
+                Card = card,
+            };
+
+            await _actionRepository.CreateAsync(action);
+
             await _context.SaveChangesAsync();
         }
 
@@ -107,6 +137,15 @@ namespace TaskBoard.Application.Services
                        ?? throw new NotFoundException($"Card with id {id} was not found");
 
             _cardRepository.Delete(card);
+
+            Action action = new Action()
+            {
+                ActionTime = DateTime.Now.SetKindUtc(),
+                ActionType = ActionType.Delete,
+                Card = card,
+            };
+
+            await _actionRepository.CreateAsync(action);
             await _context.SaveChangesAsync();
         }
     }

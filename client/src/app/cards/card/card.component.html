@@ -1,9 +1,7 @@
-<div class="col-md-4">
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">{{card?.name}}</h4>
-        <h6 class="card-subtitle text-muted">{{card?.priority}}</h6>
-        <p class="card-text p-y-1">{{card?.description}}</p>
-      </div>
+<div class="card mr-2" *ngIf="card" style="width: 15rem">
+    <div class="card-body p-1">
+      <h4 class="card-title">{{card.name}}</h4>
+      <h6 class="card-subtitle text-muted">{{card.priority}}</h6>
+      <p class="card-text p-y-1">{{card.description}}</p>
     </div>
-  </div>
+</div>

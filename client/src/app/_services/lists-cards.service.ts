@@ -1,21 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ListCardsModel } from '../_models/listCards/listCardsModel';
 import { environment } from 'src/environments/environment.development';
-import { CardModel } from '../_models/card/cardModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CardsService {
+export class ListsCardsService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
-  getCards(){
-    return this.http.get<CardModel[]>(this.baseUrl + 'cards/all')
-  }
-
-  getCardsWithoutParent(){
-    return this.http.get<CardModel[]>(this.baseUrl + 'cards/allWithoutParentList')
+  getListsCards(){
+    return this.http.get<ListCardsModel[]>(this.baseUrl + 'listCards/all')
   }
 }

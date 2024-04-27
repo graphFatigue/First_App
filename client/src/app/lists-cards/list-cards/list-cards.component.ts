@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CardModel } from 'src/app/_models/card/cardModel';
-import { CardsService } from 'src/app/_services/cards.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
 
 @Component({
   selector: 'app-list-cards',
@@ -8,19 +7,13 @@ import { CardsService } from 'src/app/_services/cards.service';
   styleUrls: ['./list-cards.component.css']
 })
 export class ListCardsComponent implements OnInit {
-  cards: CardModel[] = [];
+  @Input() listCards: ListCardsModel | undefined;
 
-  constructor(private cardsService: CardsService){
+  constructor(){
 
   }
   ngOnInit(): void {
-    this.loadCards();
-  }
-
-  loadCards(){
-    this.cardsService.getCards().subscribe({
-      next: cards => this.cards = cards
-    })
+    //this.loadCards();
   }
 
 }

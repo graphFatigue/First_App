@@ -1,5 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ListsCardsService } from '../_services/lists-cards.service';
+import { ListCardsModel } from '../_models/listCards/listCardsModel';
+import { CardModel } from '../_models/card/cardModel';
+import { CardsService } from '../_services/cards.service';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +11,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
+  listsCards : ListCardsModel[] = []
+  cardsWithoutParent : CardModel[] = []
 
-  constructor(private http: HttpClient){
-    
+  constructor(private http: HttpClient, private listsCardsService: ListsCardsService, private cardsService: CardsService){
+
   }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.loadLists();
+    this.loadCardsWithoutParent();
+  }
+    
+  loadLists(){
+      this.listsCardsService.getListsCards().subscribe({
+      next: listsCards => this.listsCards = listsCards
+    })
   }
 
+  loadCardsWithoutParent(){
+    this.cardsService.getCardsWithoutParent().subscribe({
+      next: cardsWithoutParent => this.cardsWithoutParent = cardsWithoutParent
+    })
+  }
 }
