@@ -4,5 +4,5 @@ export interface ListCardsModel {
     id: number
     name: string
     description: string
-    cards: CardModel[]
+    cards: CardModel[] | null
   }

@@ -4,5 +4,5 @@ export interface UpdateCardModel {
     description: string
     dueDate: string
     priority: string
-    listCardsName: string
+    listCardsName: string | null
   }
