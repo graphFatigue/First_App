@@ -1,10 +1,12 @@
-<div class="row p-2">
-    <div class="col p-2">
+<div class="row p-2" style="display: inline-flex;">
+    <div class="col">
+        <h2>New cards</h2>
         <div class="col mb-4" *ngFor="let card of cardsWithoutParent">
             <app-card [card]="card"></app-card>
         </div>
     </div>
     <div class="col mb-4" *ngFor="let listCards of listsCards">
+        <h2>{{listCards.name}}</h2>
         <app-list-cards [listCards]="listCards"></app-list-cards>
     </div>
 </div>

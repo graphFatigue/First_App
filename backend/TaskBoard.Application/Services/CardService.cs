@@ -110,7 +110,7 @@ namespace TaskBoard.Application.Services
                 card.DueDate = updateCardModel.DueDate;
             }
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.ListCardsName))
+            if (!string.IsNullOrWhiteSpace(updateCardModel.ListCardsName)&&updateCardModel.ListCardsName!=card?.ListCards?.Name)
             {
                 var listCards = await _listCardsRepository.GetByNameAsync(updateCardModel.ListCardsName);
                 card.ListCards = listCards;

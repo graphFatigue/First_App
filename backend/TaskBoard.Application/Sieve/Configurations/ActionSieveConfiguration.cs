@@ -3,11 +3,11 @@ using TaskBoard.Domain.Entities;
 
 namespace TaskBoard.Application.Sieve.Configurations
 {
-    public class ListCardsSieveConfiguration : ISieveConfiguration
+    public class ActionSieveConfiguration : ISieveConfiguration
     {
         public void Configure(SievePropertyMapper mapper)
         {
-            mapper.Property<ListCards>(x => x.Name)
+            mapper.Property<Domain.Entities.Action>(x => x.ActionTime)
                 .CanFilter()
                 .CanSort();
         }

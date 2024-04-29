@@ -1,5 +1,5 @@
-<div class="col justify-content-center p-2">
-    <div class="col mb-4" *ngFor="let card of listCards?.cards">
+<div class="col" style="align-items: self-start; display: inline;">
+    <div class="col mb-4" style="align-items: self-start" *ngFor="let card of listCards?.cards">
         <app-card [card]="card"></app-card>
     </div>
 </div>

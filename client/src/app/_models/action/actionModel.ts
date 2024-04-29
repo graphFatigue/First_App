@@ -1,4 +1,5 @@
 export interface ActionModel {
-    id: number;
-    message: string | null;
+    id: number
+    message: string | null
+    actionTime: string | null
 }

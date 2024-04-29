@@ -32,8 +32,7 @@ namespace TaskBoard.Infrastructure.Configuration
                 .Property(c => c.Description)
                 .HasMaxLength(300)
                 .HasColumnType("varchar(300)")
-                .HasColumnName("description")
-                .IsRequired();
+                .HasColumnName("description");
         }
     }
 }
