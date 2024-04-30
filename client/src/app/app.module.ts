@@ -14,6 +14,9 @@ import { EditCardModalWindowComponent } from './cards/edit-card-modal-window/edi
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {ButtonModule} from 'primeng/button';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { ContextMenuComponent } from './cards/context-menu/context-menu.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ListCardsComponent,
     NavComponent,
     ActionsSidebarComponent,
-    EditCardModalWindowComponent
+    EditCardModalWindowComponent,
+    ContextMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +38,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     TooltipModule.forRoot(),
     MatButtonModule,
     MatDialogModule,
+    ContextMenuModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

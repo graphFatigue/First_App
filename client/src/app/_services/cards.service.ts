@@ -14,14 +14,20 @@ export class CardsService {
   constructor(private http: HttpClient) { }
 
   getCards(){
+    console.log('works');
     return this.http.get<CardModel[]>(this.baseUrl + 'cards/all')
   }
 
+  getCard(id: number){
+    return this.http.get<CardModel>(this.baseUrl + 'cards/' + id)
+  }
+
   updateCard(id: number, updateCardModel: UpdateCardModel){
-    return this.http.put<UpdateCardModel>(this.baseUrl + 'cards/id', updateCardModel)
+    return this.http.put<UpdateCardModel>(this.baseUrl + 'cards/' + id, updateCardModel)
   }
 
   getCardsWithoutParent(){
+    console.log('works');
     return this.http.get<CardModel[]>(this.baseUrl + 'cards/allWithoutParentList')
   }
 }

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ListsCardsService } from '../_services/lists-cards.service';
 import { ListCardsModel } from '../_models/listCards/listCardsModel';
@@ -14,12 +13,12 @@ export class HomeComponent implements OnInit{
   listsCards : ListCardsModel[] = []
   cardsWithoutParent : CardModel[] = []
 
-  constructor(private http: HttpClient, private listsCardsService: ListsCardsService, private cardsService: CardsService){
+  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService){
 
   }
 
   ngOnInit(): void {
-    this.loadLists();
+    console.log(this.loadLists());
     this.loadCardsWithoutParent();
   }
     

@@ -12,3 +12,7 @@
 h4{
   width: 180px;
 }
+
+.bi:hover, bi:focus{
+  fill: darkslategrey
+}
