@@ -1,15 +1,41 @@
-<div id="modal-content-wrapper">
-    <header id="modal-header">
-        <h1 id="modal-title">Project List</h1>
-    </header>
-    <ul>
-        <li>{{cardModel.name}}</li>
-        <li>{{cardModel.description}}</li>
-        <li>Library Management System</li>
-        <li>Image fetching API</li>
-        <li>Quiz Game Application</li>
-    </ul>
+<div class="p-4" id="modal-content-wrapper">
+    <form>
+        <h2><input (focus)="false" type="text" [value]="cardModel.name" /></h2>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">List</label>
+            <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
+                <select name="listCards" class="form-control" [(ngModel)]="cardModel.listCardsName">
+                    <option *ngFor="let listCards of listsCards" [ngValue]="listCards.name">
+                    {{listCards.name}}
+                    </option>
+                </select>
+            </ng-container>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Priority</label>
+            <ng-container class="col-sm-10" *ngIf="priorityStrings as priorities">
+                <select name="priority" class="form-control" [(ngModel)]="cardModel.priority">
+                    <option *ngFor="let priority of priorities" [ngValue]="priority.toString()">
+                     {{priority.toString()}}
+                   </option>
+                </select>
+            </ng-container>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Due date</label>
+            <div class="col-sm-10">
+                <input
+				class="form-control"
+				placeholder="yyyy-mm-dd"
+				name="dp"
+				[(ngModel)]="cardModel.dueDate"
+				ngbDatepicker
+			/>
+            </div>
+        </div>
+    </form>
     <footer id="modal-footer">
+        <button mat-raised-button id="modal-save-button" (click)="closeModal()">Close</button>
         <button mat-raised-button id="modal-close-button" (click)="closeModal()">Close</button>
     </footer>
 </div>

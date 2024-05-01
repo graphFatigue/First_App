@@ -34,10 +34,8 @@ export class ContextMenuComponent {
 
   openEditForm(){
     this.dialogConfig.id = "projects-modal-component";
-    this.dialogConfig.height = "500px";
-    this.dialogConfig.width = "650px";
     this.modalDialog = this.matDialog.open(EditCardModalWindowComponent, {
-      width: '330px',
+      width: '500px',
       height: '400px',
       data: {
         cardResponse: this.id
