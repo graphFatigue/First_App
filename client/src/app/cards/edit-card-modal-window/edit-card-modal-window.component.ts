@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 import { CardsService } from 'src/app/_services/cards.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CardModel } from 'src/app/_models/card/cardModel';
@@ -10,7 +9,6 @@ import { Observable } from 'rxjs';
 import {Priority} from 'src/app/_models/priority/priority';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
-import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-edit-card-modal-window',
@@ -52,6 +50,7 @@ export class EditCardModalWindowComponent implements OnInit{
     this.cardsService.updateCard(this.editForm?.value).subscribe({
       next: _ => {
         this.editForm?.reset(this.cardModel);
+        this.closeModal();
         window.location.reload();
       }
     })

@@ -18,6 +18,7 @@ import {ButtonModule} from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { ContextMenuComponent } from './cards/context-menu/context-menu.component';
 import { CreateCardModalWindowComponent } from './cards/create-card-modal-window/create-card-modal-window.component';
+import { DeleteCardModalWindowComponent } from './cards/delete-card-modal-window/delete-card-modal-window.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CreateCardModalWindowComponent } from './cards/create-card-modal-window
     ActionsSidebarComponent,
     EditCardModalWindowComponent,
     ContextMenuComponent,
-    CreateCardModalWindowComponent
+    CreateCardModalWindowComponent,
+    DeleteCardModalWindowComponent
   ],
   imports: [
     BrowserModule,

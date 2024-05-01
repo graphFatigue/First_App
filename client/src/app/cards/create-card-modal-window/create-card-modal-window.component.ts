@@ -49,6 +49,7 @@ export class CreateCardModalWindowComponent implements OnInit{
     this.cardsService.createCard(this.createForm?.value).subscribe({
       next: _ => {
         this.createForm?.reset(this.cardModel);
+        this.closeModal();
         window.location.reload();
       }
     })

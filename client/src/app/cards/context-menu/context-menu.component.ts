@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MenuItem } from 'primeng/api';
 import { CardsService } from 'src/app/_services/cards.service';
 import { EditCardModalWindowComponent } from '../edit-card-modal-window/edit-card-modal-window.component';
+import { DeleteCardModalWindowComponent } from '../delete-card-modal-window/delete-card-modal-window.component';
 
 @Component({
   selector: 'app-context-menu',
@@ -15,7 +16,8 @@ export class ContextMenuComponent {
   @Input() target: any;
   @Input() id: any;
   dialogConfig = new MatDialogConfig();
-  modalDialog: MatDialogRef<EditCardModalWindowComponent, any> | undefined;
+  modalDialogEdit: MatDialogRef<EditCardModalWindowComponent, any> | undefined;
+  modalDialogDelete: MatDialogRef<DeleteCardModalWindowComponent, any> | undefined;
 
   constructor(private cardsService: CardsService, public matDialog: MatDialog){
 
@@ -28,13 +30,24 @@ export class ContextMenuComponent {
   },
   {
     label: 'Delete',
-    command: () => this.cardsService.getCards()
+    command: () => this.openDeletePopup()
   }
   ]
 
   openEditForm(){
     this.dialogConfig.id = "projects-modal-component";
-    this.modalDialog = this.matDialog.open(EditCardModalWindowComponent, {
+    this.modalDialogEdit = this.matDialog.open(EditCardModalWindowComponent, {
+      // width: '500px',
+      // height: '550px',
+      data: {
+        cardResponse: this.id
+      }
+    });
+  }
+
+  openDeletePopup(){
+    this.dialogConfig.id = "projects-modal-component";
+    this.modalDialogDelete = this.matDialog.open(DeleteCardModalWindowComponent, {
       // width: '500px',
       // height: '550px',
       data: {
