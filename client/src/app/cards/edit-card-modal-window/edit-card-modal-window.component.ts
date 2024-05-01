@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 import { CardsService } from 'src/app/_services/cards.service';
@@ -9,6 +9,8 @@ import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
 import { Observable } from 'rxjs';
 import {Priority} from 'src/app/_models/priority/priority';
 import { DatePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-edit-card-modal-window',
@@ -20,7 +22,8 @@ export class EditCardModalWindowComponent implements OnInit{
   listsCards$? : Observable<ListCardsModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
-  dateMin: string = new Date().toISOString().slice(0, 10);;
+  dateMin: string = new Date().toISOString().slice(0, 10);
+  @ViewChild('editForm') editForm: NgForm | undefined
 
   constructor(
     private cardsService: CardsService, 
@@ -43,6 +46,15 @@ export class EditCardModalWindowComponent implements OnInit{
 
   stringToDate(dateString: string): DatePipe {
     return new DatePipe(dateString);
+  }
+
+  updateCard(){
+    this.cardsService.updateCard(this.editForm?.value).subscribe({
+      next: _ => {
+        this.editForm?.reset(this.cardModel);
+        window.location.reload();
+      }
+    })
   }
 
   loadLists(){

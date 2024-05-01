@@ -22,8 +22,8 @@ export class CardsService {
     return this.http.get<CardModel>(this.baseUrl + 'cards/' + id)
   }
 
-  updateCard(id: number, updateCardModel: UpdateCardModel){
-    return this.http.put<UpdateCardModel>(this.baseUrl + 'cards/' + id, updateCardModel)
+  updateCard(updateCardModel: CardModel){
+    return this.http.put<CardModel>(this.baseUrl + 'cards', updateCardModel)
   }
 
   getCardsWithoutParent(){

@@ -84,10 +84,10 @@ namespace TaskBoard.Application.Services
             return _mapper.Map<CardModel>(card);
         }
 
-        public async Task UpdateAsync(int id, UpdateCardModel updateCardModel)
+        public async Task UpdateAsync(UpdateCardModel updateCardModel)
         {
-            var card = await _cardRepository.GetByIdAsync(id)
-                       ?? throw new NotFoundException($"Card with id {id} was not found");
+            var card = await _cardRepository.GetByIdAsync(updateCardModel.Id)
+                       ?? throw new NotFoundException($"Card with id {updateCardModel.Id} was not found");
 
             if (!string.IsNullOrWhiteSpace(updateCardModel.Name))
             {
