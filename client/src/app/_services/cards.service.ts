@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { CardModel } from '../_models/card/cardModel';
 import { UpdateCardModel } from '../_models/card/updateCardModel';
+import { CreateCardModel } from '../_models/card/createCardModel';
 
 
 @Injectable({
@@ -14,7 +15,6 @@ export class CardsService {
   constructor(private http: HttpClient) { }
 
   getCards(){
-    console.log('works');
     return this.http.get<CardModel[]>(this.baseUrl + 'cards/all')
   }
 
@@ -26,8 +26,11 @@ export class CardsService {
     return this.http.put<CardModel>(this.baseUrl + 'cards', updateCardModel)
   }
 
+  createCard(createCardModel: CreateCardModel){
+    return this.http.post<CardModel>(this.baseUrl + 'cards', createCardModel)
+  }
+
   getCardsWithoutParent(){
-    console.log('works');
     return this.http.get<CardModel[]>(this.baseUrl + 'cards/allWithoutParentList')
   }
 }

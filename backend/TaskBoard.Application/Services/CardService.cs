@@ -67,7 +67,11 @@ namespace TaskBoard.Application.Services
 
         public async Task<CardModel> CreateAsync(CreateCardModel createCardModel)
         {
+            var listCards = await _listCardsRepository.GetByNameAsync(createCardModel.ListCardsName);
+
             var card = _mapper.Map<Card>(createCardModel);
+
+            card.ListCards = listCards;
 
             await _cardRepository.CreateAsync(card);
 

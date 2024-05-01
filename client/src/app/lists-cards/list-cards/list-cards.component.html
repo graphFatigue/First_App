@@ -1,4 +1,7 @@
 <div class="col" style="align-items: self-start; display: inline;">
+    <button (click)="openCreateForm()" class="dots" data-initialized="true">
+        Add
+    </button>
     <div class="col mb-4" style="align-items: self-start" *ngFor="let card of listCards?.cards">
         <app-card [card]="card"></app-card>
     </div>

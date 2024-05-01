@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {ButtonModule} from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { ContextMenuComponent } from './cards/context-menu/context-menu.component';
+import { CreateCardModalWindowComponent } from './cards/create-card-modal-window/create-card-modal-window.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ContextMenuComponent } from './cards/context-menu/context-menu.componen
     NavComponent,
     ActionsSidebarComponent,
     EditCardModalWindowComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    CreateCardModalWindowComponent
   ],
   imports: [
     BrowserModule,
