@@ -8,6 +8,7 @@ import { ListsCardsService } from 'src/app/_services/lists-cards.service';
 import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
 import { Observable } from 'rxjs';
 import {Priority} from 'src/app/_models/priority/priority';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-card-modal-window',
@@ -19,6 +20,7 @@ export class EditCardModalWindowComponent implements OnInit{
   listsCards$? : Observable<ListCardsModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
+  dateMin: string = new Date().toISOString().slice(0, 10);;
 
   constructor(
     private cardsService: CardsService, 
@@ -37,6 +39,10 @@ export class EditCardModalWindowComponent implements OnInit{
     this.cardsService.getCard(Number(this.data.cardResponse)).subscribe({
       next: resp => this.cardModel = resp
     })
+  }
+
+  stringToDate(dateString: string): DatePipe {
+    return new DatePipe(dateString);
   }
 
   loadLists(){

@@ -1,6 +1,6 @@
 <div class="p-4" id="modal-content-wrapper">
     <form>
-        <h2><input (focus)="false" type="text" [value]="cardModel.name" /></h2>
+        <h2><input class="no-border" (focus)="false" type="text" [value]="cardModel.name" /></h2>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">List</label>
             <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
@@ -23,19 +23,24 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Due date</label>
-            <div class="col-sm-10">
+            <div style="width: fit-content;" class="col-sm-10 mt-1">
                 <input
-				class="form-control"
-				placeholder="yyyy-mm-dd"
-				name="dp"
-				[(ngModel)]="cardModel.dueDate"
-				ngbDatepicker
+                type="date"
+                min="{{dateMin}}"
+                value="{{cardModel.dueDate.substring(0,10)}}"
 			/>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div>
+                <textarea [value]="cardModel.description" [ngModel]="cardModel.description" id="" cols="50" rows="4">
+                </textarea>
             </div>
         </div>
     </form>
     <footer id="modal-footer">
+        <button mat-raised-button id="modal-close-button" (click)="closeModal()">Save</button>
         <button mat-raised-button id="modal-save-button" (click)="closeModal()">Close</button>
-        <button mat-raised-button id="modal-close-button" (click)="closeModal()">Close</button>
     </footer>
 </div>

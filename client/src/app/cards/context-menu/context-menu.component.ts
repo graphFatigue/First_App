@@ -36,7 +36,7 @@ export class ContextMenuComponent {
     this.dialogConfig.id = "projects-modal-component";
     this.modalDialog = this.matDialog.open(EditCardModalWindowComponent, {
       width: '500px',
-      height: '400px',
+      height: '550px',
       data: {
         cardResponse: this.id
       }
