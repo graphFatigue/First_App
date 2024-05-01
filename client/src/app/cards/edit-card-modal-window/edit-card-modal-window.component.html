@@ -1,6 +1,9 @@
 <div class="p-4" id="modal-content-wrapper">
-    <form>
-        <h2><input class="no-border" (focus)="false" type="text" [value]="cardModel.name" /></h2>
+    <div class="alert alert-warning alert-dismissible fade show" *ngIf="editForm.dirty">
+        <strong>You made changes. Any unsaved changes will be lost</strong>
+    </div>
+    <form #editForm="ngForm">
+        <h2><input name="name" class="no-border" [(ngModel)]="cardModel.name" (focus)="false" type="text" [value]="cardModel.name" /></h2>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">List</label>
             <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
@@ -23,20 +26,23 @@
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Due date</label>
+            <ng-container>
             <div style="width: fit-content;" class="col-sm-10 mt-1">
                 <input
                 type="date"
-                min="{{dateMin}}"
                 value="{{cardModel.dueDate.substring(0,10)}}"
+                name="dueDate"
+                ngModel="{{cardModel.dueDate.substring(0,10)}}"
+                min="{{dateMin}}"
 			/>
-            </div>
+            </div></ng-container>
         </div>
-        <div class="form-group col">
-            <label class="col-sm-2 col-form-label">Description</label>
-            <div>
-                <textarea [value]="cardModel.description" [ngModel]="cardModel.description" id="" cols="50" rows="4">
+        <div [(ngModel)]="cardModel.description" style="display: flex; flex-direction: column;" class="form-group">
+            <label style="font-size: medium;" class="col-sm-2 col-form-label">Description</label>
+            <ng-container>
+                <textarea name="description" [value]="cardModel.description" [(ngModel)]="cardModel.description" id="" cols="50" rows="3">
                 </textarea>
-            </div>
+            </ng-container>
         </div>
     </form>
     <footer id="modal-footer">
