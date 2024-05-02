@@ -9,7 +9,8 @@ namespace TaskBoard.Domain.Entities
         public string? Description { get; set; }
         public DateTime DueDate { get; set; }
         public Priority Priority { get; set; }
-        public int? ListCardsId { get; set; } 
+        public int ListCardsId { get; set; } 
         public virtual ListCards? ListCards { get; set; }
+        public virtual ICollection<Action>? Actions { get; set; }
     }
 }

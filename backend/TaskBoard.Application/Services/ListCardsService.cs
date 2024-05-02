@@ -6,10 +6,7 @@ using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
 using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
-using TaskBoard.Domain.Enum;
 using TaskBoard.Infrastructure;
-using TaskBoard.Infrastructure.Extensions;
-using Action = TaskBoard.Domain.Entities.Action;
 
 namespace TaskBoard.Application.Services
 {
@@ -18,33 +15,21 @@ namespace TaskBoard.Application.Services
         private readonly AppDbContext _context;
         private readonly IListCardsRepository _listCardsRepository;
         private readonly IMapper _mapper;
-        private readonly IActionRepository _actionRepository;
 
         public ListCardsService(
             AppDbContext context,
             IListCardsRepository listCardsRepository,
-            IMapper mapper,
-            IActionRepository actionRepository)
+            IMapper mapper)
         {
             _context = context;
             _listCardsRepository = listCardsRepository;
             _mapper = mapper;
-            _actionRepository = actionRepository;
         }
         public async Task<ListCardsModel> CreateAsync(CreateListCardsModel createListCardsModel)
         {
             var listCards = _mapper.Map<ListCards>(createListCardsModel);
 
             await _listCardsRepository.CreateAsync(listCards);
-
-            Action action = new Action()
-            {
-                ActionTime = DateTime.Now.SetKindUtc(),
-                ActionType = ActionType.Create,
-                ListCards = listCards,
-            };
-
-            await _actionRepository.CreateAsync(action);
 
             await _context.SaveChangesAsync();
 
@@ -58,14 +43,6 @@ namespace TaskBoard.Application.Services
 
             _listCardsRepository.Delete(listCards);
 
-            Action action = new Action()
-            {
-                ActionTime = DateTime.Now.SetKindUtc(),
-                ActionType = ActionType.Delete,
-                ListCards = listCards,
-            };
-
-            await _actionRepository.CreateAsync(action);
             await _context.SaveChangesAsync();
         }
 
@@ -105,14 +82,6 @@ namespace TaskBoard.Application.Services
 
             _listCardsRepository.Update(listCards);
 
-            Action action = new Action()
-            {
-                ActionTime = DateTime.Now.SetKindUtc(),
-                ActionType = ActionType.Update,
-                ListCards = listCards,
-            };
-
-            await _actionRepository.CreateAsync(action);
             await _context.SaveChangesAsync();
         }
     }

@@ -35,25 +35,19 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("action_time");
 
-                    b.Property<string>("ActionType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("action_type");
-
                     b.Property<int?>("CardId")
                         .HasColumnType("integer")
                         .HasColumnName("card_id");
 
-                    b.Property<int?>("ListCardsId")
-                        .HasColumnType("integer")
-                        .HasColumnName("list_cards_id");
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("message");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
-
-                    b.HasIndex("ListCardsId");
 
                     b.ToTable("actions", (string)null);
                 });
@@ -77,7 +71,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("due_date");
 
-                    b.Property<int?>("ListCardsId")
+                    b.Property<int>("ListCardsId")
                         .HasColumnType("integer")
                         .HasColumnName("list_cards_id");
 
@@ -105,6 +99,7 @@ namespace TaskBoard.Infrastructure.Migrations
                             Id = 1,
                             Description = "Necessary QA job for the website",
                             DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
                             Name = "Do QA",
                             Priority = "Medium"
                         },
@@ -113,6 +108,7 @@ namespace TaskBoard.Infrastructure.Migrations
                             Id = 2,
                             Description = "The slider is displaying images with numbers 3,6,8 inappropriately",
                             DueDate = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
                             Name = "Fix the bug with the slider on the main page",
                             Priority = "High"
                         },
@@ -121,6 +117,7 @@ namespace TaskBoard.Infrastructure.Migrations
                             Id = 3,
                             Description = "The font must be Arial and the main color must be purple",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 3,
                             Name = "Change the design of the navbar",
                             Priority = "Low"
                         },
@@ -129,6 +126,7 @@ namespace TaskBoard.Infrastructure.Migrations
                             Id = 4,
                             Description = "The font must be Arial and the main color must be purple",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
                             Name = "Change the design of the sidebar",
                             Priority = "Low"
                         },
@@ -137,6 +135,7 @@ namespace TaskBoard.Infrastructure.Migrations
                             Id = 5,
                             Description = "The description of products on the page 9 can't be changed",
                             DueDate = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
                             Name = "Fix the bug with the description of products",
                             Priority = "High"
                         });
@@ -151,12 +150,6 @@ namespace TaskBoard.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
-                        .HasColumnName("description");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -169,23 +162,33 @@ namespace TaskBoard.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("list_cards", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Planned"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "To Do"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "In Progress"
+                        });
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Action", b =>
                 {
                     b.HasOne("TaskBoard.Domain.Entities.Card", "Card")
-                        .WithMany()
+                        .WithMany("Actions")
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("TaskBoard.Domain.Entities.ListCards", "ListCards")
-                        .WithMany()
-                        .HasForeignKey("ListCardsId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Card");
-
-                    b.Navigation("ListCards");
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>
@@ -193,9 +196,15 @@ namespace TaskBoard.Infrastructure.Migrations
                     b.HasOne("TaskBoard.Domain.Entities.ListCards", "ListCards")
                         .WithMany("Cards")
                         .HasForeignKey("ListCardsId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ListCards");
+                });
+
+            modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>
+                {
+                    b.Navigation("Actions");
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.ListCards", b =>

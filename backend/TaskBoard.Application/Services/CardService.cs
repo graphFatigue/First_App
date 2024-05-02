@@ -78,7 +78,7 @@ namespace TaskBoard.Application.Services
             Action action = new Action()
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
-                ActionType = ActionType.Create,
+                Message = new string($"You added {card.Name} to {card.ListCards.Name}"),
                 Card = card,   
             };
 
@@ -93,44 +93,82 @@ namespace TaskBoard.Application.Services
             var card = await _cardRepository.GetByIdAsync(updateCardModel.Id)
                        ?? throw new NotFoundException($"Card with id {updateCardModel.Id} was not found");
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.Name))
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Name)&&updateCardModel.Name!=card.Name)
             {
+                Action action = new Action()
+                {
+                    ActionTime = DateTime.Now.SetKindUtc(),
+                    Message = new string($"You renamed card {card.Name} to {updateCardModel.Name}"),
+                    Card = card,
+                };
+
+                await _actionRepository.CreateAsync(action);
+
                 card.Name = updateCardModel.Name;
             }
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.Description))
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Description)&&updateCardModel.Description!=card.Description)
             {
+                Action action = new Action()
+                {
+                    ActionTime = DateTime.Now.SetKindUtc(),
+                    Message = new string($"You changed {card.Name}'s description"),
+                    Card = card,
+                };
+
+                await _actionRepository.CreateAsync(action);
+
                 card.Description = updateCardModel.Description;
             }
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.Priority))
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Priority)&&updateCardModel.Priority!=card.Priority.ToString())
             {
+                Action action = new Action()
+                {
+                    ActionTime = DateTime.Now.SetKindUtc(),
+                    Message = new string($"You changed the priority of {card.Name} from {card.Priority.ToString()} to {updateCardModel.Priority}"),
+                    Card = card,
+                };
+
+                await _actionRepository.CreateAsync(action);
+
                 Enum.TryParse(updateCardModel.Priority, out Priority priority);
                 card.Priority = priority;
             }
 
-            if (updateCardModel.DueDate>=DateTime.Now&&updateCardModel.DueDate.Year<=DateTime.Now.Year+1)
+            if (updateCardModel.DueDate>=DateTime.Now&&updateCardModel.DueDate.Year<=DateTime.Now.Year+1&&card.DueDate!=updateCardModel.DueDate)
             {
+                Action action = new Action()
+                {
+                    ActionTime = DateTime.Now.SetKindUtc(),
+                    Message = new string($"You changed the due date of {card.Name} from {card.DueDate.ToLongDateString()} to {updateCardModel.DueDate.ToLongDateString()}"),
+                    Card = card,
+                };
+
+                await _actionRepository.CreateAsync(action);
+
                 card.DueDate = updateCardModel.DueDate;
             }
 
             if (!string.IsNullOrWhiteSpace(updateCardModel.ListCardsName)&&updateCardModel.ListCardsName!=card?.ListCards?.Name)
             {
-                var listCards = await _listCardsRepository.GetByNameAsync(updateCardModel.ListCardsName);
+                var listCards = await _listCardsRepository.GetByNameAsync(updateCardModel.ListCardsName)
+                    ?? throw new NotFoundException($"List with cards with name {updateCardModel.ListCardsName} was not found");
+
+                Action action = new Action()
+                {
+                    ActionTime = DateTime.Now.SetKindUtc(),
+                    Message = new string($"You moved {card.Name} from {card.ListCards?.Name} to {updateCardModel.ListCardsName}"),
+                    Card = card,
+                };
+
+                await _actionRepository.CreateAsync(action);
+
                 card.ListCards = listCards;
-                card.ListCardsId = listCards?.Id;
+                card.ListCardsId = listCards.Id;
             }
 
             _cardRepository.Update(card);
-
-            Action action = new Action()
-            {
-                ActionTime = DateTime.Now.SetKindUtc(),
-                ActionType = ActionType.Update,
-                Card = card,
-            };
-
-            await _actionRepository.CreateAsync(action);
 
             await _context.SaveChangesAsync();
         }
@@ -140,14 +178,13 @@ namespace TaskBoard.Application.Services
             var card = await _cardRepository.GetByIdAsync(id)
                        ?? throw new NotFoundException($"Card with id {id} was not found");
 
-            _cardRepository.Delete(card);
-
             Action action = new Action()
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
-                ActionType = ActionType.Delete,
-                Card = card,
+                Message = new string($"You deleted card {card.Name} from {card.ListCards.Name}" )
             };
+
+            _cardRepository.Delete(card);
 
             await _actionRepository.CreateAsync(action);
             await _context.SaveChangesAsync();

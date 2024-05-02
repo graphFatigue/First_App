@@ -1,3 +1,4 @@
+import { ActionModel } from "../action/actionModel"
 import { UpdateCardModel } from "./updateCardModel"
 
 export interface CardModel {
@@ -7,4 +8,5 @@ export interface CardModel {
     dueDate: string
     priority: string
     listCardsName: string | null
+    actions: ActionModel[] | null
   }

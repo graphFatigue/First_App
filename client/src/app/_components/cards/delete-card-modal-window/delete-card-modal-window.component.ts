@@ -16,7 +16,10 @@ export class DeleteCardModalWindowComponent {
 
     deleteCard(){
       this.cardsService.deleteCard(Number(this.data.cardResponse)).subscribe({
-        next: _ => this.dialogRef.close()
+        next: _ => {
+        this.closeModal();
+        window.location.reload();
+      }
       })
     }
 

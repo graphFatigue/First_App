@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ListsCardsService } from '../_services/lists-cards.service';
-import { ListCardsModel } from '../_models/listCards/listCardsModel';
-import { CardModel } from '../_models/card/cardModel';
-import { CardsService } from '../_services/cards.service';
+import { ListsCardsService } from '../../_services/lists-cards.service';
+import { ListCardsModel } from '../../_models/listCards/listCardsModel';
+import { CardModel } from '../../_models/card/cardModel';
+import { CardsService } from '../../_services/cards.service';
 
 @Component({
   selector: 'app-home',

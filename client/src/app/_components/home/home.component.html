@@ -1,5 +1,5 @@
 <div class="row p-2" style="display: inline-flex;">
-    <div class="col">
+    <div *ngIf="cardsWithoutParent.length!==0" class="col">
         <h2>New cards</h2>
         <div class="col mb-4" *ngFor="let card of cardsWithoutParent">
             <app-card [card]="card"></app-card>

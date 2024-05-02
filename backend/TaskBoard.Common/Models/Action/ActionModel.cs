@@ -13,8 +13,7 @@ namespace TaskBoard.Common.Models.Action
         public void MapFrom(Profile profile)
         {
             profile.CreateMap<Domain.Entities.Action, ActionModel>()
-                .ForMember(dest => dest.ActionTime, src => src.MapFrom(opt => opt.ActionTime.ToFileTimeUtc()))
-                .ForMember(dest => dest.Message, src => src.MapFrom(opt => opt.SetMessage()));
+                .ForMember(dest => dest.ActionTime, src => src.MapFrom(opt => opt.ActionTime.ToFileTimeUtc()));
         }
     }
 }

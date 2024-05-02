@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import {Priority} from 'src/app/_models/priority/priority';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
+import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 
 @Component({
   selector: 'app-edit-card-modal-window',
@@ -16,7 +17,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./edit-card-modal-window.component.css']
 })
 export class EditCardModalWindowComponent implements OnInit{
-  cardModel: CardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
+  cardModel: UpdateCardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
   listsCards$? : Observable<ListCardsModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
