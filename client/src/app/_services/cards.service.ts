@@ -26,7 +26,7 @@ export class CardsService {
     return this.http.delete<CardModel>(this.baseUrl + 'cards/' + id)
   }
 
-  updateCard(updateCardModel: CardModel){
+  updateCard(updateCardModel: UpdateCardModel){
     return this.http.put<CardModel>(this.baseUrl + 'cards', updateCardModel)
   }
 

@@ -9,6 +9,7 @@ import { ActionsService } from 'src/app/_services/actions.service';
 })
 export class ActionsSidebarComponent implements OnInit{
   actions : ActionModel[] = []
+  count:number=1
 
   constructor(private actionsService: ActionsService){}
 
@@ -21,5 +22,18 @@ export class ActionsSidebarComponent implements OnInit{
       next: response => this.actions = response.items
     })
   }
+
+  convertToLocalDate(responseDate: any) {
+    try {
+        if (responseDate != null) {
+            var dt = new Date(responseDate)
+            return String('on ' + dt.toUTCString().split(' ').slice(0,3).join(' ') + ' at ' + dt.toTimeString().split(' ')[0].split(':').slice(0,2).join(':'));
+        } else {
+            return null;
+        }
+    } catch (error) {
+        return responseDate;
+    }
+}
 
 }

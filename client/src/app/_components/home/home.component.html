@@ -2,7 +2,7 @@
     <button (click)="openCreateForm()" class="dots" data-initialized="true">
         Add list
     </button>
-<div class="row p-2" style="display: inline-flex;">
+<div class="lCards p-2">
     <div *ngIf="cardsWithoutParent.length!==0" class="col">
         <h2>New cards</h2>
         <div class="col mb-4" *ngFor="let card of cardsWithoutParent">

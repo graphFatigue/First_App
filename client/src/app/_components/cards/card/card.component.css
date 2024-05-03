@@ -1,5 +1,6 @@
 .card{
     margin-right:20px!important;
+    margin-top:10px!important;
     }
 
 .row-container{
@@ -10,9 +11,57 @@
 }
 
 h4{
-  width: 180px;
+  width: 170px;
 }
 
 .bi:hover, bi:focus{
   fill: darkslategrey
+}
+
+.selectStyle{
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: medium;
+}
+
+.optionStyle{
+  font-size: medium;
+}
+
+.card-priority{
+  font-size: medium;
+  padding: 5px;
+  width: max-content;
+  color:rgba(0, 0, 0, 0.4);
+  background-color:aliceblue;
+  border-radius: 20%;
+  margin-bottom: 5px;
+}
+
+h4, .card-description{
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.card-description{
+  font-size: small;
+  color: lightslategray;
+}
+
+.dueDate{
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.h6dd{
+  font-size: medium;
+  margin: 0px;
+}
+
+svg{
+  padding-top: 0px;
 }

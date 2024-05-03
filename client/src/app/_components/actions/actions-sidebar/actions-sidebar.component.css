@@ -1,0 +1,29 @@
+.col{
+    display:inline-flex;
+    flex-direction: column;
+    border-top: 2px;
+    border-bottom: 2px;
+    border-color: rgba(0,0,0,0.1);;
+    border-bottom-style:solid;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+p{
+    padding: 0px;
+}
+
+.scrollSidebar{
+    max-height: calc(100vh - 3.5rem);
+    overflow-y: auto;
+}
+
+.date{
+    color: grey;
+    margin-bottom: 5px;
+}
+
+.message{
+    margin-bottom: 3px;
+}
+

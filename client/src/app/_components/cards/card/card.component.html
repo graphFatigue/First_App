@@ -8,7 +8,22 @@
         </svg></a>
         <app-card-context-menu [id]="card.id" [target]="openMenu"></app-card-context-menu>
       </div>
-      <h6 class="card-subtitle text-muted">{{card.priority}}</h6>
-      <p class="card-text p-y-1">{{card.description}}</p>
+      <p class="card-description">{{card.description}}</p>
+      <h6 class="card-priority">{{card.priority}}</h6>
+      <div class="dueDate">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+      </svg>
+      <h6 class="h6dd">{{convertToLocalDate(card.dueDate)}}</h6>
+    </div>
+      <ng-container class="col-sm-10" *ngIf="listsCards">
+        <select name="listCardsName" [ngModel]="value" (ngModelChange)="updateCard($event)" class="form-control selectStyle">
+          <option value="" hidden selected disabled>Move To</option>
+            <option class="optionStyle" *ngFor="let listCards of listsCards">
+            {{listCards.name}}
+            </option>
+        </select>
+    </ng-container>
     </div>
 </div>
