@@ -15,4 +15,8 @@ export class ActionsService {
   getActions(){
     return this.http.get<ActionsSieveResponse>(this.baseUrl + 'actions?Sorts=-actionTime')
   }
+
+  loadActionsWithNumPage(page: number){
+    return this.http.get<ActionsSieveResponse>(this.baseUrl + String('actions?Sorts=-ActionTime&Page=' + page + '&PageSize=20'))
+  }
 }

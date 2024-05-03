@@ -19,7 +19,7 @@
     </div>
       <ng-container class="col-sm-10" *ngIf="listsCards">
         <select name="listCardsName" [ngModel]="value" (ngModelChange)="updateCard($event)" class="form-control selectStyle">
-          <option value="" hidden selected disabled>Move To</option>
+          <option value="" hidden selected disabled>Move To: </option>
             <option class="optionStyle" *ngFor="let listCards of listsCards">
             {{listCards.name}}
             </option>

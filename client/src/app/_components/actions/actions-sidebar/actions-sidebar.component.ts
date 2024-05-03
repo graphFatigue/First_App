@@ -10,17 +10,23 @@ import { ActionsService } from 'src/app/_services/actions.service';
 export class ActionsSidebarComponent implements OnInit{
   actions : ActionModel[] = []
   count:number=1
+  page: number = 1
+  length: number = 0
 
   constructor(private actionsService: ActionsService){}
 
   ngOnInit(): void {
-    this.getActions();
+    this.loadActions();
   }
 
-  getActions(){
-    this.actionsService.getActions().subscribe({
-      next: response => this.actions = response.items
+  loadActions(){
+    this.actionsService.loadActionsWithNumPage(this.page).subscribe({
+      next: response => {
+        this.actions = this.actions.concat(response.items);
+        this.length=response.totalCount;
+      }
     })
+    this.page+=1
   }
 
   convertToLocalDate(responseDate: any) {
