@@ -4,9 +4,11 @@ using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
+using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Infrastructure;
+using TaskBoard.Infrastructure.Repositories;
 
 namespace TaskBoard.Application.Services
 {
@@ -70,10 +72,18 @@ namespace TaskBoard.Application.Services
             return _mapper.Map<ListCardsModel>(listCards);
         }
 
-        public async Task UpdateAsync(int id, UpdateListCardsModel updateListCardsModel)
+        public async Task<ListCardsModel> GetByIdAsync(int id)
         {
             var listCards = await _listCardsRepository.GetByIdAsync(id)
-           ?? throw new NotFoundException($"Cards' List with id {id} was not found");
+                       ?? throw new NotFoundException($"List with id {id} was not found");
+
+            return _mapper.Map<ListCardsModel>(listCards);
+        }
+
+        public async Task UpdateAsync(UpdateListCardsModel updateListCardsModel)
+        {
+            var listCards = await _listCardsRepository.GetByIdAsync(updateListCardsModel.Id)
+           ?? throw new NotFoundException($"Cards' List with id {updateListCardsModel.Id} was not found");
 
             if (!string.IsNullOrWhiteSpace(updateListCardsModel.Name))
             {

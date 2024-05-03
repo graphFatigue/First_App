@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NpgsqlTypes;
 using Sieve.Models;
 using TaskBoard.Abstractions.Application;
 using TaskBoard.Common.Models.ListCards;
@@ -30,10 +31,10 @@ namespace TaskBoard.API.Controllers
             return Ok(listCards);
         }
 
-        [HttpGet("{id}", Name = nameof(GetByName))]
-        public async Task<IActionResult> GetByName(string name)
+        [HttpGet("{id}", Name = nameof(GetListById))]
+        public async Task<IActionResult> GetListById(int id)
         {
-            var listCard = await _listCardsService.GetByNameAsync(name);
+            var listCard = await _listCardsService.GetByIdAsync(id);
             return Ok(listCard);
         }
 
@@ -41,13 +42,13 @@ namespace TaskBoard.API.Controllers
         public async Task<IActionResult> Create(CreateListCardsModel createCardModel)
         {
             var listCards = await _listCardsService.CreateAsync(createCardModel);
-            return CreatedAtRoute(nameof(GetByName), new { id = listCards.Id }, listCards);
+            return CreatedAtRoute(nameof(GetListById), new { id = listCards.Id }, listCards);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, UpdateListCardsModel updateListCardsModel)
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateListCardsModel updateListCardsModel)
         {
-            await _listCardsService.UpdateAsync(id, updateListCardsModel);
+            await _listCardsService.UpdateAsync(updateListCardsModel);
             return NoContent();
         }
 

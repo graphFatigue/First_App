@@ -6,13 +6,13 @@ import { EditCardModalWindowComponent } from '../edit-card-modal-window/edit-car
 import { DeleteCardModalWindowComponent } from '../delete-card-modal-window/delete-card-modal-window.component';
 
 @Component({
-  selector: 'app-context-menu',
-  templateUrl: './context-menu.component.html',
-  styleUrls: ['./context-menu.component.css'],
+  selector: 'app-card-context-menu',
+  templateUrl: './card-context-menu.component.html',
+  styleUrls: ['./card-context-menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ContextMenuComponent {
+export class CardContextMenuComponent {
   @Input() target: any;
   @Input() id: any;
   dialogConfig = new MatDialogConfig();

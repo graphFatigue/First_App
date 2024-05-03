@@ -6,7 +6,7 @@
         <svg  aria-haspopup="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" id="openMenu" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
           <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
         </svg></a>
-        <app-context-menu [id]="card.id" [target]="openMenu"></app-context-menu>
+        <app-card-context-menu [id]="card.id" [target]="openMenu"></app-card-context-menu>
       </div>
       <h6 class="card-subtitle text-muted">{{card.priority}}</h6>
       <p class="card-text p-y-1">{{card.description}}</p>

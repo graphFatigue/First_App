@@ -1,0 +1,12 @@
+<div class="p-4" id="modal-content-wrapper">
+    <div class="alert alert-warning alert-dismissible fade show" *ngIf="createForm.dirty">
+        <strong>You made changes. Any unsaved changes will be lost</strong>
+    </div>
+    <form (ngSubmit)="createListCards()" id="createForm" #createForm="ngForm">
+        <h2><input name="name" class="no-border" value="New list" [(ngModel)]="listCardsModel.name" placeholder="Enter list's name" (focus)="false" type="text" /></h2>
+    </form>
+    <footer id="modal-footer">
+        <button mat-raised-button [disabled]="!createForm.dirty || listCardsModel.name===''" form="createForm" type="submit" id="modal-close-button" >Save</button>
+        <button mat-raised-button id="modal-save-button" (click)="closeModal()">Cancel</button>
+    </footer>
+</div> 

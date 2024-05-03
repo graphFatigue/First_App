@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
-import { CardsService } from 'src/app/_services/cards.service';
 import { CreateCardModalWindowComponent } from 'src/app/_components/cards/create-card-modal-window/create-card-modal-window.component';
 
 @Component({

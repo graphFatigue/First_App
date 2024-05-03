@@ -1,0 +1,29 @@
+.row-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: first baseline;
+  }
+
+  .dots {
+	  border: 2.22px;
+    border-style: dashed;
+    border-color: gray;
+    background-color: white;
+    width: 15rem;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    padding: 5px;
+    font-size: large;
+  }
+
+.dots:hover{
+  background-color: rgba(0,0,0,0.05);
+}
+
+.column-container{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}

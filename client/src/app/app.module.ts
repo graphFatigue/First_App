@@ -16,9 +16,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import {ButtonModule} from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
-import { ContextMenuComponent } from './_components/cards/context-menu/context-menu.component';
 import { CreateCardModalWindowComponent } from './_components/cards/create-card-modal-window/create-card-modal-window.component';
 import { DeleteCardModalWindowComponent } from './_components/cards/delete-card-modal-window/delete-card-modal-window.component';
+import { ListContextMenuComponent } from './_components/lists-cards/list-context-menu/list-context-menu.component';
+import { CardContextMenuComponent } from './_components/cards/card-context-menu/card-context-menu.component';
+import { EditListModalWindowComponent } from './_components/lists-cards/edit-list-modal-window/edit-list-modal-window.component';
+import { DeleteListModalWindowComponent } from './_components/lists-cards/delete-list-modal-window/delete-list-modal-window.component';
+import { CreateListCardsModalWindowComponent } from './_components/lists-cards/create-list-modal-window/create-list-modal-window.component';
 
 @NgModule({
   declarations: [
@@ -29,9 +33,13 @@ import { DeleteCardModalWindowComponent } from './_components/cards/delete-card-
     NavComponent,
     ActionsSidebarComponent,
     EditCardModalWindowComponent,
-    ContextMenuComponent,
+    EditListModalWindowComponent,
+    CardContextMenuComponent,
     CreateCardModalWindowComponent,
-    DeleteCardModalWindowComponent
+    CreateListCardsModalWindowComponent,
+    DeleteCardModalWindowComponent,
+    DeleteListModalWindowComponent,
+    ListContextMenuComponent
   ],
   imports: [
     BrowserModule,

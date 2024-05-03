@@ -13,3 +13,28 @@
   background-color: rgba(0,0,0,0.05);
 }
     
+.bi:hover, bi:focus{
+  fill: darkslategrey
+}
+
+.row-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: first baseline;
+  margin-right: 15px;
+  border-top: 2px;
+  border-bottom: 2px;
+  border-color: rgba(0,0,0,0.1);;
+  border-top-style:solid;
+  border-bottom-style:solid;
+  padding-left: 8px;
+  padding-right: 5px;
+  border-radius: 0%;
+  margin-bottom: 10px;
+}
+
+h2{
+  margin-bottom: 5px;
+  width: 220px;
+}
