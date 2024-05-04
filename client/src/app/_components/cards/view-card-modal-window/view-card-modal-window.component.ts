@@ -54,12 +54,16 @@ export class ViewCardModalWindowComponent implements OnInit{
   }
 
   loadActions(){
-    this.actionsService.getActionsByCardId(Number(this.cardModel.id)).pipe(
-      map(res => {
-          this.actions=res;
-          console.log(this.actions.length, 'ttgfhg')
-      }))
-  }
+     this.actionsService.getActionsByCardId(Number(this.data.cardResponse)).
+     subscribe({
+      next: resp => this.actions = resp
+     })
+    }
+     //pipe(
+    //   map(res => {
+    //       this.actions=res;
+    //       console.log(this.actions.length, 'ttgfhg')
+    //   }))
 
   stringToDate(dateString: string): DatePipe {
     return new DatePipe(dateString);

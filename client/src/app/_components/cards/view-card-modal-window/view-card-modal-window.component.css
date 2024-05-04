@@ -5,6 +5,7 @@
     height: 100%;
     display: flex;
     flex-direction: row;
+    gap: 10px;
 }.modal-title {
     font-size: 22px;
     margin-bottom: 0px;
@@ -131,4 +132,5 @@
   .scrollSidebar{
     /* max-height: calc(100vh - 3.5rem); */
     overflow-y: auto;
+    background-color: rgba(128, 128, 128, 0.1);
 }

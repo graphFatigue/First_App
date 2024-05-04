@@ -50,6 +50,8 @@ export class CardComponent implements OnInit{
   openViewCardWindow(){
     this.dialogConfig.id = "projects-modal-component";
     this.modalDialogView = this.matDialog.open(ViewCardModalWindowComponent, {
+      width: '800px',
+      height: '500px',
       data: {
         cardResponse: this.card?.id
       }
