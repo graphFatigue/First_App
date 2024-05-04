@@ -30,6 +30,12 @@ namespace TaskBoard.Application.Services
             return _mapper.Map<IEnumerable<ActionModel>>(actions);
         }
 
+        public async Task<IEnumerable<ActionModel>> GetAllByCardIdAsync(int cardId)
+        {
+            var actions = await _actionRepository.GetAllByCardIdAsync(cardId);
+            return _mapper.Map<IEnumerable<ActionModel>>(actions);
+        }
+
         public async Task<PagedList<ActionModel>> GetAllWithFilterAsync(SieveModel sieveModel)
         {
             var pagedList = await _actionRepository.GetAllWithFilterAsync(sieveModel);

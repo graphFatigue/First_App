@@ -10,6 +10,10 @@ namespace TaskBoard.Application.Sieve.Configurations
             mapper.Property<Domain.Entities.Action>(x => x.ActionTime)
                 .CanFilter()
                 .CanSort();
+
+            mapper.Property<Domain.Entities.Action>(x => x.CardId)
+                .CanFilter()
+                .CanSort();
         }
     }
 }

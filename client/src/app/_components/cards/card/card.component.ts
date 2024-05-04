@@ -1,12 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { CardModel } from 'src/app/_models/card/cardModel';
-import { EditCardModalWindowComponent } from '../edit-card-modal-window/edit-card-modal-window.component';
 import { CardsService } from 'src/app/_services/cards.service';
 import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
 import { Observable } from 'rxjs';
 import { ListsCardsService } from 'src/app/_services/lists-cards.service';
+import { ViewCardModalWindowComponent } from '../view-card-modal-window/view-card-modal-window.component';
 
 @Component({
   selector: 'app-card',
@@ -18,8 +18,10 @@ export class CardComponent implements OnInit{
   listsCards : ListCardsModel[] = [];
   cardModel: UpdateCardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
   value : string = ''
+  dialogConfig = new MatDialogConfig();
+  modalDialogView: MatDialogRef<ViewCardModalWindowComponent, any> | undefined;
 
-  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService){}
+  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService, public matDialog: MatDialog){}
 
   ngOnInit(): void {
     this.loadLists();
@@ -43,6 +45,15 @@ export class CardComponent implements OnInit{
       })
     }
     else console.log(this.value, 'wrong')
+  }
+
+  openViewCardWindow(){
+    this.dialogConfig.id = "projects-modal-component";
+    this.modalDialogView = this.matDialog.open(ViewCardModalWindowComponent, {
+      data: {
+        cardResponse: this.card?.id
+      }
+    });
   }
 
   convertToLocalDate(responseDate: any) {

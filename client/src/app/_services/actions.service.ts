@@ -16,6 +16,10 @@ export class ActionsService {
     return this.http.get<ActionsSieveResponse>(this.baseUrl + 'actions?Sorts=-actionTime')
   }
 
+  getActionsByCardId(cardId: number){
+    return this.http.get<ActionModel[]>(this.baseUrl + 'actions/' + cardId)
+  }
+
   loadActionsWithNumPage(page: number){
     return this.http.get<ActionsSieveResponse>(this.baseUrl + String('actions?Sorts=-ActionTime&Page=' + page + '&PageSize=20'))
   }

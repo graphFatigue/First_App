@@ -23,6 +23,7 @@ import { CardContextMenuComponent } from './_components/cards/card-context-menu/
 import { EditListModalWindowComponent } from './_components/lists-cards/edit-list-modal-window/edit-list-modal-window.component';
 import { DeleteListModalWindowComponent } from './_components/lists-cards/delete-list-modal-window/delete-list-modal-window.component';
 import { CreateListCardsModalWindowComponent } from './_components/lists-cards/create-list-modal-window/create-list-modal-window.component';
+import { ViewCardModalWindowComponent } from './_components/cards/view-card-modal-window/view-card-modal-window.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CreateListCardsModalWindowComponent } from './_components/lists-cards/c
     CreateListCardsModalWindowComponent,
     DeleteCardModalWindowComponent,
     DeleteListModalWindowComponent,
-    ListContextMenuComponent
+    ListContextMenuComponent,
+    ViewCardModalWindowComponent
   ],
   imports: [
     BrowserModule,

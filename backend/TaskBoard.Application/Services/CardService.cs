@@ -78,7 +78,7 @@ namespace TaskBoard.Application.Services
             Action action = new Action()
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
-                Message = new string($"You added {card.Name} to {card.ListCards.Name}"),
+                Message = new string($"You added ◉<strong>{card.Name}</strong> to ◆<strong>{card.ListCards.Name}</strong>"),
                 Card = card,   
             };
 
@@ -98,7 +98,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You renamed card {card.Name} to {updateCardModel.Name}"),
+                    Message = new string($"You renamed card ◉<strong>{card.Name}</strong> to ◉<strong>{updateCardModel.Name}</strong>"),
                     Card = card,
                 };
 
@@ -112,7 +112,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You changed {card.Name}'s description"),
+                    Message = new string($"You changed ◉<strong>{card.Name}'s</strong> description"),
                     Card = card,
                 };
 
@@ -126,7 +126,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You changed the priority of {card.Name} from {card.Priority.ToString()} to {updateCardModel.Priority}"),
+                    Message = new string($"You changed the priority of ◉<strong>{card.Name}</strong> from ◾<strong>{card.Priority.ToString()}</strong> to ◾<strong>{updateCardModel.Priority}</strong>"),
                     Card = card,
                 };
 
@@ -141,7 +141,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You changed the due date of {card.Name} from {card.DueDate.ToLongDateString()} to {updateCardModel.DueDate.ToLongDateString()}"),
+                    Message = new string($"You changed the due date of ◉<strong>{card.Name}</strong> from ◾<strong>{card.DueDate.ToLongDateString()}</strong> to ◾<strong>{updateCardModel.DueDate.ToLongDateString()}</strong>"),
                     Card = card,
                 };
 
@@ -158,7 +158,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You moved {card.Name} from {card.ListCards?.Name} to {updateCardModel.ListCardsName}"),
+                    Message = new string($"You moved ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards?.Name}</strong> to ◆<strong>{updateCardModel.ListCardsName}</strong>"),
                     Card = card,
                 };
 
@@ -181,7 +181,7 @@ namespace TaskBoard.Application.Services
             Action action = new Action()
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
-                Message = new string($"You deleted card {card.Name} from {card.ListCards.Name}" )
+                Message = new string($"You deleted card ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards.Name}</strong>" )
             };
 
             _cardRepository.Delete(card);

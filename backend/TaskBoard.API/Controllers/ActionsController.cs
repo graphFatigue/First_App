@@ -22,6 +22,13 @@ namespace TaskBoard.API.Controllers
             return Ok(actions);
         }
 
+        [HttpGet("{cardId}", Name = nameof(GetAllByCardIdAsync))]
+        public async Task<IActionResult> GetAllByCardIdAsync(int cardId)
+        {
+            var actions = await _actionService.GetAllByCardIdAsync(cardId);
+            return Ok(actions);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllWithFilter([FromQuery] SieveModel sieveModel)
         {

@@ -1,13 +1,14 @@
-<div data-bs-backdrop="true" data-bs-scroll="true" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" >
+<div data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" >
     <div class="offcanvas-header bg-dark sidebar-heading border-bottom" style="height: 56px;">
             <span style="color: aliceblue;" class="fs-5 fw-semibold">History</span>
             <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="pt-4 px-3 scrollSidebar" style="overflow-y: auto;">
         <div class="col" *ngFor="let action of actions">
-            <p class="message">{{action.message}}</p>
+            <div [innerHTML]="action.message"></div>
             <p class="date">{{convertToLocalDate(action.actionTime)}}</p>
         </div>
+        
         <button *ngIf="actions.length<length"  (click)="loadActions()">See More...</button>
     </div>
 </div> 

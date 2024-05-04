@@ -1,0 +1,69 @@
+<div class="p-4" id="modal-content-wrapper">
+    <div class="card-info">
+    <div class="m-header">
+    <p class="modal-title">{{cardModel.name}}</p>
+    <div (click)="openEditForm()" class="but-edit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+          </svg>
+          <p style="margin-bottom: 0px;" class="gr-txt">Edit</p>
+    </div>
+</div>
+    <div class="wrapper">
+        <div class="box a">
+           <div class="row-prop">
+            <svg style="margin-bottom: 12px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-list-task" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z"/>
+                <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z"/>
+                <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z"/>
+            </svg>
+              <p class="gr-txt">List</p>
+           </div> 
+        </div>
+        <div class="box b">
+            <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
+                <select disabled="true" name="listCardsName" class="form-control" [(ngModel)]="cardModel.listCardsName">
+                    <option *ngFor="let listCards of listsCards" [ngValue]="listCards.name">
+                    {{listCards.name}}
+                    </option>
+                </select>
+            </ng-container>
+        </div>
+        <div class="box c">
+            <div class="row-prop">
+                <svg style="margin-bottom: 12px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-calendar3-event" viewBox="0 0 16 16">
+                    <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+                    <path d="M12 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                  </svg>
+                  <p class="gr-txt">Due date</p>
+               </div> 
+        </div>
+        <div class="box d">
+            <h6 class="h6dd">{{convertToLocalDate(cardModel.dueDate)}}</h6>
+        </div>
+        <div class="box e">
+            <div class="row-prop">
+                <svg style="margin-bottom: 12px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gray" class="bi bi-bookmark-star" viewBox="0 0 16 16">
+                    <path d="M7.84 4.1a.178.178 0 0 1 .32 0l.634 1.285a.18.18 0 0 0 .134.098l1.42.206c.145.021.204.2.098.303L9.42 6.993a.18.18 0 0 0-.051.158l.242 1.414a.178.178 0 0 1-.258.187l-1.27-.668a.18.18 0 0 0-.165 0l-1.27.668a.178.178 0 0 1-.257-.187l.242-1.414a.18.18 0 0 0-.05-.158l-1.03-1.001a.178.178 0 0 1 .098-.303l1.42-.206a.18.18 0 0 0 .134-.098z"/>
+                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                  </svg>
+                  <p class="gr-txt">Priority</p>
+               </div> 
+        </div>
+        <div class="box f">
+            <h6 class="card-priority">{{cardModel.priority}}</h6>
+        </div>
+      </div>
+      <div class="card-descr">
+        <h2 style="margin-bottom: 5px;">Description</h2>
+        <p class="gr-decsr">{{cardModel.description}}</p>
+      </div>
+    </div>
+    <div class="pt-4 px-3 scrollSidebar" style="overflow-y: auto;">
+        <div class="col" *ngFor="let action of actions">
+            <div [innerHTML]="action.message"></div>
+            <p class="date">{{convertToLocalDate(action.actionTime)}}</p>
+        </div>
+    </div>
+</div>

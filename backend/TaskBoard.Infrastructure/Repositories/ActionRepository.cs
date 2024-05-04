@@ -13,6 +13,11 @@ namespace TaskBoard.Infrastructure.Repositories
         {
         }
 
+        public async Task<IEnumerable<Action>> GetAllByCardIdAsync(int cardId)
+        {
+            return await _dbSet.Where(c => c.CardId==cardId).OrderByDescending(c => c.ActionTime).ToListAsync();
+        }
+
         public async Task<Action?> GetByIdAsync(int id)
         {
             return await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
