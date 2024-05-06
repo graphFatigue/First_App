@@ -1,14 +1,14 @@
 <div class="p-4" id="modal-content-wrapper">
-    <div class="alert alert-warning alert-dismissible fade show" *ngIf="editForm.dirty">
+    <div class="alert alert-warning alert-dismissible fade show" *ngIf="editForm?.dirty">
         <strong>You made changes. Any unsaved changes will be lost</strong>
     </div>
-    <form (ngSubmit)="updateCard()" id="editForm" #editForm="ngForm">
-        <input [hidden]="true" type="number" name="id" [(ngModel)]="cardModel.id">
-        <h2><input name="name" class="no-border" [(ngModel)]="cardModel.name" (focus)="false" type="text" [value]="cardModel.name" /></h2>
+    <form *ngIf="(cardModelObs$ | async) as cardModelObs" (ngSubmit)="updateCard()" id="editForm" #editForm="ngForm">
+        <input [hidden]="true" type="number" name="id" [(ngModel)]="cardModelObs.id">
+        <h2><input name="name" class="no-border" [(ngModel)]="cardModelObs.name" (focus)="false" type="text" [value]="cardModelObs.name" /></h2>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">List</label>
             <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
-                <select name="listCardsName" class="form-control" [(ngModel)]="cardModel.listCardsName">
+                <select name="listCardsName" class="form-control" [(ngModel)]="cardModelObs.listCardsName">
                     <option *ngFor="let listCards of listsCards" [ngValue]="listCards.name">
                     {{listCards.name}}
                     </option>
@@ -18,7 +18,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Priority</label>
             <ng-container class="col-sm-10" *ngIf="priorityStrings as priorities">
-                <select name="priority" class="form-control" [(ngModel)]="cardModel.priority">
+                <select name="priority" class="form-control" [(ngModel)]="cardModelObs.priority">
                     <option *ngFor="let priority of priorities" [ngValue]="priority.toString()">
                      {{priority.toString()}}
                    </option>
@@ -31,9 +31,9 @@
             <div style="width: fit-content;" class="col-sm-10 mt-1">
                 <input
                 type="date"
-                value="{{cardModel.dueDate.substring(0,10)}}"
+                value="{{cardModelObs.dueDate.substring(0,10)}}"
                 name="dueDate"
-                ngModel="{{cardModel.dueDate.substring(0,10)}}"
+                ngModel="{{cardModelObs.dueDate.substring(0,10)}}"
                 min="{{dateMin}}"
 			/>
             </div></ng-container>
@@ -41,13 +41,13 @@
         <div style="display: flex; flex-direction: column;" class="form-group">
             <label style="font-size: medium;" class="col-sm-2 col-form-label">Description</label>
             <ng-container>
-                <textarea placeholder="Write description for the card" name="description" [value]="cardModel.description" [(ngModel)]="cardModel.description" id="" cols="50" rows="3">
+                <textarea placeholder="Write description for the card" name="description" [value]="cardModelObs.description" [(ngModel)]="cardModelObs.description" id="" cols="50" rows="3">
                 </textarea>
             </ng-container>
-        </div>
+        </div>    
+        <footer id="modal-footer">
+            <button mat-raised-button [disabled]="!editForm?.dirty || cardModelObs.name==='' || cardModelObs.dueDate==='' || cardModelObs.priority==='' || cardModelObs.listCardsName===''|| cardModelObs.description===''" form="editForm" type="submit" id="modal-close-button">Save</button>
+            <button mat-raised-button id="modal-save-button" (click)="closeModal()">Cancel</button>
+        </footer>
     </form>
-    <footer id="modal-footer">
-        <button mat-raised-button [disabled]="!editForm.dirty || cardModel.name==='' || cardModel.dueDate==='' || cardModel.priority==='' || cardModel.listCardsName===''|| cardModel.description===''" form="editForm" type="submit" id="modal-close-button">Save</button>
-        <button mat-raised-button id="modal-save-button" (click)="closeModal()">Cancel</button>
-    </footer>
 </div>

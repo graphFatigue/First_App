@@ -6,7 +6,7 @@
     background-color: white;
     width: 15rem;
     margin-bottom: 20px;
-    margin-left: 10px;
+    margin-left: 0px;
     padding: 5px;
     font-size: large;
   }
@@ -17,10 +17,11 @@
 
 .column-container{
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
 }
+
 
 .col{
   width: 25%;
@@ -30,6 +31,38 @@
 
 .lCards{
   display: grid; 
-  gap:5%;
-  grid-template-columns: repeat(4, 25%);
+  gap:50px;
+  justify-content: space-between;
+  grid-template-columns: repeat(4, 23%);
+  width: 100%;
+}
+
+@media screen and (max-width: 1300px) {
+  .lCards {
+    display: grid; 
+    justify-content: space-between;
+    column-gap: 50px;
+    grid-template-columns: repeat(3, 30%);
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .lCards {
+    display: grid; 
+    justify-content: space-between;
+    column-gap: 50px;
+    grid-template-columns: repeat(2, 48%);
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .lCards {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    grid-template-columns: repeat(1, 100%);
+  }
+  .column-container{
+    padding-left: 70px;
+  }
 }

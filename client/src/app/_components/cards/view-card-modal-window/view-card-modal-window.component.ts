@@ -20,7 +20,7 @@ import { ActionModel } from 'src/app/_models/action/actionModel';
   styleUrls: ['./view-card-modal-window.component.css']
 })
 export class ViewCardModalWindowComponent implements OnInit{
-  cardModel: CardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: '',actions: null}
+  cardModelObs$?: Observable<CardModel>
   listsCards$? : Observable<ListCardsModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
@@ -48,9 +48,7 @@ export class ViewCardModalWindowComponent implements OnInit{
   }
 
   loadCard(){
-    this.cardsService.getCard(Number(this.data.cardResponse)).subscribe({
-      next: resp => this.cardModel = resp
-    })
+    this.cardModelObs$ = this.cardsService.getCard(Number(this.data.cardResponse));
   }
 
   loadActions(){
@@ -59,24 +57,9 @@ export class ViewCardModalWindowComponent implements OnInit{
       next: resp => this.actions = resp
      })
     }
-     //pipe(
-    //   map(res => {
-    //       this.actions=res;
-    //       console.log(this.actions.length, 'ttgfhg')
-    //   }))
 
   stringToDate(dateString: string): DatePipe {
     return new DatePipe(dateString);
-  }
-
-  updateCard(){
-    this.cardsService.updateCard(this.editForm?.value).subscribe({
-      next: _ => {
-        this.editForm?.reset(this.cardModel);
-        this.closeModal();
-        window.location.reload();
-      }
-    })
   }
 
   loadLists(){
@@ -107,7 +90,7 @@ openEditForm(){
     // width: '500px',
     // height: '550px',
     data: {
-      cardResponse: this.cardModel.id
+      cardResponse: Number(this.data.cardResponse)
     }
   });
 }

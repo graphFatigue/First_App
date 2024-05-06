@@ -37,7 +37,7 @@ export class CreateCardModalWindowComponent implements OnInit{
     this.loadLists()
     this.priorities.forEach(prioritiy => {this.priorityStrings.push(String(prioritiy))
     });
-    this.listCardsName = this.data.cardResponse;
+    this.listCardsName = String(this.data.cardResponse).trim();
     this.cardModel.listCardsName=this.data.cardResponse;
   }
 

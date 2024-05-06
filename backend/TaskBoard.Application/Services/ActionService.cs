@@ -3,7 +3,9 @@ using Sieve.Models;
 using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
+using TaskBoard.Common.Exceptions;
 using TaskBoard.Common.Models.Action;
+using TaskBoard.Common.Models.Card;
 using TaskBoard.Infrastructure;
 
 namespace TaskBoard.Application.Services
@@ -32,7 +34,8 @@ namespace TaskBoard.Application.Services
 
         public async Task<IEnumerable<ActionModel>> GetAllByCardIdAsync(int cardId)
         {
-            var actions = await _actionRepository.GetAllByCardIdAsync(cardId);
+            var actions = await _actionRepository.GetAllByCardIdAsync(cardId)
+                ?? throw new NotFoundException($"Card with id {cardId} was not found");
             return _mapper.Map<IEnumerable<ActionModel>>(actions);
         }
 

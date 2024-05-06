@@ -17,7 +17,7 @@ import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
   styleUrls: ['./edit-card-modal-window.component.css']
 })
 export class EditCardModalWindowComponent implements OnInit{
-  cardModel: UpdateCardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
+  cardModelObs$?: Observable<UpdateCardModel>
   listsCards$? : Observable<ListCardsModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
@@ -38,9 +38,7 @@ export class EditCardModalWindowComponent implements OnInit{
   }
 
   loadCard(){
-    this.cardsService.getCard(Number(this.data.cardResponse)).subscribe({
-      next: resp => this.cardModel = resp
-    })
+    this.cardModelObs$ = this.cardsService.getCard(Number(this.data.cardResponse));
   }
 
   stringToDate(dateString: string): DatePipe {
@@ -50,7 +48,7 @@ export class EditCardModalWindowComponent implements OnInit{
   updateCard(){
     this.cardsService.updateCard(this.editForm?.value).subscribe({
       next: _ => {
-        this.editForm?.reset(this.cardModel);
+        this.editForm?.reset(this.cardModelObs$);
         this.closeModal();
         window.location.reload();
       }
