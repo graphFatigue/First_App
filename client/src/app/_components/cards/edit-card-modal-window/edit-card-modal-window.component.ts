@@ -18,11 +18,12 @@ import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 })
 export class EditCardModalWindowComponent implements OnInit{
   cardModel: UpdateCardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
-  listsCards$? : Observable<ListCardsModel[]>
+  listsCards$? : Observable<ListCardsModel[]>;
   priorities = Object.values(Priority);
-  priorityStrings : string[]= []
+  priorityStrings : string[]= [];
   dateMin: string = new Date().toISOString().slice(0, 10);
-  @ViewChild('editForm') editForm: NgForm | undefined
+  @ViewChild('editForm') editForm: NgForm | undefined;
+  errors: string[] = [];
 
   constructor(
     private cardsService: CardsService, 
@@ -46,13 +47,20 @@ export class EditCardModalWindowComponent implements OnInit{
   }
 
   updateCard(){
-    this.cardsService.updateCard(this.editForm?.value).subscribe({
-      next: _ => {
-        this.editForm?.reset(this.cardModel);
+    this.cardsService.updateCard(this.editForm?.value).subscribe(      
+      next => {
         this.closeModal();
         window.location.reload();
-      }
-    })
+    },
+      err =>{
+        this.errors = [];
+        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));
+        for (var fieldName in validationErrorDictionary) {
+          if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+            this.errors.push(validationErrorDictionary[fieldName]);
+          }
+      }}
+  )
   }
 
   loadLists(){

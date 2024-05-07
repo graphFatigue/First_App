@@ -25,7 +25,7 @@ namespace TaskBoard.Infrastructure.Initializers
                     Name = "Do laundry",
                     Description = "You need to do the launry!!",
                     Priority = Domain.Enum.Priority.High,
-                    DueDate = new DateTime(2024, 05, 8).SetKindUtc(),
+                    DueDate = new DateTime(2024, 05, 28).SetKindUtc(),
                     ListCardsId = 2
                 },
                 new Card()
@@ -50,9 +50,9 @@ namespace TaskBoard.Infrastructure.Initializers
                 {
                     Id = 5,
                     Name = "Find something to wear this evening",
-                    Description = "You're going to  your promotion",
+                    Description = "You're going to celebrate your promotion",
                     Priority = Domain.Enum.Priority.High,
-                    DueDate = new DateTime(2024, 05, 4).SetKindUtc(),
+                    DueDate = new DateTime(2024, 07, 4).SetKindUtc(),
                     ListCardsId = 1
                 },
                 new Card()
@@ -70,7 +70,7 @@ namespace TaskBoard.Infrastructure.Initializers
                     Name = "Buy groceries",
                     Description = "You have nothing to eat",
                     Priority = Domain.Enum.Priority.High,
-                    DueDate = new DateTime(2024, 05, 8).SetKindUtc(),
+                    DueDate = new DateTime(2024, 05, 20).SetKindUtc(),
                     ListCardsId = 1
                 },
                 new Card()
@@ -97,7 +97,7 @@ namespace TaskBoard.Infrastructure.Initializers
                     Name = "Go for a walk with your friend",
                     Description = "Long time no see!",
                     Priority = Domain.Enum.Priority.High,
-                    DueDate = new DateTime(2024, 05, 4).SetKindUtc(),
+                    DueDate = new DateTime(2024, 06, 08).SetKindUtc(),
                     ListCardsId = 2
                 }
             );

@@ -2,6 +2,13 @@
     <div class="alert alert-warning alert-dismissible fade show" *ngIf="createForm.dirty">
         <strong>You made changes. Any unsaved changes will be lost</strong>
     </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errors.length > 0">
+        <ul style="margin-bottom: 0px;">
+          <li *ngFor="let error of errors">
+            {{ error }}
+          </li>
+        </ul>
+      </div>
     <form (ngSubmit)="createListCards()" id="createForm" #createForm="ngForm">
         <h2><input name="name" class="no-border" value="New list" [(ngModel)]="listCardsModel.name" placeholder="Enter list's name" (focus)="false" type="text" /></h2>
     </form>

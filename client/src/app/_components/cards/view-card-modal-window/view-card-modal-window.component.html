@@ -71,7 +71,7 @@
     <div *ngIf="(actionsObs$ | async) as actionsObs" class="pt-4 px-3 scrollSidebar" style="overflow-y: auto;">
         <div class="col" *ngFor="let action of actionsObs">
             <div [innerHTML]="action.message"></div>
-            <p class="date">{{convertToLocalDate(action.actionTime)}}</p>
+            <p class="date">{{convertToLocalDate2(action.actionTime)}}</p>
         </div>
     </div>
 </div>

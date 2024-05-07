@@ -112,7 +112,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You changed ◉<strong>{card.Name}'s</strong> description"),
+                    Message = new string($"You changed ◉<strong>{card.Name}</strong>'s description"),
                     Card = card,
                 };
 

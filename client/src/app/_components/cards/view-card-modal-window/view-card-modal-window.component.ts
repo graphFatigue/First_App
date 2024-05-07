@@ -80,6 +80,19 @@ export class ViewCardModalWindowComponent implements OnInit{
     }
 }
 
+convertToLocalDate2(responseDate: any) {
+  try {
+      if (responseDate != null) {
+          var dt = new Date(responseDate)
+          return String('on ' + dt.toUTCString().split(' ').slice(0,3).join(' ') + ' at ' + dt.toTimeString().split(' ')[0].split(':').slice(0,2).join(':'));
+      } else {
+          return null;
+      }
+  } catch (error) {
+      return responseDate;
+  }
+}
+
 openEditForm(){
   this.dialogConfig.id = "projects-modal-component";
   this.closeModal();

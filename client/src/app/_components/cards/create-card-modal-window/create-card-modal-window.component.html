@@ -2,6 +2,13 @@
     <div class="alert alert-warning alert-dismissible fade show" *ngIf="createForm.dirty">
         <strong>You made changes. Any unsaved changes will be lost</strong>
     </div>
+    <div class="alert alert-danger" role="alert" *ngIf="errors.length > 0">
+        <ul style="margin-bottom: 0px;">
+          <li *ngFor="let error of errors">
+            {{ error }}
+          </li>
+        </ul>
+      </div>
     <form (ngSubmit)="createCard()" id="createForm" #createForm="ngForm">
         <h2><input name="name" class="no-border" value="New card" [(ngModel)]="cardModel.name" placeholder="Enter card's name" (focus)="false" type="text" /></h2>
         <div class="form-group row">
@@ -41,7 +48,7 @@
         <div style="display: flex; flex-direction: column;" class="form-group">
             <label style="font-size: medium;" class="col-sm-2 col-form-label">Description</label>
             <ng-container>
-                <textarea placeholder="Write description for the card" name="description" [(ngModel)]="cardModel.description" cols="50" rows="3">
+                <textarea style="resize: vertical; min-height: 50px; max-height: 120px;" placeholder="Write description for the card" name="description" [(ngModel)]="cardModel.description" cols="50" rows="3">
                 </textarea>
             </ng-container>
         </div>

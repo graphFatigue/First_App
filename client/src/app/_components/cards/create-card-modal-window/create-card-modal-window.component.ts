@@ -21,6 +21,7 @@ import { CreateCardModel } from 'src/app/_models/card/createCardModel';
 export class CreateCardModalWindowComponent implements OnInit{
   cardModel: CreateCardModel = {name: '', description: '', priority: '', listCardsName: '', dueDate: new Date().toISOString().substring(0, 10)}
   listsCards$? : Observable<ListCardsModel[]>
+  errors: string[] = []
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
   dateMin: string = new Date().toISOString().substring(0, 10);
@@ -44,13 +45,20 @@ export class CreateCardModalWindowComponent implements OnInit{
   }
 
   createCard(){
-    this.cardsService.createCard(this.createForm?.value).subscribe({
-      next: _ => {
-        this.createForm?.reset(this.cardModel);
+    this.cardsService.createCard(this.createForm?.value).subscribe(
+      next => {
         this.closeModal();
         window.location.reload();
-      }
-    })
+      },
+      err =>{
+        this.errors = [];
+        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));
+        for (var fieldName in validationErrorDictionary) {
+          if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+            this.errors.push(validationErrorDictionary[fieldName]);
+          }
+      }}
+    )
   }
 
   loadLists(){

@@ -16,6 +16,7 @@ import { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsM
 export class CreateListCardsModalWindowComponent {
   listCardsModel: CreateListCardsModel = {name: ''};
   @ViewChild('createForm') createForm: NgForm | undefined;
+  errors: string[] = [];
 
   constructor(
     private listsCardsService: ListsCardsService,
@@ -28,15 +29,30 @@ export class CreateListCardsModalWindowComponent {
 
   createListCards(){
       this.listsCardsService.createListCards(this.createForm?.value).subscribe(
-        {
-        next: _ => {
-          this.createForm?.reset(this.listCardsModel);
+        next => {
           this.closeModal();
           window.location.reload();
-        },
-        error(msg) {
-          console.log(msg.error.message);
-      }})
+      },
+        err =>{
+          this.errors = [];
+          console.log(err.error);
+          try{
+            let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));
+            for (var fieldName in validationErrorDictionary) {
+              if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+                this.errors.push(validationErrorDictionary[fieldName]);
+              }
+          }
+          }
+          catch{
+            let validationErrorDictionary = JSON.parse(JSON.stringify(err.error));
+            for (var fieldName in validationErrorDictionary) {
+              if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+                this.errors.push(validationErrorDictionary[fieldName]);
+              }
+          }
+          }
+      })
   }
     
   closeModal() {

@@ -14,8 +14,9 @@ import { UpdateListCardsModel } from 'src/app/_models/listCards/updateListCardsM
   styleUrls: ['./edit-list-modal-window.component.css']
 })
 export class EditListModalWindowComponent implements OnInit{
-  listCardsModel: UpdateListCardsModel = {id: 0, name:''}
-  @ViewChild('editForm') editForm: NgForm | undefined
+  listCardsModel: UpdateListCardsModel = {id: 0, name:''};
+  @ViewChild('editForm') editForm: NgForm | undefined;
+  errors: string[] = [];
 
   constructor(
     private listsCardsService: ListsCardsService,
@@ -34,13 +35,30 @@ export class EditListModalWindowComponent implements OnInit{
   }
 
   updateListCards(){
-    this.listsCardsService.updateListCards(this.editForm?.value).subscribe({
-      next: _ => {
-        this.editForm?.reset(this.listCardsModel);
-        this.closeModal();
-        window.location.reload();
+    this.listsCardsService.updateListCards(this.editForm?.value).subscribe( next => {
+      this.closeModal();
+      window.location.reload();
+  },
+    err =>{
+      this.errors = [];
+      console.log(err.error);
+      try{
+        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));
+        for (var fieldName in validationErrorDictionary) {
+          if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+            this.errors.push(validationErrorDictionary[fieldName]);
+          }
       }
-    })
+      }
+      catch{
+        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error));
+        for (var fieldName in validationErrorDictionary) {
+          if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+            this.errors.push(validationErrorDictionary[fieldName]);
+          }
+      }
+      }
+  })
   }
     
   closeModal() {
