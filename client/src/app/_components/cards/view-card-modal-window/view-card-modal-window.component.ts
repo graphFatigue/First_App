@@ -9,7 +9,6 @@ import { Observable, map } from 'rxjs';
 import {Priority} from 'src/app/_models/priority/priority';
 import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
-import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 import { EditCardModalWindowComponent } from '../edit-card-modal-window/edit-card-modal-window.component';
 import { ActionsService } from 'src/app/_services/actions.service';
 import { ActionModel } from 'src/app/_models/action/actionModel';
@@ -20,13 +19,13 @@ import { ActionModel } from 'src/app/_models/action/actionModel';
   styleUrls: ['./view-card-modal-window.component.css']
 })
 export class ViewCardModalWindowComponent implements OnInit{
-  cardModelObs$?: Observable<CardModel>
+  cardModel$?: Observable<CardModel>
   listsCards$? : Observable<ListCardsModel[]>
+  actionsObs$?: Observable<ActionModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
   dateMin: string = new Date().toISOString().slice(0, 10);
   @ViewChild('editForm') editForm: NgForm | undefined
-  actions: ActionModel[] = []
 
   constructor(
     private cardsService: CardsService, 
@@ -48,14 +47,11 @@ export class ViewCardModalWindowComponent implements OnInit{
   }
 
   loadCard(){
-    this.cardModelObs$ = this.cardsService.getCard(Number(this.data.cardResponse));
+    this.cardModel$ = this.cardsService.getCard(Number(this.data.cardResponse));
   }
 
   loadActions(){
-     this.actionsService.getActionsByCardId(Number(this.data.cardResponse)).
-     subscribe({
-      next: resp => this.actions = resp
-     })
+     this.actionsObs$ = this.actionsService.getActionsByCardId(Number(this.data.cardResponse))
     }
 
   stringToDate(dateString: string): DatePipe {
@@ -73,7 +69,8 @@ export class ViewCardModalWindowComponent implements OnInit{
   convertToLocalDate(responseDate: any) {
     try {
         if (responseDate != null) {
-            var dt = new Date(responseDate)
+            var dt = new Date(responseDate);
+            dt.setHours(dt.getHours()+5);
             return String(dt.toUTCString().split(' ').slice(0,3).join(' '));
         } else {
             return null;

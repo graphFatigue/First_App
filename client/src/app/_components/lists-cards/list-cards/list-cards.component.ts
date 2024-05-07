@@ -13,10 +13,7 @@ export class ListCardsComponent {
   dialogConfig = new MatDialogConfig();
   modalDialog: MatDialogRef<CreateCardModalWindowComponent, any> | undefined;
 
-  constructor(public matDialog: MatDialog){
-
-  }
-
+  constructor(public matDialog: MatDialog){}
 
   openCreateForm(){
     this.dialogConfig.id = "projects-modal-component";

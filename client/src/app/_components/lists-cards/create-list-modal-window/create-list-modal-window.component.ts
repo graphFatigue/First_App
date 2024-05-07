@@ -13,31 +13,30 @@ import { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsM
   templateUrl: './create-list-modal-window.component.html',
   styleUrls: ['./create-list-modal-window.component.css']
 })
-export class CreateListCardsModalWindowComponent implements OnInit{
-  listCardsModel: CreateListCardsModel = {name: ''}
-  @ViewChild('createForm') createForm: NgForm | undefined
+export class CreateListCardsModalWindowComponent {
+  listCardsModel: CreateListCardsModel = {name: ''};
+  @ViewChild('createForm') createForm: NgForm | undefined;
 
   constructor(
     private listsCardsService: ListsCardsService,
     public dialogRef: MatDialogRef<CreateListCardsModalWindowComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any){}
 
-  ngOnInit(): void {
-    
-  }
-
   stringToDate(dateString: string): DatePipe {
     return new DatePipe(dateString);
   }
 
   createListCards(){
-    this.listsCardsService.createListCards(this.createForm?.value).subscribe({
-      next: _ => {
-        this.createForm?.reset(this.listCardsModel);
-        this.closeModal();
-        window.location.reload();
-      }
-    })
+      this.listsCardsService.createListCards(this.createForm?.value).subscribe(
+        {
+        next: _ => {
+          this.createForm?.reset(this.listCardsModel);
+          this.closeModal();
+          window.location.reload();
+        },
+        error(msg) {
+          console.log(msg.error.message);
+      }})
   }
     
   closeModal() {

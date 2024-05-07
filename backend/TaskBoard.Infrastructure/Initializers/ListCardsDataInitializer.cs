@@ -18,11 +18,6 @@ namespace TaskBoard.Infrastructure.Initializers
                 {
                     Id = 2,
                     Name = "To Do",
-                },
-                new ListCards()
-                {
-                    Id = 3,
-                    Name = "In Progress",
                 });
         }
     }

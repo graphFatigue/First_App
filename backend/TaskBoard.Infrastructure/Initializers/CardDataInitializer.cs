@@ -13,8 +13,8 @@ namespace TaskBoard.Infrastructure.Initializers
                 new Card()
                 {
                     Id = 1,
-                    Name = "Do QA",
-                    Description = "Necessary QA job for the website",
+                    Name = "Wash the dishes",
+                    Description = "You need to wash the dishes",
                     Priority = Domain.Enum.Priority.Medium,
                     DueDate = new DateTime(2024, 05, 15).SetKindUtc(),
                     ListCardsId = 1,
@@ -22,8 +22,8 @@ namespace TaskBoard.Infrastructure.Initializers
                 new Card()
                 {
                     Id = 2,
-                    Name = "Fix the bug with the slider on the main page",
-                    Description = "The slider is displaying images with numbers 3,6,8 inappropriately",
+                    Name = "Do laundry",
+                    Description = "You need to do the launry!!",
                     Priority = Domain.Enum.Priority.High,
                     DueDate = new DateTime(2024, 05, 8).SetKindUtc(),
                     ListCardsId = 2
@@ -31,17 +31,17 @@ namespace TaskBoard.Infrastructure.Initializers
                 new Card()
                 {
                     Id = 3,
-                    Name = "Change the design of the navbar",
-                    Description = "The font must be Arial and the main color must be purple",
+                    Name = "Plan your vacation",
+                    Description = "You need to plan your summer vacation",
                     Priority = Domain.Enum.Priority.Low,
                     DueDate = new DateTime(2024, 05, 30).SetKindUtc(),
-                    ListCardsId = 3
+                    ListCardsId = 1
                 },
                 new Card()
                 {
                     Id = 4,
-                    Name = "Change the design of the sidebar",
-                    Description = "The font must be Arial and the main color must be purple",
+                    Name = "Give away the old cloth",
+                    Description = "You really need to give away your old cloth",
                     Priority = Domain.Enum.Priority.Low,
                     DueDate = new DateTime(2024, 05, 30).SetKindUtc(),
                     ListCardsId = 2
@@ -49,11 +49,56 @@ namespace TaskBoard.Infrastructure.Initializers
                 new Card()
                 {
                     Id = 5,
-                    Name = "Fix the bug with the description of products",
-                    Description = "The description of products on the page 9 can't be changed",
+                    Name = "Find something to wear this evening",
+                    Description = "You're going to  your promotion",
                     Priority = Domain.Enum.Priority.High,
                     DueDate = new DateTime(2024, 05, 4).SetKindUtc(),
                     ListCardsId = 1
+                },
+                new Card()
+                {
+                    Id = 6,
+                    Name = "Buy new shoes",
+                    Description = "You've seen a great pair of shoes tomorrow at the shop",
+                    Priority = Domain.Enum.Priority.Medium,
+                    DueDate = new DateTime(2024, 05, 15).SetKindUtc(),
+                    ListCardsId = 2,
+                },
+                new Card()
+                {
+                    Id = 7,
+                    Name = "Buy groceries",
+                    Description = "You have nothing to eat",
+                    Priority = Domain.Enum.Priority.High,
+                    DueDate = new DateTime(2024, 05, 8).SetKindUtc(),
+                    ListCardsId = 1
+                },
+                new Card()
+                {
+                    Id = 8,
+                    Name = "Call your mother",
+                    Description = "You need to return call!!",
+                    Priority = Domain.Enum.Priority.Low,
+                    DueDate = new DateTime(2024, 05, 30).SetKindUtc(),
+                    ListCardsId = 2
+                },
+                new Card()
+                {
+                    Id = 9,
+                    Name = "Schedule an appointment with the doctor",
+                    Description = "You've been feeling really under the weather lately",
+                    Priority = Domain.Enum.Priority.Low,
+                    DueDate = new DateTime(2024, 05, 30).SetKindUtc(),
+                    ListCardsId = 1
+                },
+                new Card()
+                {
+                    Id = 10,
+                    Name = "Go for a walk with your friend",
+                    Description = "Long time no see!",
+                    Priority = Domain.Enum.Priority.High,
+                    DueDate = new DateTime(2024, 05, 4).SetKindUtc(),
+                    ListCardsId = 2
                 }
             );
         }

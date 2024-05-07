@@ -73,8 +73,7 @@ namespace TaskBoard.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "Planned" },
-                    { 2, "To Do" },
-                    { 3, "In Progress" }
+                    { 2, "To Do" }
                 });
 
             migrationBuilder.InsertData(
@@ -82,11 +81,16 @@ namespace TaskBoard.Infrastructure.Migrations
                 columns: new[] { "card_id", "description", "due_date", "list_cards_id", "name", "priority" },
                 values: new object[,]
                 {
-                    { 1, "Necessary QA job for the website", new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Do QA", "Medium" },
-                    { 2, "The slider is displaying images with numbers 3,6,8 inappropriately", new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Fix the bug with the slider on the main page", "High" },
-                    { 3, "The font must be Arial and the main color must be purple", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 3, "Change the design of the navbar", "Low" },
-                    { 4, "The font must be Arial and the main color must be purple", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Change the design of the sidebar", "Low" },
-                    { 5, "The description of products on the page 9 can't be changed", new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Fix the bug with the description of products", "High" }
+                    { 1, "You need to wash the dishes", new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Wash the dishes", "Medium" },
+                    { 2, "You need to do the launry!!", new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Do laundry", "High" },
+                    { 3, "You need to plan your summer vacation", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Plan your vacation", "Low" },
+                    { 4, "You really need to give away your old cloth", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Give away the old cloth", "Low" },
+                    { 5, "You're going to  your promotion", new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Find something to wear this evening", "High" },
+                    { 6, "You've seen a great pair of shoes tomorrow at the shop", new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Buy new shoes", "Medium" },
+                    { 7, "You have nothing to eat", new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Buy groceries", "High" },
+                    { 8, "You need to return call!!", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Call your mother", "Low" },
+                    { 9, "You've been feeling really under the weather lately", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Schedule an appointment with the doctor", "Low" },
+                    { 10, "Long time no see!", new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Go for a walk with your friend", "High" }
                 });
 
             migrationBuilder.CreateIndex(

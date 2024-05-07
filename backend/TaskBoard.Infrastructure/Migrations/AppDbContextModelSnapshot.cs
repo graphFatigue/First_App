@@ -97,46 +97,91 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Necessary QA job for the website",
+                            Description = "You need to wash the dishes",
                             DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
-                            Name = "Do QA",
+                            Name = "Wash the dishes",
                             Priority = "Medium"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "The slider is displaying images with numbers 3,6,8 inappropriately",
+                            Description = "You need to do the launry!!",
                             DueDate = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
-                            Name = "Fix the bug with the slider on the main page",
+                            Name = "Do laundry",
                             Priority = "High"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "The font must be Arial and the main color must be purple",
+                            Description = "You need to plan your summer vacation",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ListCardsId = 3,
-                            Name = "Change the design of the navbar",
+                            ListCardsId = 1,
+                            Name = "Plan your vacation",
                             Priority = "Low"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "The font must be Arial and the main color must be purple",
+                            Description = "You really need to give away your old cloth",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
-                            Name = "Change the design of the sidebar",
+                            Name = "Give away the old cloth",
                             Priority = "Low"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "The description of products on the page 9 can't be changed",
+                            Description = "You're going to  your promotion",
                             DueDate = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
-                            Name = "Fix the bug with the description of products",
+                            Name = "Find something to wear this evening",
+                            Priority = "High"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "You've seen a great pair of shoes tomorrow at the shop",
+                            DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Buy new shoes",
+                            Priority = "Medium"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "You have nothing to eat",
+                            DueDate = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
+                            Name = "Buy groceries",
+                            Priority = "High"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "You need to return call!!",
+                            DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Call your mother",
+                            Priority = "Low"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "You've been feeling really under the weather lately",
+                            DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
+                            Name = "Schedule an appointment with the doctor",
+                            Priority = "Low"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Long time no see!",
+                            DueDate = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Go for a walk with your friend",
                             Priority = "High"
                         });
                 });
@@ -173,11 +218,6 @@ namespace TaskBoard.Infrastructure.Migrations
                         {
                             Id = 2,
                             Name = "To Do"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "In Progress"
                         });
                 });
 

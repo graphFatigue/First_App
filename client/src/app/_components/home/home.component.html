@@ -2,13 +2,7 @@
     <button (click)="openCreateForm()" class="dots" data-initialized="true">
         Add list
     </button>
-<div class="lCards">
-    <div *ngIf="cardsWithoutParent.length!==0" class="col">
-        <h2>New cards</h2>
-        <div class="col mb-4" *ngFor="let card of cardsWithoutParent">
-            <app-card [card]="card"></app-card>
-        </div>
-    </div>
+<div *ngIf="(listsCards$ | async) as listsCards" class="lCards">
     <div class="col mb-4" *ngFor="let listCards of listsCards">
         <app-list-cards [listCards]="listCards"></app-list-cards>
     </div>

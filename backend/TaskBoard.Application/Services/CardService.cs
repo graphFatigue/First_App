@@ -141,7 +141,7 @@ namespace TaskBoard.Application.Services
                 Action action = new Action()
                 {
                     ActionTime = DateTime.Now.SetKindUtc(),
-                    Message = new string($"You changed the due date of ◉<strong>{card.Name}</strong> from ◾<strong>{card.DueDate.ToLongDateString()}</strong> to ◾<strong>{updateCardModel.DueDate.ToLongDateString()}</strong>"),
+                    Message = new string($"You changed the due date of ◉<strong>{card.Name}</strong> from ◾<strong>{card.DueDate.ToString("ddd', 'dd' 'MMM' 'yyyy")}</strong> to ◾<strong>{updateCardModel.DueDate.ToString("ddd', 'dd' 'MMM' 'yyyy")}</strong>"),
                     Card = card,
                 };
 

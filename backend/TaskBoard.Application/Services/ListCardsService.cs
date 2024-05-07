@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Npgsql;
 using Sieve.Models;
 using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
@@ -33,7 +34,14 @@ namespace TaskBoard.Application.Services
 
             await _listCardsRepository.CreateAsync(listCards);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw new NpgsqlException($"List with name {createListCardsModel.Name} already exists");
+            }
 
             return _mapper.Map<ListCardsModel>(listCards);
         }
@@ -51,6 +59,7 @@ namespace TaskBoard.Application.Services
         public async Task<IEnumerable<ListCardsModel>> GetAllAsync()
         {
             var listCards = await _listCardsRepository.GetAllAsync();
+            listCards.OrderByDescending(x => x.Name);
             return _mapper.Map<IEnumerable<ListCardsModel>>(listCards);
         }
 
@@ -92,7 +101,14 @@ namespace TaskBoard.Application.Services
 
             _listCardsRepository.Update(listCards);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw new NpgsqlException($"List with name {updateListCardsModel.Name} already exists");
+            }
         }
     }
 }

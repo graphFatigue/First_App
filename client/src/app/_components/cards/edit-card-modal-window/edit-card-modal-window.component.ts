@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CardsService } from 'src/app/_services/cards.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
   styleUrls: ['./edit-card-modal-window.component.css']
 })
 export class EditCardModalWindowComponent implements OnInit{
-  cardModelObs$?: Observable<UpdateCardModel>
+  cardModel: UpdateCardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
   listsCards$? : Observable<ListCardsModel[]>
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
@@ -28,7 +28,8 @@ export class EditCardModalWindowComponent implements OnInit{
     private cardsService: CardsService, 
     private listsCardsService: ListsCardsService,
     public dialogRef: MatDialogRef<EditCardModalWindowComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: any){}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private changeDetectorRef: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.loadCard()
@@ -38,17 +39,16 @@ export class EditCardModalWindowComponent implements OnInit{
   }
 
   loadCard(){
-    this.cardModelObs$ = this.cardsService.getCard(Number(this.data.cardResponse));
-  }
-
-  stringToDate(dateString: string): DatePipe {
-    return new DatePipe(dateString);
+    this.cardsService.getCard(Number(this.data.cardResponse)).subscribe({
+      next: resp => this.cardModel = resp
+    });
+    this.changeDetectorRef.detectChanges();
   }
 
   updateCard(){
     this.cardsService.updateCard(this.editForm?.value).subscribe({
       next: _ => {
-        this.editForm?.reset(this.cardModelObs$);
+        this.editForm?.reset(this.cardModel);
         this.closeModal();
         window.location.reload();
       }

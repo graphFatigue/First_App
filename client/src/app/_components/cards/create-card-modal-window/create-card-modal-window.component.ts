@@ -24,7 +24,6 @@ export class CreateCardModalWindowComponent implements OnInit{
   priorities = Object.values(Priority);
   priorityStrings : string[]= []
   dateMin: string = new Date().toISOString().substring(0, 10);
-  listCardsName: string = ''
   @ViewChild('createForm') createForm: NgForm | undefined
 
   constructor(
@@ -37,8 +36,7 @@ export class CreateCardModalWindowComponent implements OnInit{
     this.loadLists()
     this.priorities.forEach(prioritiy => {this.priorityStrings.push(String(prioritiy))
     });
-    this.listCardsName = String(this.data.cardResponse).trim();
-    this.cardModel.listCardsName=this.data.cardResponse;
+    this.cardModel.listCardsName=this.data.cardResponse.trim();
   }
 
   stringToDate(dateString: string): DatePipe {

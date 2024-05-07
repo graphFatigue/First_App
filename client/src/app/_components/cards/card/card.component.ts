@@ -35,7 +35,6 @@ export class CardComponent implements OnInit{
 
   updateCard(newValue: string | null){
     if(this.card ){
-      console.log(this.value, 'wrong')
       this.cardModel = this.card
       this.cardModel.listCardsName = newValue
       this.cardsService.updateCard(this.cardModel).subscribe({
@@ -62,6 +61,7 @@ export class CardComponent implements OnInit{
     try {
         if (responseDate != null) {
             var dt = new Date(responseDate)
+            dt.setHours(dt.getHours()+5);
             return String(dt.toUTCString().split(' ').slice(0,3).join(' '));
         } else {
             return null;
