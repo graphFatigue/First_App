@@ -107,7 +107,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         {
                             Id = 2,
                             Description = "You need to do the launry!!",
-                            DueDate = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DueDate = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
                             Name = "Do laundry",
                             Priority = "High"
@@ -133,8 +133,8 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Description = "You're going to  your promotion",
-                            DueDate = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "You're going to celebrate your promotion",
+                            DueDate = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
                             Name = "Find something to wear this evening",
                             Priority = "High"
@@ -152,7 +152,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         {
                             Id = 7,
                             Description = "You have nothing to eat",
-                            DueDate = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DueDate = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
                             Name = "Buy groceries",
                             Priority = "High"
@@ -179,7 +179,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         {
                             Id = 10,
                             Description = "Long time no see!",
-                            DueDate = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DueDate = new DateTime(2024, 6, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
                             Name = "Go for a walk with your friend",
                             Priority = "High"
