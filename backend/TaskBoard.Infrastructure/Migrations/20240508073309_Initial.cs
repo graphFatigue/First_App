@@ -16,8 +16,7 @@ namespace TaskBoard.Infrastructure.Migrations
                 {
                     list_cards_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false),
-                    description = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false)
+                    name = table.Column<string>(type: "varchar(120)", maxLength: 120, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,7 +33,7 @@ namespace TaskBoard.Infrastructure.Migrations
                     description = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
                     due_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     priority = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: false),
-                    list_cards_id = table.Column<int>(type: "integer", nullable: true)
+                    list_cards_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,10 +52,9 @@ namespace TaskBoard.Infrastructure.Migrations
                 {
                     action_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    action_type = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    message = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     action_time = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    card_id = table.Column<int>(type: "integer", nullable: true),
-                    list_cards_id = table.Column<int>(type: "integer", nullable: true)
+                    card_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,13 +64,16 @@ namespace TaskBoard.Infrastructure.Migrations
                         column: x => x.card_id,
                         principalTable: "cards",
                         principalColumn: "card_id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_actions_list_cards_list_cards_id",
-                        column: x => x.list_cards_id,
-                        principalTable: "list_cards",
-                        principalColumn: "list_cards_id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.InsertData(
+                table: "list_cards",
+                columns: new[] { "list_cards_id", "name" },
+                values: new object[,]
+                {
+                    { 1, "Planned" },
+                    { 2, "To Do" }
                 });
 
             migrationBuilder.InsertData(
@@ -80,22 +81,22 @@ namespace TaskBoard.Infrastructure.Migrations
                 columns: new[] { "card_id", "description", "due_date", "list_cards_id", "name", "priority" },
                 values: new object[,]
                 {
-                    { 1, "Necessary QA job for the website", new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc), null, "Do QA", "Medium" },
-                    { 2, "The slider is displaying images with numbers 3,6,8 inappropriately", new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc), null, "Fix the bug with the slider on the main page", "High" },
-                    { 3, "The font must be Arial and the main color must be purple", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), null, "Change the design of the navbar", "Low" },
-                    { 4, "The font must be Arial and the main color must be purple", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), null, "Change the design of the sidebar", "Low" },
-                    { 5, "The description of products on the page 9 can't be changed", new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc), null, "Fix the bug with the description of products", "High" }
+                    { 1, "You need to wash the dishes", new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Wash the dishes", "Medium" },
+                    { 2, "You need to do the launry!!", new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Do laundry", "High" },
+                    { 3, "You need to plan your summer vacation", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Plan your vacation", "Low" },
+                    { 4, "You really need to give away your old cloth", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Give away the old cloth", "Low" },
+                    { 5, "You're going to celebrate your promotion", new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Find something to wear this evening", "High" },
+                    { 6, "You've seen a great pair of shoes tomorrow at the shop", new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Buy new shoes", "Medium" },
+                    { 7, "You have nothing to eat", new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Buy groceries", "High" },
+                    { 8, "You need to return call!!", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Call your mother", "Low" },
+                    { 9, "You've been feeling really under the weather lately", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 1, "Schedule an appointment with the doctor", "Low" },
+                    { 10, "Long time no see!", new DateTime(2024, 6, 8, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Go for a walk with your friend", "High" }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_actions_card_id",
                 table: "actions",
                 column: "card_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_actions_list_cards_id",
-                table: "actions",
-                column: "list_cards_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_list_cards_id",

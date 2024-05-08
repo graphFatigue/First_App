@@ -9,6 +9,9 @@ namespace TaskBoard.API.Validators.ListCards
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Name must not be empty");
+
+            RuleFor(c => c.Name)
+                .Length(2, 50).WithMessage("Name must be between 2 and 50 characters");
         }
     }
 }

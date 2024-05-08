@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Newtonsoft.Json;
+using Npgsql;
 using TaskBoard.Common.Exceptions;
 
 namespace TaskBoard.API.Middleware
@@ -30,6 +32,7 @@ namespace TaskBoard.API.Middleware
             var code = exception switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,
+                NpgsqlException => StatusCodes.Status400BadRequest,
                 BadRequestException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };

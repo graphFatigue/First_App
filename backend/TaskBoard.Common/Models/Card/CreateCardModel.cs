@@ -1,4 +1,5 @@
-﻿using TaskBoard.Common.Mappings;
+﻿using AutoMapper;
+using TaskBoard.Common.Mappings;
 
 namespace TaskBoard.Common.Models.Card
 {
@@ -8,5 +9,6 @@ namespace TaskBoard.Common.Models.Card
         public string? Description { get; set; }
         public DateTime DueDate { get; set; }
         public string? Priority { get; set; }
+        public string? ListCardsName { get; set; }
     }
 }

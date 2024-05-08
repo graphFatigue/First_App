@@ -1,0 +1,22 @@
+<div data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" class="sdbar d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" >
+    <div class="offcanvas-header bg-dark sidebar-heading border-bottom" style="height: 56px;">
+            <span style="color: aliceblue;" class="fs-5 fw-semibold">History</span>
+            <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="pt-4 px-3 sdbar scrollSidebar" style="overflow-y: auto;">
+        <div class="col" *ngFor="let action of actions">
+            <div [innerHTML]="action.message"></div>
+            <p class="date">{{convertToLocalDate(action.actionTime)}}</p>
+        </div>
+        
+        <div style="display: flex; margin-bottom: 10px; width: 100%; flex-direction: row; justify-content: center;">
+            <button class="history" *ngIf="actions.length<length"  (click)="loadActions()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="black" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+              </svg>
+              <p style="margin-bottom: 0px;">Show more</p>
+            </button>
+        </div>
+    </div>
+</div> 

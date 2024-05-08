@@ -49,7 +49,7 @@ namespace TaskBoard.Infrastructure.Configuration
                 .HasOne(s => s.ListCards)
                 .WithMany(x => x.Cards)
                 .HasForeignKey(s => s.ListCardsId)
-                .IsRequired(false)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder

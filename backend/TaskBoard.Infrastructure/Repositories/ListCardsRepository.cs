@@ -18,6 +18,11 @@ namespace TaskBoard.Infrastructure.Repositories
         {
         }
 
+        public async Task<ListCards?> GetByIdAsync(int id)
+        {
+            return await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async Task<ListCards?> GetByNameAsync(string name)
         {
             return await _dbSet.FirstOrDefaultAsync(x => x.Name == name);

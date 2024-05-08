@@ -23,6 +23,13 @@ namespace TaskBoard.API.Controllers
             return Ok(cards);
         }
 
+        [HttpGet("allWithoutParentList")]
+        public async Task<IActionResult> GetAllWithoutParentList()
+        {
+            var cards = await _cardService.GetAllWithoutParentListAsync();
+            return Ok(cards);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllWithFilter([FromQuery] SieveModel sieveModel)
         {
@@ -44,10 +51,10 @@ namespace TaskBoard.API.Controllers
             return CreatedAtRoute(nameof(GetById), new { id = card.Id }, card);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, UpdateCardModel updateCardModel)
+        [HttpPut]
+        public async Task<IActionResult> Put(UpdateCardModel updateCardModel)
         {
-            await _cardService.UpdateAsync(id, updateCardModel);
+            await _cardService.UpdateAsync(updateCardModel);
             return NoContent();
         }
 

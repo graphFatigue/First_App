@@ -20,10 +20,10 @@ namespace TaskBoard.Infrastructure.Configuration
                 .HasColumnName("action_id");
 
             builder
-                .Property(c => c.ActionType)
-                .HasMaxLength(20)
-                .HasColumnType("varchar(20)")
-                .HasColumnName("action_type")
+                .Property(c => c.Message)
+                .HasMaxLength(200)
+                .HasColumnType("varchar(200)")
+                .HasColumnName("message")
                 .HasConversion<string>()
                 .IsRequired();
 
@@ -33,21 +33,10 @@ namespace TaskBoard.Infrastructure.Configuration
 
             builder
                 .HasOne(s => s.Card)
-                .WithMany()
+                .WithMany(c => c.Actions)
                 .HasForeignKey(s => s.CardId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Property(s => s.ListCardsId)
-                .HasColumnName("list_cards_id");
-
-            builder
-                .HasOne(s => s.ListCards)
-                .WithMany()
-                .HasForeignKey(s => s.ListCardsId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .Property(s => s.ActionTime)

@@ -1,0 +1,33 @@
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 7266
+
+ENV ASPNETCORE_URLS=http://+:7266
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+ARG configuration=Release
+WORKDIR /src
+COPY ["backend/TaskBoard.API/TaskBoard.API.csproj", "backend/TaskBoard.API/"]
+COPY ["backend/TaskBoard.Application/TaskBoard.Application.csproj", "backend/TaskBoard.Application/"]
+COPY ["backend/TaskBoard.Infrastructure/TaskBoard.Infrastructure.csproj", "backend/TaskBoard.Infrastructure/"]
+COPY ["backend/TaskBoard.Abstractions/TaskBoard.Abstractions.csproj", "backend/TaskBoard.Abstractions/"]
+COPY ["backend/TaskBoard.Domain/TaskBoard.Domain.csproj", "backend/TaskBoard.Domain/"]
+COPY ["backend/TaskBoard.Common/TaskBoard.Common.csproj", "backend/TaskBoard.Common/"]
+RUN dotnet restore "backend/TaskBoard.API/TaskBoard.API.csproj"
+COPY . .
+WORKDIR "/src/TaskBoard.API"
+RUN dotnet build "TaskBoard.API.csproj" -c $configuration -o /app/build
+
+FROM build AS publish
+ARG configuration=Release
+RUN dotnet publish "TaskBoard.API.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "TaskBoard.API.dll"]

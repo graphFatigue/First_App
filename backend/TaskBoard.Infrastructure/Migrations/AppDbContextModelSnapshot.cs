@@ -35,25 +35,19 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("action_time");
 
-                    b.Property<string>("ActionType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("action_type");
-
                     b.Property<int?>("CardId")
                         .HasColumnType("integer")
                         .HasColumnName("card_id");
 
-                    b.Property<int?>("ListCardsId")
-                        .HasColumnType("integer")
-                        .HasColumnName("list_cards_id");
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("message");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
-
-                    b.HasIndex("ListCardsId");
 
                     b.ToTable("actions", (string)null);
                 });
@@ -77,7 +71,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("due_date");
 
-                    b.Property<int?>("ListCardsId")
+                    b.Property<int>("ListCardsId")
                         .HasColumnType("integer")
                         .HasColumnName("list_cards_id");
 
@@ -103,41 +97,91 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Necessary QA job for the website",
+                            Description = "You need to wash the dishes",
                             DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Do QA",
+                            ListCardsId = 1,
+                            Name = "Wash the dishes",
                             Priority = "Medium"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "The slider is displaying images with numbers 3,6,8 inappropriately",
-                            DueDate = new DateTime(2024, 5, 8, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Fix the bug with the slider on the main page",
+                            Description = "You need to do the launry!!",
+                            DueDate = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Do laundry",
                             Priority = "High"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "The font must be Arial and the main color must be purple",
+                            Description = "You need to plan your summer vacation",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Change the design of the navbar",
+                            ListCardsId = 1,
+                            Name = "Plan your vacation",
                             Priority = "Low"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "The font must be Arial and the main color must be purple",
+                            Description = "You really need to give away your old cloth",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Change the design of the sidebar",
+                            ListCardsId = 2,
+                            Name = "Give away the old cloth",
                             Priority = "Low"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "The description of products on the page 9 can't be changed",
-                            DueDate = new DateTime(2024, 5, 4, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Fix the bug with the description of products",
+                            Description = "You're going to celebrate your promotion",
+                            DueDate = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
+                            Name = "Find something to wear this evening",
+                            Priority = "High"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "You've seen a great pair of shoes tomorrow at the shop",
+                            DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Buy new shoes",
+                            Priority = "Medium"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "You have nothing to eat",
+                            DueDate = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
+                            Name = "Buy groceries",
+                            Priority = "High"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "You need to return call!!",
+                            DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Call your mother",
+                            Priority = "Low"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "You've been feeling really under the weather lately",
+                            DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 1,
+                            Name = "Schedule an appointment with the doctor",
+                            Priority = "Low"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Long time no see!",
+                            DueDate = new DateTime(2024, 6, 8, 0, 0, 0, 0, DateTimeKind.Utc),
+                            ListCardsId = 2,
+                            Name = "Go for a walk with your friend",
                             Priority = "High"
                         });
                 });
@@ -151,12 +195,6 @@ namespace TaskBoard.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)")
-                        .HasColumnName("description");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -169,23 +207,28 @@ namespace TaskBoard.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("list_cards", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Planned"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "To Do"
+                        });
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Action", b =>
                 {
                     b.HasOne("TaskBoard.Domain.Entities.Card", "Card")
-                        .WithMany()
+                        .WithMany("Actions")
                         .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("TaskBoard.Domain.Entities.ListCards", "ListCards")
-                        .WithMany()
-                        .HasForeignKey("ListCardsId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Card");
-
-                    b.Navigation("ListCards");
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>
@@ -193,9 +236,15 @@ namespace TaskBoard.Infrastructure.Migrations
                     b.HasOne("TaskBoard.Domain.Entities.ListCards", "ListCards")
                         .WithMany("Cards")
                         .HasForeignKey("ListCardsId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ListCards");
+                });
+
+            modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>
+                {
+                    b.Navigation("Actions");
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.ListCards", b =>

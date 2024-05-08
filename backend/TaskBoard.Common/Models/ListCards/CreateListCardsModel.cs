@@ -11,6 +11,5 @@ namespace TaskBoard.Common.Models.ListCards
     public class CreateListCardsModel : IMapTo<Domain.Entities.ListCards>
     {
         public string? Name { get; set; }
-        public string? Description { get; set; }
     }
 }

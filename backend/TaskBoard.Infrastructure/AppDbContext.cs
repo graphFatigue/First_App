@@ -27,6 +27,7 @@ namespace TaskBoard.Infrastructure
 
             base.OnModelCreating(modelBuilder);
             CardDataInitializer.SeedData(modelBuilder);
+            ListCardsDataInitializer.SeedData(modelBuilder);
         }
 
         public DbSet<Card>? Cards { get; set; }

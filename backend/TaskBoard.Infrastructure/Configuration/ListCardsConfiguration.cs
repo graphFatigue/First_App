@@ -28,12 +28,12 @@ namespace TaskBoard.Infrastructure.Configuration
                 .HasColumnName("name")
                 .IsRequired();
 
-            builder
-                .Property(c => c.Description)
-                .HasMaxLength(300)
-                .HasColumnType("varchar(300)")
-                .HasColumnName("description")
-                .IsRequired();
+            //builder
+            //    .HasMany(s => s.Cards)
+            //    .WithOne(x => x.ListCards)
+            //    .HasForeignKey(s => s.ListCardsId)
+            //    .IsRequired(false)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

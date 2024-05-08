@@ -10,7 +10,6 @@ namespace TaskBoard.Common.Models.Card
         public DateTime DueDate { get; set; }
         public string? Priority { get; set; }
         public string? ListCardsName { get; set; }
-        public virtual Domain.Entities.ListCards? ListCards { get; set; }
         public void MapFrom(Profile profile)
         {
             profile.CreateMap<Domain.Entities.Card, UpdateCardModel>()
