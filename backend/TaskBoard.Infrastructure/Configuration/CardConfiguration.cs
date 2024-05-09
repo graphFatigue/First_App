@@ -53,6 +53,17 @@ namespace TaskBoard.Infrastructure.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
+                .Property(s => s.BoardId)
+                .HasColumnName("board_id");
+
+            builder
+                .HasOne(s => s.Board)
+                .WithMany(x => x.Cards)
+                .HasForeignKey(s => s.BoardId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
                 .Property(s => s.DueDate)
                 .HasColumnName("due_date")
                 .IsRequired();

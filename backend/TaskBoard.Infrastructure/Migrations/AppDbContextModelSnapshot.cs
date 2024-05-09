@@ -52,6 +52,41 @@ namespace TaskBoard.Infrastructure.Migrations
                     b.ToTable("actions", (string)null);
                 });
 
+            modelBuilder.Entity("TaskBoard.Domain.Entities.Board", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("list_cards_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("varchar(120)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("boards", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Family doard"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "My board"
+                        });
+                });
+
             modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>
                 {
                     b.Property<int>("Id")
@@ -60,6 +95,10 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnName("card_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BoardId")
+                        .HasColumnType("integer")
+                        .HasColumnName("board_id");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -89,6 +128,8 @@ namespace TaskBoard.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BoardId");
+
                     b.HasIndex("ListCardsId");
 
                     b.ToTable("cards", (string)null);
@@ -97,6 +138,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            BoardId = 1,
                             Description = "You need to wash the dishes",
                             DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
@@ -106,15 +148,17 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
+                            BoardId = 1,
                             Description = "You need to do the launry!!",
                             DueDate = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ListCardsId = 2,
+                            ListCardsId = 1,
                             Name = "Do laundry",
                             Priority = "High"
                         },
                         new
                         {
                             Id = 3,
+                            BoardId = 1,
                             Description = "You need to plan your summer vacation",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
@@ -124,24 +168,27 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
+                            BoardId = 1,
                             Description = "You really need to give away your old cloth",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ListCardsId = 2,
+                            ListCardsId = 1,
                             Name = "Give away the old cloth",
                             Priority = "Low"
                         },
                         new
                         {
                             Id = 5,
+                            BoardId = 2,
                             Description = "You're going to celebrate your promotion",
                             DueDate = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ListCardsId = 1,
+                            ListCardsId = 2,
                             Name = "Find something to wear this evening",
                             Priority = "High"
                         },
                         new
                         {
                             Id = 6,
+                            BoardId = 2,
                             Description = "You've seen a great pair of shoes tomorrow at the shop",
                             DueDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
@@ -151,6 +198,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 7,
+                            BoardId = 1,
                             Description = "You have nothing to eat",
                             DueDate = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 1,
@@ -160,6 +208,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 8,
+                            BoardId = 2,
                             Description = "You need to return call!!",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
@@ -169,15 +218,17 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 9,
+                            BoardId = 2,
                             Description = "You've been feeling really under the weather lately",
                             DueDate = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc),
-                            ListCardsId = 1,
+                            ListCardsId = 2,
                             Name = "Schedule an appointment with the doctor",
                             Priority = "Low"
                         },
                         new
                         {
                             Id = 10,
+                            BoardId = 2,
                             Description = "Long time no see!",
                             DueDate = new DateTime(2024, 6, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             ListCardsId = 2,
@@ -195,6 +246,10 @@ namespace TaskBoard.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BoardId")
+                        .HasColumnType("integer")
+                        .HasColumnName("board_id");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -202,6 +257,8 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BoardId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -212,11 +269,13 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            BoardId = 1,
                             Name = "Planned"
                         },
                         new
                         {
                             Id = 2,
+                            BoardId = 2,
                             Name = "To Do"
                         });
                 });
@@ -233,13 +292,39 @@ namespace TaskBoard.Infrastructure.Migrations
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>
                 {
+                    b.HasOne("TaskBoard.Domain.Entities.Board", "Board")
+                        .WithMany("Cards")
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TaskBoard.Domain.Entities.ListCards", "ListCards")
                         .WithMany("Cards")
                         .HasForeignKey("ListCardsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Board");
+
                     b.Navigation("ListCards");
+                });
+
+            modelBuilder.Entity("TaskBoard.Domain.Entities.ListCards", b =>
+                {
+                    b.HasOne("TaskBoard.Domain.Entities.Board", "Board")
+                        .WithMany("ListsCards")
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Board");
+                });
+
+            modelBuilder.Entity("TaskBoard.Domain.Entities.Board", b =>
+                {
+                    b.Navigation("Cards");
+
+                    b.Navigation("ListsCards");
                 });
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Card", b =>

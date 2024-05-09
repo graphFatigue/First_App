@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Infrastructure.Configuration;
 using TaskBoard.Infrastructure.Initializers;
@@ -24,13 +23,16 @@ namespace TaskBoard.Infrastructure
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CardConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ListCardsConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ActionConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BoardConfiguration).Assembly);
 
             base.OnModelCreating(modelBuilder);
             CardDataInitializer.SeedData(modelBuilder);
             ListCardsDataInitializer.SeedData(modelBuilder);
+            BoardDataInitializer.SeedData(modelBuilder);
         }
 
         public DbSet<Card>? Cards { get; set; }
+        public DbSet<Board>? Boards { get; set; }
         public DbSet<Action>? Actions { get; set; }
         public DbSet<ListCards>? ListCards { get; set; }
     }

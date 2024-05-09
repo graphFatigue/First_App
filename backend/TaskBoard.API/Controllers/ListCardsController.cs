@@ -39,9 +39,9 @@ namespace TaskBoard.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateListCardsModel createCardModel)
+        public async Task<IActionResult> Create(CreateListCardsModel createListCardsModel)
         {
-            var listCards = await _listCardsService.CreateAsync(createCardModel);
+            var listCards = await _listCardsService.CreateAsync(createListCardsModel);
             return CreatedAtRoute(nameof(GetListById), new { id = listCards.Id }, listCards);
         }
 

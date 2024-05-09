@@ -28,6 +28,17 @@ namespace TaskBoard.Infrastructure.Configuration
                 .HasColumnName("name")
                 .IsRequired();
 
+            builder
+                .Property(s => s.BoardId)
+                .HasColumnName("board_id");
+
+            builder
+                .HasOne(s => s.Board)
+                .WithMany(x => x.ListsCards)
+                .HasForeignKey(s => s.BoardId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
             //builder
             //    .HasMany(s => s.Cards)
             //    .WithOne(x => x.ListCards)

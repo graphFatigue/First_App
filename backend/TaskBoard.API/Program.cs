@@ -43,6 +43,6 @@ app.MapControllers();
 
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
-await app.MigrateDatabase();
+//await app.MigrateDatabase();
 
 app.Run();

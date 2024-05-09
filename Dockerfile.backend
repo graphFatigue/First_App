@@ -12,12 +12,12 @@ USER appuser
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["backend/TaskBoard.API/TaskBoard.API.csproj", "backend/TaskBoard.API/"]
-COPY ["backend/TaskBoard.Application/TaskBoard.Application.csproj", "backend/TaskBoard.Application/"]
-COPY ["backend/TaskBoard.Infrastructure/TaskBoard.Infrastructure.csproj", "backend/TaskBoard.Infrastructure/"]
-COPY ["backend/TaskBoard.Abstractions/TaskBoard.Abstractions.csproj", "backend/TaskBoard.Abstractions/"]
-COPY ["backend/TaskBoard.Domain/TaskBoard.Domain.csproj", "backend/TaskBoard.Domain/"]
-COPY ["backend/TaskBoard.Common/TaskBoard.Common.csproj", "backend/TaskBoard.Common/"]
+COPY ["TaskBoard.API/TaskBoard.API.csproj", "backend/TaskBoard.API/"]
+COPY ["TaskBoard.Application/TaskBoard.Application.csproj", "backend/TaskBoard.Application/"]
+COPY ["TaskBoard.Infrastructure/TaskBoard.Infrastructure.csproj", "backend/TaskBoard.Infrastructure/"]
+COPY ["TaskBoard.Abstractions/TaskBoard.Abstractions.csproj", "backend/TaskBoard.Abstractions/"]
+COPY ["TaskBoard.Domain/TaskBoard.Domain.csproj", "backend/TaskBoard.Domain/"]
+COPY ["TaskBoard.Common/TaskBoard.Common.csproj", "backend/TaskBoard.Common/"]
 RUN dotnet restore "backend/TaskBoard.API/TaskBoard.API.csproj"
 COPY . .
 WORKDIR "/src/TaskBoard.API"

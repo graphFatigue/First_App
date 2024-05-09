@@ -11,6 +11,8 @@ namespace TaskBoard.Domain.Entities
         public Priority Priority { get; set; }
         public int ListCardsId { get; set; } 
         public virtual ListCards? ListCards { get; set; }
+        public int BoardId { get; set; }
+        public virtual Board? Board { get; set; }
         public virtual ICollection<Action>? Actions { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace TaskBoard.Application.Extensions
             services.AddScoped<ICardService, CardService>();
             services.AddScoped<IListCardsService, ListCardsService>();
             services.AddScoped<IActionService, ActionService>();
+            services.AddScoped<IBoardService, BoardService>();
             services.Configure<SieveOptions>(options => options.CaseSensitive = false);
 
             return services;

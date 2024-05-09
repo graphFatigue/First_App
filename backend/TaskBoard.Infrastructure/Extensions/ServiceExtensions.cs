@@ -12,6 +12,7 @@ namespace TaskBoard.Infrastructure.Extensions
             services.AddScoped<ICardRepository, CardRepository>();
             services.AddScoped<IListCardsRepository, ListCardsRepository>();
             services.AddScoped<IActionRepository, ActionRepository>();
+            services.AddScoped<IBoardRepository, BoardRepository>();
 
             return services;
         }

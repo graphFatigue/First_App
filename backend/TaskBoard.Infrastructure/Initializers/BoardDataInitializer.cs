@@ -3,23 +3,21 @@ using TaskBoard.Domain.Entities;
 
 namespace TaskBoard.Infrastructure.Initializers
 {
-    internal class ListCardsDataInitializer
+    internal class BoardDataInitializer
     {
         internal static void SeedData(ModelBuilder builder)
         {
-            builder.Entity<ListCards>().HasData
+            builder.Entity<Board>().HasData
             (
-                new ListCards()
+                new Board()
                 {
                     Id = 1,
-                    Name = "Planned",
-                    BoardId = 1,
+                    Name = "Family doard",
                 },
-                new ListCards()
+                new Board()
                 {
                     Id = 2,
-                    Name = "To Do",
-                    BoardId = 2,
+                    Name = "My board",
                 });
         }
     }
