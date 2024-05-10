@@ -10,6 +10,10 @@ namespace TaskBoard.Application.Sieve.Configurations
             mapper.Property<ListCards>(x => x.Name)
                 .CanFilter()
                 .CanSort();
+
+            mapper.Property<ListCards>(x => x.BoardId)
+                .CanFilter()
+                .CanSort();
         }
     }
 }

@@ -5,10 +5,12 @@ using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
 using TaskBoard.Common.Models.Card;
+using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Domain.Enum;
 using TaskBoard.Infrastructure;
 using TaskBoard.Infrastructure.Extensions;
+using TaskBoard.Infrastructure.Repositories;
 using Action = TaskBoard.Domain.Entities.Action;
 
 namespace TaskBoard.Application.Services
@@ -20,19 +22,22 @@ namespace TaskBoard.Application.Services
         private readonly IMapper _mapper;
         private readonly IListCardsRepository _listCardsRepository;
         private readonly IActionRepository _actionRepository;
+        private readonly IBoardRepository _boardRepository;
 
         public CardService(
             AppDbContext context,
             ICardRepository cardRepository,
             IMapper mapper,
             IListCardsRepository listCardsRepository,
-            IActionRepository actionRepository)
+            IActionRepository actionRepository,
+            IBoardRepository boardRepository)
         {
             _context = context;
             _cardRepository = cardRepository;
             _mapper = mapper;
             _listCardsRepository = listCardsRepository;
             _actionRepository = actionRepository;
+            _boardRepository = boardRepository;
         }
 
         public async Task<IEnumerable<CardModel>> GetAllAsync()
@@ -64,14 +69,16 @@ namespace TaskBoard.Application.Services
 
             return _mapper.Map<CardModel>(card);
         }
-
         public async Task<CardModel> CreateAsync(CreateCardModel createCardModel)
         {
+            var board = await _boardRepository.GetByIdAsync(createCardModel.BoardId);
+
             var listCards = await _listCardsRepository.GetByNameAsync(createCardModel.ListCardsName);
 
             var card = _mapper.Map<Card>(createCardModel);
 
             card.ListCards = listCards;
+            card.Board = board;
 
             await _cardRepository.CreateAsync(card);
 
@@ -79,7 +86,8 @@ namespace TaskBoard.Application.Services
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
                 Message = new string($"You added ◉<strong>{card.Name}</strong> to ◆<strong>{card.ListCards.Name}</strong>"),
-                Card = card,   
+                Card = card,
+                Board = card.Board,
             };
 
             await _actionRepository.CreateAsync(action);
@@ -100,6 +108,7 @@ namespace TaskBoard.Application.Services
                     ActionTime = DateTime.Now.SetKindUtc(),
                     Message = new string($"You renamed card ◉<strong>{card.Name}</strong> to ◉<strong>{updateCardModel.Name}</strong>"),
                     Card = card,
+                    Board = card.Board,
                 };
 
                 await _actionRepository.CreateAsync(action);
@@ -114,6 +123,7 @@ namespace TaskBoard.Application.Services
                     ActionTime = DateTime.Now.SetKindUtc(),
                     Message = new string($"You changed ◉<strong>{card.Name}</strong>'s description"),
                     Card = card,
+                    Board = card.Board,
                 };
 
                 await _actionRepository.CreateAsync(action);
@@ -128,6 +138,7 @@ namespace TaskBoard.Application.Services
                     ActionTime = DateTime.Now.SetKindUtc(),
                     Message = new string($"You changed the priority of ◉<strong>{card.Name}</strong> from ◾<strong>{card.Priority.ToString()}</strong> to ◾<strong>{updateCardModel.Priority}</strong>"),
                     Card = card,
+                    Board = card.Board,
                 };
 
                 await _actionRepository.CreateAsync(action);
@@ -143,6 +154,7 @@ namespace TaskBoard.Application.Services
                     ActionTime = DateTime.Now.SetKindUtc(),
                     Message = new string($"You changed the due date of ◉<strong>{card.Name}</strong> from ◾<strong>{card.DueDate.ToString("ddd', 'dd' 'MMM' 'yyyy")}</strong> to ◾<strong>{updateCardModel.DueDate.ToString("ddd', 'dd' 'MMM' 'yyyy")}</strong>"),
                     Card = card,
+                    Board = card.Board,
                 };
 
                 await _actionRepository.CreateAsync(action);
@@ -160,6 +172,7 @@ namespace TaskBoard.Application.Services
                     ActionTime = DateTime.Now.SetKindUtc(),
                     Message = new string($"You moved ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards?.Name}</strong> to ◆<strong>{updateCardModel.ListCardsName}</strong>"),
                     Card = card,
+                    Board = card.Board,
                 };
 
                 await _actionRepository.CreateAsync(action);
@@ -181,7 +194,8 @@ namespace TaskBoard.Application.Services
             Action action = new Action()
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
-                Message = new string($"You deleted card ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards.Name}</strong>" )
+                Message = new string($"You deleted card ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards.Name}</strong>" ),
+                Board = card.Board,
             };
 
             _cardRepository.Delete(card);

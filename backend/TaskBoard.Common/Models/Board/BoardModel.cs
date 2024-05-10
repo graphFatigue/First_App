@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TaskBoard.Common.Mappings;
+using TaskBoard.Common.Models.Action;
 using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 
@@ -11,10 +12,12 @@ namespace TaskBoard.Common.Models.Board
         public string? Name { get; set; }
         public ICollection<CardModel>? Cards { get; set; }
         public ICollection<ListCardsModel>? ListsCards { get; set; }
+        public ICollection<ActionModel>? Actions { get; set; }
         public void MapFrom(Profile profile)
         {
             profile.CreateMap<Domain.Entities.Board, BoardModel>()
                 .ForMember(dest => dest.Cards, src => src.MapFrom(opt => opt.Cards))
+                .ForMember(dest => dest.Actions, src => src.MapFrom(opt => opt.Actions))
                 .ForMember(dest => dest.ListsCards, src => src.MapFrom(opt => opt.ListsCards));
         }
     }

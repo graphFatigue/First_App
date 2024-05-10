@@ -5,6 +5,7 @@ using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
+using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Infrastructure;
@@ -16,19 +17,26 @@ namespace TaskBoard.Application.Services
         private readonly AppDbContext _context;
         private readonly IListCardsRepository _listCardsRepository;
         private readonly IMapper _mapper;
+        private readonly IBoardRepository _boardRepository;
 
         public ListCardsService(
             AppDbContext context,
             IListCardsRepository listCardsRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IBoardRepository boardRepository)
         {
             _context = context;
             _listCardsRepository = listCardsRepository;
             _mapper = mapper;
+            _boardRepository = boardRepository;
         }
         public async Task<ListCardsModel> CreateAsync(CreateListCardsModel createListCardsModel)
         {
+            var board = await _boardRepository.GetByIdAsync(createListCardsModel.BoardId);
+
             var listCards = _mapper.Map<ListCards>(createListCardsModel);
+
+            listCards.Board = board;
 
             await _listCardsRepository.CreateAsync(listCards);
 
@@ -107,6 +115,13 @@ namespace TaskBoard.Application.Services
             {
                 throw new NpgsqlException($"List with name {updateListCardsModel.Name} already exists");
             }
+        }
+
+        public async Task<IEnumerable<ListCardsModel>> GetAllByBoardIdAsync(int id)
+        {
+            var listCards = await _listCardsRepository.GetByBoardId(id);
+            listCards.OrderByDescending(x => x.Name);
+            return _mapper.Map<IEnumerable<ListCardsModel>>(listCards);
         }
     }
 }

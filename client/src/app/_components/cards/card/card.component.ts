@@ -15,6 +15,7 @@ import { ViewCardModalWindowComponent } from '../view-card-modal-window/view-car
 })
 export class CardComponent implements OnInit{
   @Input() card: CardModel | undefined;
+  @Input() boardId: any;
   listsCards : ListCardsModel[] = [];
   cardModel: UpdateCardModel = {id: 0, name: '', description: '', priority: '', listCardsName: '', dueDate: ''}
   value : string = ''
@@ -28,7 +29,7 @@ export class CardComponent implements OnInit{
   }
 
   loadLists(){
-    this.listsCardsService.getListsCards().subscribe({
+    this.listsCardsService.getListsCardsByBoardId(this.boardId).subscribe({
     next: listsCards => this.listsCards = listsCards.filter(el => el.name!==this.card?.listCardsName)
   })
 }
@@ -52,7 +53,8 @@ export class CardComponent implements OnInit{
       width: '800px',
       height: '500px',
       data: {
-        cardResponse: this.card?.id
+        cardResponse: this.card?.id,
+        boardResponse: this.boardId
       }
     });
   }

@@ -31,18 +31,25 @@ namespace TaskBoard.API.Controllers
             return Ok(boards);
         }
 
-        [HttpGet("{id}", Name = nameof(GetListById))]
-        public async Task<IActionResult> GetListById(int id)
+        [HttpGet("{id}", Name = nameof(GetBoardById))]
+        public async Task<IActionResult> GetBoardById(int id)
         {
             var board = await _boardService.GetByIdAsync(id);
             return Ok(board);
         }
 
+        //[HttpGet("{name}", Name = nameof(GetBoardByName))]
+        //public async Task<IActionResult> GetBoardByName(string name)
+        //{
+        //    var board = await _boardService.GetByNameAsync(name);
+        //    return Ok(board);
+        //}
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateBoardModel createBoardModel)
         {
             var board = await _boardService.CreateAsync(createBoardModel);
-            return CreatedAtRoute(nameof(GetListById), new { id = board.Id }, board);
+            return CreatedAtRoute(nameof(GetBoardById), new { id = board.Id }, board);
         }
 
         [HttpPut]

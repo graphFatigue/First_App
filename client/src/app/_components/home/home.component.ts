@@ -18,26 +18,9 @@ export class HomeComponent implements OnInit{
   dialogConfig = new MatDialogConfig();
   modalDialog: MatDialogRef<CreateListCardsModalWindowComponent, any> | undefined;
 
-  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService, public matDialog: MatDialog){}
+  constructor(){}
 
   ngOnInit(): void {
-    this.loadLists();
-    this.loadCardsWithoutParent();
   }
     
-  loadLists(){
-    this.listsCards$ = this.listsCardsService.getListsCards()
-  }
-
-  loadCardsWithoutParent(){
-    this.cardsWithoutParent$ = this.cardsService.getCardsWithoutParent();
-  }
-
-  openCreateForm(){
-    this.dialogConfig.id = "projects-modal-component";
-    this.modalDialog = this.matDialog.open(CreateListCardsModalWindowComponent, {
-      width: '500px',
-      // height: '550px',
-    });
-  }
 }

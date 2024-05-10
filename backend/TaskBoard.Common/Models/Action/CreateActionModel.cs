@@ -8,5 +8,6 @@ namespace TaskBoard.Common.Models.Action
         public string? Message { get; set; }
         public DateTime ActionTime { get; set; }
         public int CardId { get; set; }
+        public int BoardId { get; set; }
     }
 }

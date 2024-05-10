@@ -13,8 +13,8 @@ import { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsM
   templateUrl: './create-list-modal-window.component.html',
   styleUrls: ['./create-list-modal-window.component.css']
 })
-export class CreateListCardsModalWindowComponent {
-  listCardsModel: CreateListCardsModel = {name: ''};
+export class CreateListCardsModalWindowComponent implements OnInit{
+  listCardsModel: CreateListCardsModel = {name: '', boardId: 0};
   @ViewChild('createForm') createForm: NgForm | undefined;
   errors: string[] = [];
 
@@ -23,8 +23,9 @@ export class CreateListCardsModalWindowComponent {
     public dialogRef: MatDialogRef<CreateListCardsModalWindowComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any){}
 
-  stringToDate(dateString: string): DatePipe {
-    return new DatePipe(dateString);
+
+  ngOnInit(): void {
+    this.listCardsModel.boardId = Number(this.data.boardResponse);
   }
 
   createListCards(){

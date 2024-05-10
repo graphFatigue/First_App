@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ActionModel } from 'src/app/_models/action/actionModel';
 import { ActionsService } from 'src/app/_services/actions.service';
 
@@ -13,14 +14,14 @@ export class ActionsSidebarComponent implements OnInit{
   page: number = 1
   length: number = 0
 
-  constructor(private actionsService: ActionsService){}
+  constructor(private actionsService: ActionsService, private route: ActivatedRoute){}
 
   ngOnInit(): void {
     this.loadActions();
   }
 
   loadActions(){
-    this.actionsService.loadActionsWithNumPage(this.page).subscribe({
+  this.actionsService.loadActionsWithNumPage(this.page).subscribe({
       next: response => {
         this.actions = this.actions.concat(response.items);
         this.length=response.totalCount;

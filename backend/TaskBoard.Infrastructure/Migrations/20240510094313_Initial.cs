@@ -81,11 +81,18 @@ namespace TaskBoard.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     message = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     action_time = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    card_id = table.Column<int>(type: "integer", nullable: true)
+                    card_id = table.Column<int>(type: "integer", nullable: true),
+                    board_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_actions", x => x.action_id);
+                    table.ForeignKey(
+                        name: "FK_actions_boards_board_id",
+                        column: x => x.board_id,
+                        principalTable: "boards",
+                        principalColumn: "list_cards_id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_actions_cards_card_id",
                         column: x => x.card_id,
@@ -99,7 +106,7 @@ namespace TaskBoard.Infrastructure.Migrations
                 columns: new[] { "list_cards_id", "name" },
                 values: new object[,]
                 {
-                    { 1, "Family doard" },
+                    { 1, "Family board" },
                     { 2, "My board" }
                 });
 
@@ -128,6 +135,11 @@ namespace TaskBoard.Infrastructure.Migrations
                     { 9, 2, "You've been feeling really under the weather lately", new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Schedule an appointment with the doctor", "Low" },
                     { 10, 2, "Long time no see!", new DateTime(2024, 6, 8, 0, 0, 0, 0, DateTimeKind.Utc), 2, "Go for a walk with your friend", "High" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_actions_board_id",
+                table: "actions",
+                column: "board_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_actions_card_id",

@@ -12,7 +12,7 @@ namespace TaskBoard.Infrastructure.Initializers
                 new Board()
                 {
                     Id = 1,
-                    Name = "Family doard",
+                    Name = "Family board",
                 },
                 new Board()
                 {

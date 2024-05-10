@@ -100,7 +100,8 @@ openEditForm(){
     // width: '500px',
     // height: '550px',
     data: {
-      cardResponse: Number(this.data.cardResponse)
+      cardResponse: Number(this.data.cardResponse),
+      boardResponse: this.data.boardResponse
     }
   });
 }

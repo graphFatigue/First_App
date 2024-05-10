@@ -24,6 +24,13 @@ namespace TaskBoard.API.Controllers
             return Ok(listCards);
         }
 
+        [HttpGet("allBy/{boardId}")]
+        public async Task<IActionResult> GetAllByBoardId(int boardId) 
+        {
+            var listCards = await _listCardsService.GetAllByBoardIdAsync(boardId);
+            return Ok(listCards);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllWithFilter([FromQuery] SieveModel sieveModel)
         {

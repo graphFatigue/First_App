@@ -9,6 +9,7 @@ namespace TaskBoard.Common.Models.Action
         public int Id { get; set; }
         public string? Message { get; set; }
         public DateTime? ActionTime { get; set; }
+        public int BoardId { get; set; }
 
         public void MapFrom(Profile profile)
         {

@@ -6,5 +6,6 @@ namespace TaskBoard.Abstractions.Infrastructure
     {
         Task<ListCards?> GetByNameAsync(string name);
         Task<ListCards?> GetByIdAsync(int id);
+        Task<IEnumerable<ListCards?>> GetByBoardId(int id);
     }
 }

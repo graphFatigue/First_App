@@ -19,7 +19,7 @@ import { CreateCardModel } from 'src/app/_models/card/createCardModel';
   styleUrls: ['./create-card-modal-window.component.css']
 })
 export class CreateCardModalWindowComponent implements OnInit{
-  cardModel: CreateCardModel = {name: '', description: '', priority: '', listCardsName: '', dueDate: new Date().toISOString().substring(0, 10)}
+  cardModel: CreateCardModel = {name: '', description: '', priority: '', listCardsName: '', boardId:0, dueDate: new Date().toISOString().substring(0, 10)}
   listsCards$? : Observable<ListCardsModel[]>
   errors: string[] = []
   priorities = Object.values(Priority);
@@ -37,11 +37,8 @@ export class CreateCardModalWindowComponent implements OnInit{
     this.loadLists()
     this.priorities.forEach(prioritiy => {this.priorityStrings.push(String(prioritiy))
     });
-    this.cardModel.listCardsName=this.data.cardResponse.trim();
-  }
-
-  stringToDate(dateString: string): DatePipe {
-    return new DatePipe(dateString);
+    this.cardModel.listCardsName=this.data.cardResponse;//.trim();
+    this.cardModel.boardId = Number(this.data.boardResponse);
   }
 
   createCard(){
@@ -62,7 +59,7 @@ export class CreateCardModalWindowComponent implements OnInit{
   }
 
   loadLists(){
-    this.listsCards$=this.listsCardsService.getListsCards();
+    this.listsCards$=this.listsCardsService.getListsCardsByBoardId(Number(this.data.boardResponse));
   }
     
   closeModal() {

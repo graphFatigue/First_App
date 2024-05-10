@@ -9,5 +9,7 @@ namespace TaskBoard.Domain.Entities
         public DateTime ActionTime { get; set; }
         public int? CardId { get; set; }
         public virtual Card? Card { get; set; }
+        public int? BoardId { get; set; }
+        public virtual Board? Board { get; set; }
     }
 }

@@ -16,6 +16,10 @@ export class ListsCardsService {
     return this.http.get<ListCardsModel[]>(this.baseUrl + 'listCards/all')
   }
 
+  getListsCardsByBoardId(id: number){
+    return this.http.get<ListCardsModel[]>(this.baseUrl + 'listCards/allBy/' + id)
+  }
+
   getListCards(id: number){
     return this.http.get<ListCardsModel>(this.baseUrl + 'listCards/' + id)
   }

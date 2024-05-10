@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +24,9 @@ import { EditListModalWindowComponent } from './_components/lists-cards/edit-lis
 import { DeleteListModalWindowComponent } from './_components/lists-cards/delete-list-modal-window/delete-list-modal-window.component';
 import { CreateListCardsModalWindowComponent } from './_components/lists-cards/create-list-modal-window/create-list-modal-window.component';
 import { ViewCardModalWindowComponent } from './_components/cards/view-card-modal-window/view-card-modal-window.component';
+import { RouterModule } from '@angular/router';
+import { BoardListComponent } from './_components/boards/board-list/board-list.component';
+import { BoardComponent } from './_components/boards/board/board.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,9 @@ import { ViewCardModalWindowComponent } from './_components/cards/view-card-moda
     DeleteCardModalWindowComponent,
     DeleteListModalWindowComponent,
     ListContextMenuComponent,
-    ViewCardModalWindowComponent
+    ViewCardModalWindowComponent,
+    BoardListComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +58,9 @@ import { ViewCardModalWindowComponent } from './_components/cards/view-card-moda
     MatButtonModule,
     MatDialogModule,
     ContextMenuModule,
-    ButtonModule
+    ButtonModule,
   ],
-  providers: [],
+  providers: [    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

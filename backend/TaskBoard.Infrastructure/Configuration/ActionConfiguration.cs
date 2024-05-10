@@ -39,6 +39,17 @@ namespace TaskBoard.Infrastructure.Configuration
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder
+                .Property(s => s.BoardId)
+                .HasColumnName("board_id");
+
+            builder
+                .HasOne(s => s.Board)
+                .WithMany(c => c.Actions)
+                .HasForeignKey(s => s.BoardId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
                 .Property(s => s.ActionTime)
                 .HasColumnName("action_time")
                 .IsRequired();

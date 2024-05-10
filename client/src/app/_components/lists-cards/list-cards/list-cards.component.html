@@ -13,6 +13,6 @@
         Add
     </button>
     <div class="col mb-4" style="align-items: self-start" *ngFor="let card of listCards?.cards">
-        <app-card [card]="card"></app-card>
+        <app-card [boardId]="listCards?.boardId" [card]="card"></app-card>
     </div>
 </div>

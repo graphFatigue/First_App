@@ -21,7 +21,8 @@ export class ListCardsComponent {
       // width: '500px',
       // height: '550px',
       data: {
-        cardResponse: this.listCards?.name
+        cardResponse: this.listCards?.name,
+        boardResponse: this.listCards?.boardId
       }
     });
   }

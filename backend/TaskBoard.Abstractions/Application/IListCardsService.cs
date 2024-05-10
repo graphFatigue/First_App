@@ -9,6 +9,7 @@ namespace TaskBoard.Abstractions.Application
     {
         Task<IEnumerable<ListCardsModel>> GetAllAsync();
         Task<PagedList<ListCardsModel>> GetAllWithFilterAsync(SieveModel sieveModel);
+        Task<IEnumerable<ListCardsModel>> GetAllByBoardIdAsync(int id);
         Task<ListCardsModel> GetByNameAsync(string name);
         Task<ListCardsModel> CreateAsync(CreateListCardsModel createListCardsModel);
         Task UpdateAsync(UpdateListCardsModel updateListCardsModel);

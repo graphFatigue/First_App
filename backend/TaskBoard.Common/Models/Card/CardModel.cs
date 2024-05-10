@@ -13,12 +13,14 @@ namespace TaskBoard.Common.Models.Card
         public DateTime DueDate { get; set; }
         public string? Priority { get; set; }
         public string? ListCardsName { get; set; }
+        public int BoardId { get; set; }
         public ICollection<ActionModel>? Actions { get; set; }
 
         public void MapFrom(Profile profile)
         {
             profile.CreateMap<Domain.Entities.Card, CardModel>()
                 .ForMember(dest => dest.ListCardsName, src => src.MapFrom(opt => opt.ListCards.Name))
+                .ForMember(dest => dest.BoardId, src => src.MapFrom(opt => opt.Board.Id))
                 .ForMember(dest => dest.Actions, src => src.MapFrom(opt => opt.Actions))
                 .ForMember(dest => dest.Priority, src => src.MapFrom(opt => opt.Priority.ToString()));
         }

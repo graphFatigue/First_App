@@ -4,4 +4,5 @@ export interface CreateCardModel {
     dueDate: string
     priority: string
     listCardsName: string
+    boardId: number
   }

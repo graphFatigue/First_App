@@ -64,7 +64,7 @@ export class EditCardModalWindowComponent implements OnInit{
   }
 
   loadLists(){
-    this.listsCards$=this.listsCardsService.getListsCards();
+    this.listsCards$=this.listsCardsService.getListsCardsByBoardId(this.data.boardResponse);
   }
     
   closeModal() {

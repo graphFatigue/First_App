@@ -15,6 +15,7 @@ import { DeleteCardModalWindowComponent } from '../delete-card-modal-window/dele
 export class CardContextMenuComponent {
   @Input() target: any;
   @Input() id: any;
+  @Input() boardId: any;
   dialogConfig = new MatDialogConfig();
   modalDialogEdit: MatDialogRef<EditCardModalWindowComponent, any> | undefined;
   modalDialogDelete: MatDialogRef<DeleteCardModalWindowComponent, any> | undefined;
@@ -40,7 +41,8 @@ export class CardContextMenuComponent {
       // width: '500px',
       // height: '550px',
       data: {
-        cardResponse: this.id
+        cardResponse: this.id,
+        boardResponse: this.boardId
       }
     });
   }

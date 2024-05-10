@@ -8,5 +8,6 @@ export interface CardModel {
     dueDate: string
     priority: string
     listCardsName: string | null
+    boardId: number
     actions: ActionModel[] | null
   }

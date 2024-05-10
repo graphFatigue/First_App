@@ -1,0 +1,11 @@
+<div class="column-container">
+<div *ngIf="(boards$ | async) as boards" class="lCards">
+    <div class="col mb-4" *ngFor="let board of boards">
+        <ul class="list-inline" >
+              <li class="list-inline-item">
+                  <button class="btn btn-primary" (click)="boardsService.openBoardPage()" routerLink="/boards/{{board.id}}" routerLinkActive="active">{{board.name}}</button>
+                </li>
+          </ul>
+    </div>
+</div>
+</div>

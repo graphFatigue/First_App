@@ -35,6 +35,11 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("action_time");
 
+                    b.Property<int?>("BoardId")
+                        .IsRequired()
+                        .HasColumnType("integer")
+                        .HasColumnName("board_id");
+
                     b.Property<int?>("CardId")
                         .HasColumnType("integer")
                         .HasColumnName("card_id");
@@ -46,6 +51,8 @@ namespace TaskBoard.Infrastructure.Migrations
                         .HasColumnName("message");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BoardId");
 
                     b.HasIndex("CardId");
 
@@ -78,7 +85,7 @@ namespace TaskBoard.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Family doard"
+                            Name = "Family board"
                         },
                         new
                         {
@@ -282,10 +289,18 @@ namespace TaskBoard.Infrastructure.Migrations
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Action", b =>
                 {
+                    b.HasOne("TaskBoard.Domain.Entities.Board", "Board")
+                        .WithMany("Actions")
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TaskBoard.Domain.Entities.Card", "Card")
                         .WithMany("Actions")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Board");
 
                     b.Navigation("Card");
                 });
@@ -322,6 +337,8 @@ namespace TaskBoard.Infrastructure.Migrations
 
             modelBuilder.Entity("TaskBoard.Domain.Entities.Board", b =>
                 {
+                    b.Navigation("Actions");
+
                     b.Navigation("Cards");
 
                     b.Navigation("ListsCards");
