@@ -10,7 +10,7 @@
         </ul>
       </div>
     <form (ngSubmit)="createCard()" id="createForm" #createForm="ngForm">
-        <input [hidden]="true" type="text" name="boardName" [(ngModel)]="cardModel.boardId">
+        <input [hidden]="true" type="text" name="boardId" [(ngModel)]="cardModel.boardId">
         <h2><input name="name" class="no-border" value="New card" [(ngModel)]="cardModel.name" placeholder="Enter card's name" (focus)="false" type="text" /></h2>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">List</label>

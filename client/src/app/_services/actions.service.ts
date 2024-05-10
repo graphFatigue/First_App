@@ -23,4 +23,8 @@ export class ActionsService {
   loadActionsWithNumPage(page: number){
     return this.http.get<ActionsSieveResponse>(this.baseUrl + String('actions?Sorts=-ActionTime&Page=' + page + '&PageSize=20'))
   }
+
+  loadActionsWithNumPageAndBoardId(page: number, boardId: number){
+    return this.http.get<ActionsSieveResponse>(this.baseUrl + String('actions?Filters=boardid==' + boardId +'&Sorts=-ActionTime&Page=' + page + '&PageSize=20'))
+  }
 }

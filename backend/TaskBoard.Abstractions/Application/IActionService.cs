@@ -10,8 +10,6 @@ namespace TaskBoard.Abstractions.Application
         Task<IEnumerable<ActionModel>> GetAllAsync();
         Task<IEnumerable<ActionModel>> GetAllByCardIdAsync(int cardId);
         Task<PagedList<ActionModel>> GetAllWithFilterAsync(SieveModel sieveModel);
-        //Task<CardModel> GetByIdAsync(int id);
-        //Task<CardModel> CreateAsync(CreateCardModel createCardModel);
-        //Task DeleteAsync(int id);
+        Task<PagedList<ActionModel>> GetAllWithBoardIdAndFilterAsync(SieveModel sieveModel, int boardId);
     }
 }

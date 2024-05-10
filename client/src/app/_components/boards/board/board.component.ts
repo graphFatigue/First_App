@@ -24,6 +24,7 @@ export class BoardComponent implements OnInit{
   loadBoard(){
     var id =  this.route.snapshot.paramMap.get('id');
     if (!id) return;
+    this.boardsService.openBoardPage(Number(id));
     this.boardsService.getBoard(id).subscribe({
       next: board => this.board = board
     })
@@ -35,7 +36,7 @@ export class BoardComponent implements OnInit{
       width: '500px',
       // height: '550px',
       data: {
-        boardResponse: this.board?.name
+        boardResponse: this.board?.id
       }
     });
   }

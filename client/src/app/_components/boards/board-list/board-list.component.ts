@@ -16,10 +16,6 @@ export class BoardListComponent implements OnInit{
   ngOnInit(): void {
     this.loadBoards();
   }
-
-  openBoardPage(){
-    this.boardsService.boardPageIsOpened$.next(true);
-  }
     
   loadBoards(){
     this.boards$ = this.boardsService.getBoards()
