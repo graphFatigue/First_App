@@ -9,11 +9,11 @@
           </li>
         </ul>
       </div>
-    <form *ngIf="listCardsModel" (ngSubmit)="updateListCards()" id="editForm" #editForm="ngForm">
-        <input [hidden]="true" type="number" name="id" [(ngModel)]="listCardsModel.id">
-        <h2><input name="name" placeholder="Enter list's name" placeholder="Enter board's name" class="no-border" [(ngModel)]="listCardsModel.name" (focus)="false" type="text" [value]="listCardsModel.name" /></h2>
+    <form *ngIf="boardModel" (ngSubmit)="updateBoard()" id="editForm" #editForm="ngForm">
+        <input [hidden]="true" type="number" name="id" [(ngModel)]="boardModel.id">
+        <h2><input name="name" placeholder="Enter list's name" placeholder="Enter board's name" class="no-border" [(ngModel)]="boardModel.name" (focus)="false" type="text" [value]="boardModel.name" /></h2>
         <footer id="modal-footer">
-            <button mat-raised-button [disabled]="!editForm?.dirty || listCardsModel.name===''" form="editForm" type="submit" id="modal-close-button">Save</button>
+            <button mat-raised-button [disabled]="!editForm?.dirty || boardModel.name===''" form="editForm" type="submit" id="modal-close-button">Save</button>
             <button mat-raised-button id="modal-save-button" (click)="closeModal()">Cancel</button>
         </footer>     
     </form>

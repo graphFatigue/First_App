@@ -39,17 +39,6 @@ namespace TaskBoard.Application.Services
             return _mapper.Map<IEnumerable<ActionModel>>(actions);
         }
 
-        public async Task<PagedList<ActionModel>> GetAllWithBoardIdAndFilterAsync(SieveModel sieveModel, int boardId)
-        {
-            var pagedList = await _actionRepository.GetAllWithFilterAsync(sieveModel);
-            var actionModels = _mapper.Map<IEnumerable<ActionModel>>(pagedList.Items);
-
-            var updatedPagedList = PagedList<ActionModel>.Copy(pagedList, actionModels);
-            updatedPagedList.Items = updatedPagedList.Items.Where(x => x.BoardId == boardId);
-
-            return updatedPagedList;
-        }
-
         public async Task<PagedList<ActionModel>> GetAllWithFilterAsync(SieveModel sieveModel)
         {
             var pagedList = await _actionRepository.GetAllWithFilterAsync(sieveModel);

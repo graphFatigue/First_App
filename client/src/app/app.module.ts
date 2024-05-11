@@ -27,6 +27,10 @@ import { ViewCardModalWindowComponent } from './_components/cards/view-card-moda
 import { RouterModule } from '@angular/router';
 import { BoardListComponent } from './_components/boards/board-list/board-list.component';
 import { BoardComponent } from './_components/boards/board/board.component';
+import { BoardContextMenuComponent } from './_components/boards/board-context-menu/board-context-menu.component';
+import { CreateBoardModalWindowComponent } from './_components/boards/create-board-modal-window/create-board-modal-window.component';
+import { DeleteBoardModalWindowComponent } from './_components/boards/delete-board-modal-window/delete-board-modal-window.component';
+import { EditBoardModalWindowComponent } from './_components/boards/edit-board-modal-window/edit-board-modal-window.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,11 @@ import { BoardComponent } from './_components/boards/board/board.component';
     ListContextMenuComponent,
     ViewCardModalWindowComponent,
     BoardListComponent,
-    BoardComponent
+    BoardComponent,
+    BoardContextMenuComponent,
+    CreateBoardModalWindowComponent,
+    DeleteBoardModalWindowComponent,
+    EditBoardModalWindowComponent
   ],
   imports: [
     BrowserModule,

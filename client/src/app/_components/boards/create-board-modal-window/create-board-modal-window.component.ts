@@ -1,35 +1,28 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
-import { CardsService } from 'src/app/_services/cards.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ListsCardsService } from 'src/app/_services/lists-cards.service';
-import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsModel';
+import { CreateBoardModel } from 'src/app/_models/board/createBoardModel';
+import { BoardsService } from 'src/app/_services/boards.service';
 
 @Component({
-  selector: 'app-create-list-modal-window',
-  templateUrl: './create-list-modal-window.component.html',
-  styleUrls: ['./create-list-modal-window.component.css']
+  selector: 'app-create-board-modal-window',
+  templateUrl: './create-board-modal-window.component.html',
+  styleUrls: ['./create-board-modal-window.component.css']
 })
-export class CreateListCardsModalWindowComponent implements OnInit{
-  listCardsModel: CreateListCardsModel = {name: '', boardId: 0};
+export class CreateBoardModalWindowComponent{
+  boardModel: CreateBoardModel = {name: ''};
   @ViewChild('createForm') createForm: NgForm | undefined;
   errors: string[] = [];
 
   constructor(
-    private listsCardsService: ListsCardsService,
-    public dialogRef: MatDialogRef<CreateListCardsModalWindowComponent>, 
+    private boardsService: BoardsService,
+    public dialogRef: MatDialogRef<CreateBoardModalWindowComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any){}
 
-
-  ngOnInit(): void {
-    this.listCardsModel.boardId = Number(this.data.boardResponse);
-  }
-
-  createListCards(){
-      this.listsCardsService.createListCards(this.createForm?.value).subscribe(
+  createBoard(){
+      this.boardsService.createBoard(this.createForm?.value).subscribe(
         next => {
           this.closeModal();
           window.location.reload();
