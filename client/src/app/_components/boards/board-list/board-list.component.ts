@@ -4,6 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { BoardModel } from 'src/app/_models/board/boardModel';
 import { BoardsService } from 'src/app/_services/boards.service';
 import { CreateBoardModalWindowComponent } from '../create-board-modal-window/create-board-modal-window.component';
+import { Store } from '@ngrx/store';
+import { boardReducer } from 'src/app/store/board.reducer';
+import { openBoard } from 'src/app/store/board.actions';
 
 @Component({
   selector: 'app-board-list',
@@ -15,7 +18,9 @@ export class BoardListComponent implements OnInit{
   dialogConfig = new MatDialogConfig();
   modalDialog: MatDialogRef<CreateBoardModalWindowComponent, any> | undefined;
 
-  constructor(public boardsService: BoardsService, public matDialog: MatDialog){}
+  constructor(private boardsService: BoardsService, public matDialog: MatDialog, 
+    private store: Store<{id:{id: number}}>)
+    {}
 
   ngOnInit(): void {
     this.loadBoards();
@@ -23,6 +28,10 @@ export class BoardListComponent implements OnInit{
     
   loadBoards(){
     this.boards$ = this.boardsService.getBoards()
+  }
+
+  openBoardPage(id: number){
+    this.store.dispatch(openBoard({id:id}))
   }
 
   openCreateForm(){

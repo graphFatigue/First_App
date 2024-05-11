@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,10 @@ import { BoardContextMenuComponent } from './_components/boards/board-context-me
 import { CreateBoardModalWindowComponent } from './_components/boards/create-board-modal-window/create-board-modal-window.component';
 import { DeleteBoardModalWindowComponent } from './_components/boards/delete-board-modal-window/delete-board-modal-window.component';
 import { EditBoardModalWindowComponent } from './_components/boards/edit-board-modal-window/edit-board-modal-window.component';
+import { StoreModule } from '@ngrx/store';
+import { boardReducer } from './store/board.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -67,6 +71,9 @@ import { EditBoardModalWindowComponent } from './_components/boards/edit-board-m
     MatDialogModule,
     ContextMenuModule,
     ButtonModule,
+    StoreModule.forRoot({id: boardReducer}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([])
   ],
   providers: [    ],
   bootstrap: [AppComponent]

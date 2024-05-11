@@ -7,7 +7,7 @@
         <div class="card" *ngIf="board" style="width: 15rem;">
             <div class="card-body col p-10">
               <div class="row-container">
-                <h4 style="cursor: pointer;" (click)="boardsService.openBoardPage(board.id)" routerLink="/boards/{{board.id}}" routerLinkActive="active">{{board.name}}</h4>
+                <h4 style="cursor: pointer;" (click)="openBoardPage(board.id)" routerLink="/boards/{{board.id}}" routerLinkActive="active">{{board.name}}</h4>
                 <a #openMenu href="{{board.id}}">
                 <svg  aria-haspopup="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" id="openMenu" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                   <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ActionModel } from 'src/app/_models/action/actionModel';
 import { ActionsService } from 'src/app/_services/actions.service';
 import { BoardsService } from 'src/app/_services/boards.service';
@@ -14,20 +15,21 @@ export class ActionsSidebarComponent implements OnInit{
   count:number=1
   page: number = 1
   length: number = 0
-  //currentLength: number = 0
+  boardId: number = 0
 
-  constructor(private actionsService: ActionsService, private boardsService: BoardsService){}
+  constructor(private actionsService: ActionsService,
+    private store: Store<{id:{id: number}}>){}
 
   ngOnInit(): void {
     this.loadActions();
   }
 
   loadActions(){
-    this.actionsService.loadActionsWithNumPageAndBoardId(this.page,this.boardsService.boardId$.value).subscribe({
+    this.store.select('id').subscribe(data=> this.boardId = data.id)
+    this.actionsService.loadActionsWithNumPageAndBoardId(this.page,this.boardId).subscribe({
       next: response => {
         this.actions = this.actions.concat(response.items);
         this.length=response.totalCount;
-        //this.currentLength+= response.items.length;
       }
     })
     this.page+=1

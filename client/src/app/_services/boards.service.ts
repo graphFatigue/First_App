@@ -12,21 +12,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class BoardsService {
   baseUrl = environment.apiUrl;
-
-  boardPageIsOpened$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  boardId$: BehaviorSubject<number> = new BehaviorSubject(0);
-
+  
   constructor(private http: HttpClient) { }
-
-  public openBoardPage(id: number) {
-    this.boardPageIsOpened$.next(true);
-    this.boardId$.next(id);
-  }
-
-  public closeBoardPage() {
-    this.boardPageIsOpened$.next(false);
-    this.boardId$.next(0);
-  }
 
   getBoards(){
     return this.http.get<BoardModel[]>(this.baseUrl + 'boards/all')
