@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BoardsService } from 'src/app/_services/boards.service';
-import { closeBoard } from 'src/app/store/board.actions';
+import { closeBoard } from 'src/app/store/boards/board.actions';
 
 @Component({
   selector: 'app-nav',

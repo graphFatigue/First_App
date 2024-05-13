@@ -5,7 +5,7 @@ import { BoardsService } from 'src/app/_services/boards.service';
 import { CreateListCardsModalWindowComponent } from '../../lists-cards/create-list-modal-window/create-list-modal-window.component';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { openBoard } from 'src/app/store/board.actions';
+import { openBoard } from 'src/app/store/boards/board.actions';
 
 @Component({
   selector: 'app-board',

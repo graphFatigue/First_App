@@ -32,9 +32,10 @@ import { CreateBoardModalWindowComponent } from './_components/boards/create-boa
 import { DeleteBoardModalWindowComponent } from './_components/boards/delete-board-modal-window/delete-board-modal-window.component';
 import { EditBoardModalWindowComponent } from './_components/boards/edit-board-modal-window/edit-board-modal-window.component';
 import { StoreModule } from '@ngrx/store';
-import { boardReducer } from './store/board.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { ListsEffects } from './store/lists/lists.effects';
+import { boardReducer } from './store/boards/board.reducer';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ import { EffectsModule } from '@ngrx/effects';
     ButtonModule,
     StoreModule.forRoot({id: boardReducer}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([ListsEffects])
   ],
   providers: [    ],
   bootstrap: [AppComponent]

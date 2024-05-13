@@ -7,6 +7,9 @@ import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
 import { Observable } from 'rxjs';
 import { ListsCardsService } from 'src/app/_services/lists-cards.service';
 import { ViewCardModalWindowComponent } from '../view-card-modal-window/view-card-modal-window.component';
+import { Store } from '@ngrx/store';
+import { loadLists } from 'src/app/store/lists/lists.action';
+import { getlists } from 'src/app/store/lists/lists.selector';
 
 @Component({
   selector: 'app-card',
@@ -22,13 +25,17 @@ export class CardComponent implements OnInit{
   dialogConfig = new MatDialogConfig();
   modalDialogView: MatDialogRef<ViewCardModalWindowComponent, any> | undefined;
 
-  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService, public matDialog: MatDialog){}
+  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService, public matDialog: MatDialog,
+    private store: Store){}
 
   ngOnInit(): void {
     this.loadLists();
   }
 
   loadLists(){
+    //this.store.dispatch(loadLists(this.boardId));
+    // this.store.select(getlists).subscribe(item =>
+    //   this.listsCards = item.filter(el => el.name!==this.card?.listCardsName));
     this.listsCardsService.getListsCardsByBoardId(this.boardId).subscribe({
     next: listsCards => this.listsCards = listsCards.filter(el => el.name!==this.card?.listCardsName)
   })
