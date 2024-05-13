@@ -12,14 +12,14 @@ const _listsReducer = createReducer(listsState,
     on(loadListsSuccess,(state, action)=>{
         return{
             ...state,
-            lists:[...action.lists]
+            lists:action.lists
         };
     }),
-    // on(addList,(state, action)=>{
-    //     const _list = {}
+    //     on(addList,(state, action)=>{
+    //     const _list = {...action.listInput}
     //     return{
     //         ...state,
-    //         boardId: action.boardId
+    //         boardId: action.listInput
     //     };
     // }),
     on(addListSuccess,(state, action)=>{

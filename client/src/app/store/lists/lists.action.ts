@@ -11,5 +11,6 @@ export const ADD_LIST='[list component] add list'
 export const loadLists=createAction(LOAD_LISTS, props<{boardId: number}>());
 export const loadListsSuccess=createAction(LOAD_LISTS_SUCCESS, props<{lists: ListCardsModel[]}>());
 
-export const addList=createAction(ADD_LIST, props<{listInput: CreateListCardsModel}>);
-export const addListSuccess=createAction(ADD_LIST_SUCCESS, props<{list: ListCardsModel}>());
+export const addList=createAction(ADD_LIST, props<{listInput: CreateListCardsModel}>());
+
+export const addListSuccess=createAction(ADD_LIST_SUCCESS, props<{list: CreateListCardsModel}>());

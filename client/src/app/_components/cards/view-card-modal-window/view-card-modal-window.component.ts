@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms';
 import { EditCardModalWindowComponent } from '../edit-card-modal-window/edit-card-modal-window.component';
 import { ActionsService } from 'src/app/_services/actions.service';
 import { ActionModel } from 'src/app/_models/action/actionModel';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-view-card-modal-window',
@@ -19,7 +20,7 @@ import { ActionModel } from 'src/app/_models/action/actionModel';
   styleUrls: ['./view-card-modal-window.component.css']
 })
 export class ViewCardModalWindowComponent implements OnInit{
-  cardModel$?: Observable<CardModel>
+  card: CardModel = {id:0, name:'', description:'', boardId:0, listCardsName:'', priority:'', dueDate:'', actions:[]}
   listsCards$? : Observable<ListCardsModel[]>
   actionsObs$?: Observable<ActionModel[]>
   priorities = Object.values(Priority);
@@ -32,7 +33,7 @@ export class ViewCardModalWindowComponent implements OnInit{
     private listsCardsService: ListsCardsService,
     private actionsService: ActionsService,
     public dialogRef: MatDialogRef<ViewCardModalWindowComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: any, public matDialog: MatDialog){}
+    @Inject(MAT_DIALOG_DATA) public data: any, public matDialog: MatDialog, private store: Store<{card:{card:CardModel}}>){}
 
     dialogConfig = new MatDialogConfig();
     modalDialogEdit: MatDialogRef<EditCardModalWindowComponent, any> | undefined;
@@ -47,7 +48,7 @@ export class ViewCardModalWindowComponent implements OnInit{
   }
 
   loadCard(){
-    this.cardModel$ = this.cardsService.getCard(Number(this.data.cardResponse));
+    this.store.select('card').subscribe(data=> this.card = data.card);
   }
 
   loadActions(){

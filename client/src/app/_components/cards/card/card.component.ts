@@ -10,6 +10,7 @@ import { ViewCardModalWindowComponent } from '../view-card-modal-window/view-car
 import { Store } from '@ngrx/store';
 import { loadLists } from 'src/app/store/lists/lists.action';
 import { getlists } from 'src/app/store/lists/lists.selector';
+import { loadCard } from 'src/app/store/cards/card.actions';
 
 @Component({
   selector: 'app-card',
@@ -25,20 +26,20 @@ export class CardComponent implements OnInit{
   dialogConfig = new MatDialogConfig();
   modalDialogView: MatDialogRef<ViewCardModalWindowComponent, any> | undefined;
 
-  constructor(private listsCardsService: ListsCardsService, private cardsService: CardsService, public matDialog: MatDialog,
-    private store: Store){}
+  constructor(private cardsService: CardsService, public matDialog: MatDialog,
+    private store: Store<{lists:{lists: ListCardsModel[]}, card:{card:CardModel}}>){}
 
   ngOnInit(): void {
     this.loadLists();
   }
 
   loadLists(){
-    //this.store.dispatch(loadLists(this.boardId));
-    // this.store.select(getlists).subscribe(item =>
-    //   this.listsCards = item.filter(el => el.name!==this.card?.listCardsName));
-    this.listsCardsService.getListsCardsByBoardId(this.boardId).subscribe({
-    next: listsCards => this.listsCards = listsCards.filter(el => el.name!==this.card?.listCardsName)
-  })
+    try{
+      this.store.select('lists').subscribe(data=> this.listsCards = data.lists.filter(el => el.name!==this.card?.listCardsName));
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 
   updateCard(newValue: string | null){
@@ -55,6 +56,8 @@ export class CardComponent implements OnInit{
   }
 
   openViewCardWindow(){
+    if (this.card)
+    this.store.dispatch(loadCard({cardId:this.card.id}));
     this.dialogConfig.id = "projects-modal-component";
     this.modalDialogView = this.matDialog.open(ViewCardModalWindowComponent, {
       width: '800px',

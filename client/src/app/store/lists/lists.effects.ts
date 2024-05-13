@@ -11,25 +11,26 @@ export class ListsEffects{
     _loadLists = createEffect(() =>
     this.action$.pipe(
         ofType(loadLists),
-        exhaustMap((action) => {
+        switchMap((action) => {
             return this.listsService.getListsCardsByBoardId(action.boardId).pipe(
                 map((data) => {
                     return loadListsSuccess({lists: data});
+                }),
+                catchError((err)=> EMPTY)
+            )
+        })
+    ));
+
+    _addList = createEffect(()=>
+    this.action$.pipe(
+        ofType(addList),
+        exhaustMap((action) => {
+            return this.listsService.createListCards(action.listInput).pipe(
+                map((data) => {
+                    return addListSuccess({list: data});
                 }),
                 catchError(()=> EMPTY)
             )
         })
     ));
-    // _addList = createEffect(()=>
-    // this.action$.pipe(
-    //     ofType(addList),
-    //     exhaustMap((action) => {
-    //         return this.listsService.getListsCardsByBoardId(action).pipe(
-    //             map((data) => {
-    //                 return addListSuccess({list:data});
-    //             }),
-    //             catchError(()=> EMPTY)
-    //         )
-    //     })
-    // ));
 }
