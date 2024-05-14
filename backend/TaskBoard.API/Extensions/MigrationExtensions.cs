@@ -14,5 +14,12 @@ namespace TaskBoard.API.Extensions
 
             dbContext.Database.Migrate();
         }
+
+        public static async Task ApplyMigrations(this IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            await dbContext.Database.MigrateAsync();
+        }
     }
 }

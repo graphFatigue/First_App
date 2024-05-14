@@ -91,7 +91,7 @@ namespace TaskBoard.Application.Services
         public async Task UpdateAsync(UpdateBoardModel updateBoardModel)
         {
             var board = await _boardRepository.GetByIdAsync(updateBoardModel.Id)
-           ?? throw new NotFoundException($"Cards' List with id {updateBoardModel.Id} was not found");
+           ?? throw new NotFoundException($"Board with id {updateBoardModel.Id} was not found");
 
             if (!string.IsNullOrWhiteSpace(updateBoardModel.Name))
             {
@@ -106,7 +106,7 @@ namespace TaskBoard.Application.Services
             }
             catch (Exception)
             {
-                throw new NpgsqlException($"List with name {updateBoardModel.Name} already exists");
+                throw new NpgsqlException($"Board with name {updateBoardModel.Name} already exists");
             }
         }
     }

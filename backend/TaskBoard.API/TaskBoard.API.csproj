@@ -24,4 +24,8 @@
     <ProjectReference Include="..\TaskBoard.Infrastructure\TaskBoard.Infrastructure.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="TaskBoard.Tests"/>
+	</ItemGroup>
+
 </Project>

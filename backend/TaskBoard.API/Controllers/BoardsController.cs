@@ -2,7 +2,6 @@
 using Sieve.Models;
 using TaskBoard.Abstractions.Application;
 using TaskBoard.Common.Models.Board;
-using TaskBoard.Common.Models.ListCards;
 
 namespace TaskBoard.API.Controllers
 {
@@ -37,13 +36,6 @@ namespace TaskBoard.API.Controllers
             var board = await _boardService.GetByIdAsync(id);
             return Ok(board);
         }
-
-        //[HttpGet("{name}", Name = nameof(GetBoardByName))]
-        //public async Task<IActionResult> GetBoardByName(string name)
-        //{
-        //    var board = await _boardService.GetByNameAsync(name);
-        //    return Ok(board);
-        //}
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateBoardModel createBoardModel)
