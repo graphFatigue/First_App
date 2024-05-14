@@ -21,6 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskBoard.Domain", "TaskBoa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskBoard.Application", "TaskBoard.Application\TaskBoard.Application.csproj", "{F2CDF98A-226D-4A53-9545-DC94BCD9B31A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskBoard.Tests", "TaskBoard.Tests\TaskBoard.Tests.csproj", "{7E3B62CE-6942-4C53-BA8B-FB86CE8B8723}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C2FC61B-BF69-4809-A7D6-7B8BFDCED420} = {6C2FC61B-BF69-4809-A7D6-7B8BFDCED420}
+		{7868BAF1-86C4-482A-AF2F-FC81FFC6E78D} = {7868BAF1-86C4-482A-AF2F-FC81FFC6E78D}
+		{96A7F547-0179-4B5E-8377-3C897A521E12} = {96A7F547-0179-4B5E-8377-3C897A521E12}
+		{A6B4DCA5-8A1B-4111-81F9-3600604A8857} = {A6B4DCA5-8A1B-4111-81F9-3600604A8857}
+		{F2CDF98A-226D-4A53-9545-DC94BCD9B31A} = {F2CDF98A-226D-4A53-9545-DC94BCD9B31A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +60,10 @@ Global
 		{F2CDF98A-226D-4A53-9545-DC94BCD9B31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2CDF98A-226D-4A53-9545-DC94BCD9B31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2CDF98A-226D-4A53-9545-DC94BCD9B31A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3B62CE-6942-4C53-BA8B-FB86CE8B8723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3B62CE-6942-4C53-BA8B-FB86CE8B8723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3B62CE-6942-4C53-BA8B-FB86CE8B8723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3B62CE-6942-4C53-BA8B-FB86CE8B8723}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
+using TaskBoard.Common.Models.Board;
 using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
@@ -71,9 +72,11 @@ namespace TaskBoard.Application.Services
         }
         public async Task<CardModel> CreateAsync(CreateCardModel createCardModel)
         {
-            var board = await _boardRepository.GetByIdAsync(createCardModel.BoardId);
+            var board = await _boardRepository.GetByIdAsync(createCardModel.BoardId)
+                ?? throw new NotFoundException($"Board with id {createCardModel.BoardId} was not found");
 
-            var listCards = await _listCardsRepository.GetByNameAsync(createCardModel.ListCardsName);
+            var listCards = await _listCardsRepository.GetByNameAsync(createCardModel.ListCardsName)
+                ?? throw new NotFoundException($"List with name {createCardModel.ListCardsName} was not found");
 
             var card = _mapper.Map<Card>(createCardModel);
 

@@ -5,6 +5,7 @@ using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
+using TaskBoard.Common.Models.Board;
 using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
@@ -32,7 +33,8 @@ namespace TaskBoard.Application.Services
         }
         public async Task<ListCardsModel> CreateAsync(CreateListCardsModel createListCardsModel)
         {
-            var board = await _boardRepository.GetByIdAsync(createListCardsModel.BoardId);
+            var board = await _boardRepository.GetByIdAsync(createListCardsModel.BoardId)
+                ?? throw new NotFoundException($"Board with id {createListCardsModel.BoardId} was not found");
 
             var listCards = _mapper.Map<ListCards>(createListCardsModel);
 
@@ -55,7 +57,7 @@ namespace TaskBoard.Application.Services
         public async Task DeleteAsync(int id)
         {
             var listCards = await _listCardsRepository.GetByIdAsync(id)
-           ?? throw new NotFoundException($"Cards' List with id {id} was not found");
+                ?? throw new NotFoundException($"Cards' List with id {id} was not found");
 
             _listCardsRepository.Delete(listCards);
 
@@ -82,7 +84,7 @@ namespace TaskBoard.Application.Services
         public async Task<ListCardsModel> GetByNameAsync(string name)
         {
             var listCards = await _listCardsRepository.GetByNameAsync(name)
-           ?? throw new NotFoundException($"Cards' List with id {name} was not found");
+                ?? throw new NotFoundException($"Cards' List with id {name} was not found");
 
             return _mapper.Map<ListCardsModel>(listCards);
         }
@@ -90,7 +92,7 @@ namespace TaskBoard.Application.Services
         public async Task<ListCardsModel> GetByIdAsync(int id)
         {
             var listCards = await _listCardsRepository.GetByIdAsync(id)
-                       ?? throw new NotFoundException($"List with id {id} was not found");
+                ?? throw new NotFoundException($"List with id {id} was not found");
 
             return _mapper.Map<ListCardsModel>(listCards);
         }
@@ -98,7 +100,7 @@ namespace TaskBoard.Application.Services
         public async Task UpdateAsync(UpdateListCardsModel updateListCardsModel)
         {
             var listCards = await _listCardsRepository.GetByIdAsync(updateListCardsModel.Id)
-           ?? throw new NotFoundException($"Cards' List with id {updateListCardsModel.Id} was not found");
+                ?? throw new NotFoundException($"Cards' List with id {updateListCardsModel.Id} was not found");
 
             if (!string.IsNullOrWhiteSpace(updateListCardsModel.Name))
             {
