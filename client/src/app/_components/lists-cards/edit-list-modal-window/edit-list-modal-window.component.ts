@@ -7,6 +7,7 @@ import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
 import { Observable } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { UpdateListCardsModel } from 'src/app/_models/listCards/updateListCardsModel';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-edit-list-modal-window',
@@ -21,16 +22,15 @@ export class EditListModalWindowComponent implements OnInit{
   constructor(
     private listsCardsService: ListsCardsService,
     public dialogRef: MatDialogRef<EditListModalWindowComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: any,private changeDetectorRef: ChangeDetectorRef){}
+    @Inject(MAT_DIALOG_DATA) public data: any,private changeDetectorRef: ChangeDetectorRef,
+    private store: Store<{list:{list: ListCardsModel}}>){}
 
   ngOnInit(): void {
       this.loadListCards();
   }
 
   loadListCards(){
-    this.listsCardsService.getListCards(Number(this.data.listResponse)).subscribe({
-      next: resp => this.listCardsModel = resp
-    })
+    this.store.select('list').subscribe(data=> this.listCardsModel = data.list);
     this.changeDetectorRef.detectChanges();
   }
 

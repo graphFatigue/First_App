@@ -35,10 +35,9 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { ListsEffects } from './store/lists/lists.effects';
-import { boardReducer } from './store/boards/board.reducer';
-import { listsReducer } from './store/lists/lists.reducer';
-import { cardReducer } from './store/cards/card.reducer';
 import { CardEffects } from './store/cards/card.effects';
+import { AppState } from './store/global/App.state';
+import { ListEffects } from './store/list/list.effects';
 
 @NgModule({
   declarations: [
@@ -75,9 +74,9 @@ import { CardEffects } from './store/cards/card.effects';
     MatDialogModule,
     ContextMenuModule,
     ButtonModule,
-    StoreModule.forRoot({id: boardReducer, lists: listsReducer, card: cardReducer}),
+    StoreModule.forRoot(AppState),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([ListsEffects, CardEffects])
+    EffectsModule.forRoot([ListsEffects, CardEffects, ListEffects])
   ],
   providers: [    ],
   bootstrap: [AppComponent]

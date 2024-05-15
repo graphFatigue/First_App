@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { listsState } from "./lists.state";
-import { addList, addListSuccess, loadLists, loadListsSuccess } from "./lists.action";
+import { loadLists, loadListsSuccess } from "./lists.action";
 
 const _listsReducer = createReducer(listsState, 
     on(loadLists,(state, action)=>{
@@ -15,20 +15,6 @@ const _listsReducer = createReducer(listsState,
             lists:action.lists
         };
     }),
-    //     on(addList,(state, action)=>{
-    //     const _list = {...action.listInput}
-    //     return{
-    //         ...state,
-    //         boardId: action.listInput
-    //     };
-    // }),
-    on(addListSuccess,(state, action)=>{
-        const _list = {...action.list}
-        return{
-            ...state,
-            lists:[...state, _list]
-        };
-    })
     )
 
 export function listsReducer(state: any, action: any){

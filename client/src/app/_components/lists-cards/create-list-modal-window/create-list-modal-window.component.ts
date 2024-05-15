@@ -1,10 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
-import { CardsService } from 'src/app/_services/cards.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ListsCardsService } from 'src/app/_services/lists-cards.service';
-import { DatePipe } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsModel';
 

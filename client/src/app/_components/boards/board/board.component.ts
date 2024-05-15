@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { openBoard } from 'src/app/store/boards/board.actions';
 import { loadLists } from 'src/app/store/lists/lists.action';
 import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
+import { AppStateModel } from 'src/app/store/global/AppState.Model';
 
 @Component({
   selector: 'app-board',
@@ -20,7 +21,7 @@ export class BoardComponent implements OnInit{
   modalDialog: MatDialogRef<CreateListCardsModalWindowComponent, any> | undefined;
 
   constructor(private boardsService: BoardsService, private route: ActivatedRoute, public matDialog: MatDialog, 
-    private store: Store<{id:{id: number}, lists:{lists: ListCardsModel[]}}>){}
+    private store: Store<AppStateModel>){}
 
   ngOnInit(): void {
     this.loadBoard();

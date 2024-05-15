@@ -1,8 +1,8 @@
 import { createReducer,on } from "@ngrx/store";
 import {closeBoard, openBoard} from  "./board.actions";
-import { initialState } from "./board.state";
+import { boardId } from "./board.state";
 
-const _boardReducer = createReducer(initialState, 
+const _boardReducer = createReducer(boardId, 
     on(openBoard,(state, action)=>{
         return{
             ...state,

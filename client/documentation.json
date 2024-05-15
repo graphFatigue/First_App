@@ -123,21 +123,39 @@
         },
         {
             "name": "AppStateModel",
-            "id": "interface-AppStateModel-79cbfe01ba60ff0fd4e60949dbd0752d0ad55740da47005f7acb0aa82b4eecd1cf83e72e609e9c8a99f3c2daa20d4e88d25b3bdb70b4af3dcf697c3ab2d22754",
+            "id": "interface-AppStateModel-b87671a875dff58e91a2ccb4bd7abf8adbd0750b2696d22b89aa7e590d60e581565e435b794655b0e36a30b0f02b0e0492f0a5bc016e9bb10774688b2ed92856",
             "file": "src/app/store/global/AppState.Model.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import { ListCardsModel } from \"src/app/_models/listCards/listCardsModel\";\r\n\r\nexport interface AppStateModel{\r\n    boardId: number,\r\n    lists: ListCardsModel[]\r\n}",
+            "sourceCode": "import { CardModel } from \"src/app/_models/card/cardModel\";\r\nimport { ListCardsModel } from \"src/app/_models/listCards/listCardsModel\";\r\n\r\nexport interface AppStateModel{\r\n    id: number,\r\n    lists: ListCardsModel[],\r\n    card: CardModel,\r\n    list: ListCardsModel\r\n}",
             "properties": [
                 {
-                    "name": "boardId",
+                    "name": "card",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "CardModel",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                },
+                {
+                    "name": "id",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 4
+                    "line": 5
+                },
+                {
+                    "name": "list",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ListCardsModel",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
                 },
                 {
                     "name": "lists",
@@ -146,7 +164,7 @@
                     "type": "ListCardsModel[]",
                     "optional": false,
                     "description": "",
-                    "line": 5
+                    "line": 6
                 }
             ],
             "indexSignatures": [],
@@ -1400,6 +1418,82 @@
             "type": "injectable"
         },
         {
+            "name": "ListEffects",
+            "id": "injectable-ListEffects-6a126e582de69dea3ef738125d5fac0447d3dcca7713c1a1b620000a2e8a3ddc4aedc472d70038226965c6d633d3731ba272dc42e868a0b1affa6114a7491664",
+            "file": "src/app/store/list/list.effects.ts",
+            "properties": [
+                {
+                    "name": "_AddList",
+                    "defaultValue": "createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(addList),\r\n        switchMap(action =>\r\n            this.listCardsService.createListCards(action.listinput).pipe(\r\n                switchMap(data => of(\r\n                    addListSuccess({ listInput: data as CreateListCardsModel }),\r\n                )),\r\n                catchError((_error) => EMPTY)\r\n            )\r\n        )\r\n    )\r\n)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 26
+                },
+                {
+                    "name": "_loadList",
+                    "defaultValue": "createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(loadList),\r\n        switchMap((action) => {\r\n            return this.listCardsService.getListCards(action.listId).pipe(\r\n                map((data) => {\r\n                    return loadListSuccess({list: data});\r\n                }),\r\n                catchError((err)=> EMPTY)\r\n            )\r\n        })\r\n    ))",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 13
+                }
+            ],
+            "methods": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "description": "",
+            "rawdescription": "\n",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport {Actions, createEffect, ofType} from '@ngrx/effects'\r\nimport { EMPTY, catchError, exhaustMap, map, of, switchMap } from \"rxjs\";\r\nimport { CardsService } from \"src/app/_services/cards.service\";\r\nimport { addList, addListSuccess, loadList, loadListSuccess } from \"./list.actions\";\r\nimport { ListsCardsService } from \"src/app/_services/lists-cards.service\";\r\nimport { CreateListCardsModel } from \"src/app/_models/listCards/createListCardsModel\";\r\n\r\n@Injectable()\r\nexport class ListEffects{\r\n    constructor(private action$: Actions, private listCardsService: ListsCardsService){}\r\n\r\n    _loadList = createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(loadList),\r\n        switchMap((action) => {\r\n            return this.listCardsService.getListCards(action.listId).pipe(\r\n                map((data) => {\r\n                    return loadListSuccess({list: data});\r\n                }),\r\n                catchError((err)=> EMPTY)\r\n            )\r\n        })\r\n    ));\r\n\r\n    _AddList = createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(addList),\r\n        switchMap(action =>\r\n            this.listCardsService.createListCards(action.listinput).pipe(\r\n                switchMap(data => of(\r\n                    addListSuccess({ listInput: data as CreateListCardsModel }),\r\n                )),\r\n                catchError((_error) => EMPTY)\r\n            )\r\n        )\r\n    )\r\n);\r\n}",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "action$",
+                        "type": "Actions",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "listCardsService",
+                        "type": "ListsCardsService",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 10,
+                "jsdoctags": [
+                    {
+                        "name": "action$",
+                        "type": "Actions",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "listCardsService",
+                        "type": "ListsCardsService",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "extends": [],
+            "type": "injectable"
+        },
+        {
             "name": "ListsCardsService",
             "id": "injectable-ListsCardsService-7c950ff37c336437632eaa175cf0482e2168d9de562a2f8eac98e933ff8b9995ef7e64fb3b10ef6b8328fff989480781077482b2d03290b453a7687d3679fb10",
             "file": "src/app/_services/lists-cards.service.ts",
@@ -1603,19 +1697,9 @@
         },
         {
             "name": "ListsEffects",
-            "id": "injectable-ListsEffects-af9bdbbb65adc3f1148bc8d23c0036819b87397d7134d50710a72b06ea5cd829e6f6ef5a8286ae38b10d9b9a43519b6723c4f06b56fcffeb8451650cca229ca2",
+            "id": "injectable-ListsEffects-566a1d47c78427b133ddd1fc74afaccc93a5603b582f6a579a8f97dc7c34c1bd12911dcc3f9d17bf6070b0f707e7390ae83462ebc4a9ae9beea35125fba926f3",
             "file": "src/app/store/lists/lists.effects.ts",
             "properties": [
-                {
-                    "name": "_addList",
-                    "defaultValue": "createEffect(()=>\r\n    this.action$.pipe(\r\n        ofType(addList),\r\n        exhaustMap((action) => {\r\n            return this.listsService.createListCards(action.listInput).pipe(\r\n                map((data) => {\r\n                    return addListSuccess({list: data});\r\n                }),\r\n                catchError(()=> EMPTY)\r\n            )\r\n        })\r\n    ))",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 24
-                },
                 {
                     "name": "_loadLists",
                     "defaultValue": "createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(loadLists),\r\n        switchMap((action) => {\r\n            return this.listsService.getListsCardsByBoardId(action.boardId).pipe(\r\n                map((data) => {\r\n                    return loadListsSuccess({lists: data});\r\n                }),\r\n                catchError((err)=> EMPTY)\r\n            )\r\n        })\r\n    ))",
@@ -1632,7 +1716,7 @@
             "deprecationMessage": "",
             "description": "",
             "rawdescription": "\n",
-            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport {Actions, createEffect, ofType} from '@ngrx/effects'\r\nimport { ListsCardsService } from \"src/app/_services/lists-cards.service\";\r\nimport { addList, addListSuccess, loadLists, loadListsSuccess } from \"./lists.action\";\r\nimport { EMPTY, catchError, exhaustMap, map, switchMap } from \"rxjs\";\r\n\r\n@Injectable()\r\nexport class ListsEffects{\r\n    constructor(private action$: Actions, private listsService: ListsCardsService){}\r\n\r\n    _loadLists = createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(loadLists),\r\n        switchMap((action) => {\r\n            return this.listsService.getListsCardsByBoardId(action.boardId).pipe(\r\n                map((data) => {\r\n                    return loadListsSuccess({lists: data});\r\n                }),\r\n                catchError((err)=> EMPTY)\r\n            )\r\n        })\r\n    ));\r\n\r\n    _addList = createEffect(()=>\r\n    this.action$.pipe(\r\n        ofType(addList),\r\n        exhaustMap((action) => {\r\n            return this.listsService.createListCards(action.listInput).pipe(\r\n                map((data) => {\r\n                    return addListSuccess({list: data});\r\n                }),\r\n                catchError(()=> EMPTY)\r\n            )\r\n        })\r\n    ));\r\n}",
+            "sourceCode": "import { Injectable } from \"@angular/core\";\r\nimport {Actions, createEffect, ofType} from '@ngrx/effects'\r\nimport { ListsCardsService } from \"src/app/_services/lists-cards.service\";\r\nimport { loadLists, loadListsSuccess } from \"./lists.action\";\r\nimport { EMPTY, catchError, exhaustMap, map, switchMap } from \"rxjs\";\r\n\r\n@Injectable()\r\nexport class ListsEffects{\r\n    constructor(private action$: Actions, private listsService: ListsCardsService){}\r\n\r\n    _loadLists = createEffect(() =>\r\n    this.action$.pipe(\r\n        ofType(loadLists),\r\n        switchMap((action) => {\r\n            return this.listsService.getListsCardsByBoardId(action.boardId).pipe(\r\n                map((data) => {\r\n                    return loadListsSuccess({lists: data});\r\n                }),\r\n                catchError((err)=> EMPTY)\r\n            )\r\n        })\r\n    ));\r\n}",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1987,7 +2071,7 @@
         },
         {
             "name": "BoardComponent",
-            "id": "component-BoardComponent-ee0ab03d7b7148a74c032bbaa729c2d4e0b87a38ae630901e71d9d7908a2941370707dda78c23e38626fd3194761e5d43f80587ddcb2ddcc84d3453452a97cdf",
+            "id": "component-BoardComponent-8df05cac42052135bc9e2659da516a89b6a41353e291af56d19970806c750421145d24f53540b9ad1826e1ee9709cbf0a642496764f2244cf6e54d5124ad9a8c",
             "file": "src/app/_components/boards/board/board.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2014,7 +2098,7 @@
                     "type": "BoardModel | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 19
                 },
                 {
                     "name": "dialogConfig",
@@ -2024,7 +2108,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 20
                 },
                 {
                     "name": "matDialog",
@@ -2033,7 +2117,7 @@
                     "type": "MatDialog",
                     "optional": false,
                     "description": "",
-                    "line": 22,
+                    "line": 23,
                     "modifierKind": [
                         125
                     ]
@@ -2045,7 +2129,7 @@
                     "type": "MatDialogRef<CreateListCardsModalWindowComponent | any> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 21
                 }
             ],
             "methodsClass": [
@@ -2055,7 +2139,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 29,
+                    "line": 30,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2065,7 +2149,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 25,
+                    "line": 26,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2075,7 +2159,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 39,
+                    "line": 40,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -2089,7 +2173,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { ActivatedRoute } from '@angular/router';\r\nimport { BoardModel } from 'src/app/_models/board/boardModel';\r\nimport { BoardsService } from 'src/app/_services/boards.service';\r\nimport { CreateListCardsModalWindowComponent } from '../../lists-cards/create-list-modal-window/create-list-modal-window.component';\r\nimport { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';\r\nimport { Store } from '@ngrx/store';\r\nimport { openBoard } from 'src/app/store/boards/board.actions';\r\nimport { loadLists } from 'src/app/store/lists/lists.action';\r\nimport { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';\r\n\r\n@Component({\r\n  selector: 'app-board',\r\n  templateUrl: './board.component.html',\r\n  styleUrls: ['./board.component.css']\r\n})\r\nexport class BoardComponent implements OnInit{\r\n  board: BoardModel | undefined;\r\n  dialogConfig = new MatDialogConfig();\r\n  modalDialog: MatDialogRef<CreateListCardsModalWindowComponent, any> | undefined;\r\n\r\n  constructor(private boardsService: BoardsService, private route: ActivatedRoute, public matDialog: MatDialog, \r\n    private store: Store<{id:{id: number}, lists:{lists: ListCardsModel[]}}>){}\r\n\r\n  ngOnInit(): void {\r\n    this.loadBoard();\r\n  }\r\n\r\n  loadBoard(){\r\n    var id =  this.route.snapshot.paramMap.get('id');\r\n    if (!id) return;\r\n    this.store.dispatch(openBoard({id:Number(id)}))\r\n    this.boardsService.getBoard(id).subscribe({\r\n      next: board => this.board = board\r\n    })\r\n    this.store.dispatch(loadLists({boardId:Number(id)}));\r\n  }\r\n\r\n  openCreateForm(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialog = this.matDialog.open(CreateListCardsModalWindowComponent, {\r\n      width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        boardResponse: this.board?.id\r\n      }\r\n    });\r\n  }\r\n\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { ActivatedRoute } from '@angular/router';\r\nimport { BoardModel } from 'src/app/_models/board/boardModel';\r\nimport { BoardsService } from 'src/app/_services/boards.service';\r\nimport { CreateListCardsModalWindowComponent } from '../../lists-cards/create-list-modal-window/create-list-modal-window.component';\r\nimport { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';\r\nimport { Store } from '@ngrx/store';\r\nimport { openBoard } from 'src/app/store/boards/board.actions';\r\nimport { loadLists } from 'src/app/store/lists/lists.action';\r\nimport { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';\r\nimport { AppStateModel } from 'src/app/store/global/AppState.Model';\r\n\r\n@Component({\r\n  selector: 'app-board',\r\n  templateUrl: './board.component.html',\r\n  styleUrls: ['./board.component.css']\r\n})\r\nexport class BoardComponent implements OnInit{\r\n  board: BoardModel | undefined;\r\n  dialogConfig = new MatDialogConfig();\r\n  modalDialog: MatDialogRef<CreateListCardsModalWindowComponent, any> | undefined;\r\n\r\n  constructor(private boardsService: BoardsService, private route: ActivatedRoute, public matDialog: MatDialog, \r\n    private store: Store<AppStateModel>){}\r\n\r\n  ngOnInit(): void {\r\n    this.loadBoard();\r\n  }\r\n\r\n  loadBoard(){\r\n    var id =  this.route.snapshot.paramMap.get('id');\r\n    if (!id) return;\r\n    this.store.dispatch(openBoard({id:Number(id)}))\r\n    this.boardsService.getBoard(id).subscribe({\r\n      next: board => this.board = board\r\n    })\r\n    this.store.dispatch(loadLists({boardId:Number(id)}));\r\n  }\r\n\r\n  openCreateForm(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialog = this.matDialog.open(CreateListCardsModalWindowComponent, {\r\n      width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        boardResponse: this.board?.id\r\n      }\r\n    });\r\n  }\r\n\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2124,12 +2208,12 @@
                     },
                     {
                         "name": "store",
-                        "type": "Store<literal type>",
+                        "type": "Store<AppStateModel>",
                         "deprecated": false,
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 20,
+                "line": 21,
                 "jsdoctags": [
                     {
                         "name": "boardsService",
@@ -2160,7 +2244,7 @@
                     },
                     {
                         "name": "store",
-                        "type": "Store<literal type>",
+                        "type": "Store<AppStateModel>",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -2352,7 +2436,7 @@
         },
         {
             "name": "BoardListComponent",
-            "id": "component-BoardListComponent-1ce6c185f2a2cb527c4ac749abab04e12cbd8ed762d7f6ee8431dd2c6cd88fe3d676856a05ce0218da6f19df2e251c30d50ca4ee905e07edb7101a244f10cc97",
+            "id": "component-BoardListComponent-865e5635b53c3bf307a59a33b7d2d65f53a453f2f8bf60a4f660f09fadb2137aa2f1672c9489fb9799eec4f3c9d1a9172a300da2caa63bc8d119f06a79f1ae70",
             "file": "src/app/_components/boards/board-list/board-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2379,7 +2463,7 @@
                     "type": "Observable<BoardModel[]>",
                     "optional": true,
                     "description": "",
-                    "line": 16
+                    "line": 17
                 },
                 {
                     "name": "dialogConfig",
@@ -2389,7 +2473,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 18
                 },
                 {
                     "name": "matDialog",
@@ -2398,7 +2482,7 @@
                     "type": "MatDialog",
                     "optional": false,
                     "description": "",
-                    "line": 20,
+                    "line": 21,
                     "modifierKind": [
                         125
                     ]
@@ -2410,7 +2494,7 @@
                     "type": "MatDialogRef<CreateBoardModalWindowComponent | any> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 19
                 }
             ],
             "methodsClass": [
@@ -2420,7 +2504,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 28,
+                    "line": 29,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2430,7 +2514,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 24,
+                    "line": 25,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2447,7 +2531,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 32,
+                    "line": 33,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2468,7 +2552,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 36,
+                    "line": 37,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -2482,7 +2566,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';\r\nimport { BehaviorSubject, Observable } from 'rxjs';\r\nimport { BoardModel } from 'src/app/_models/board/boardModel';\r\nimport { BoardsService } from 'src/app/_services/boards.service';\r\nimport { CreateBoardModalWindowComponent } from '../create-board-modal-window/create-board-modal-window.component';\r\nimport { Store } from '@ngrx/store';\r\nimport { openBoard } from 'src/app/store/boards/board.actions';\r\n\r\n@Component({\r\n  selector: 'app-board-list',\r\n  templateUrl: './board-list.component.html',\r\n  styleUrls: ['./board-list.component.css']\r\n})\r\nexport class BoardListComponent implements OnInit{\r\n  boards$? : Observable<BoardModel[]>\r\n  dialogConfig = new MatDialogConfig();\r\n  modalDialog: MatDialogRef<CreateBoardModalWindowComponent, any> | undefined;\r\n\r\n  constructor(private boardsService: BoardsService, public matDialog: MatDialog, \r\n    private store: Store<{id:{id: number}}>)\r\n    {}\r\n\r\n  ngOnInit(): void {\r\n    this.loadBoards();\r\n  }\r\n    \r\n  loadBoards(){\r\n    this.boards$ = this.boardsService.getBoards()\r\n  }\r\n\r\n  openBoardPage(id: number){\r\n    this.store.dispatch(openBoard({id:id}))\r\n  }\r\n\r\n  openCreateForm(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialog = this.matDialog.open(CreateBoardModalWindowComponent, {\r\n      width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        \r\n      }\r\n    });\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';\r\nimport { BehaviorSubject, Observable } from 'rxjs';\r\nimport { BoardModel } from 'src/app/_models/board/boardModel';\r\nimport { BoardsService } from 'src/app/_services/boards.service';\r\nimport { CreateBoardModalWindowComponent } from '../create-board-modal-window/create-board-modal-window.component';\r\nimport { Store } from '@ngrx/store';\r\nimport { openBoard } from 'src/app/store/boards/board.actions';\r\nimport { AppStateModel } from 'src/app/store/global/AppState.Model';\r\n\r\n@Component({\r\n  selector: 'app-board-list',\r\n  templateUrl: './board-list.component.html',\r\n  styleUrls: ['./board-list.component.css']\r\n})\r\nexport class BoardListComponent implements OnInit{\r\n  boards$? : Observable<BoardModel[]>\r\n  dialogConfig = new MatDialogConfig();\r\n  modalDialog: MatDialogRef<CreateBoardModalWindowComponent, any> | undefined;\r\n\r\n  constructor(private boardsService: BoardsService, public matDialog: MatDialog, \r\n    private store: Store<AppStateModel>)\r\n    {}\r\n\r\n  ngOnInit(): void {\r\n    this.loadBoards();\r\n  }\r\n    \r\n  loadBoards(){\r\n    this.boards$ = this.boardsService.getBoards()\r\n  }\r\n\r\n  openBoardPage(id: number){\r\n    this.store.dispatch(openBoard({id:id}))\r\n  }\r\n\r\n  openCreateForm(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialog = this.matDialog.open(CreateBoardModalWindowComponent, {\r\n      width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        \r\n      }\r\n    });\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2511,12 +2595,12 @@
                     },
                     {
                         "name": "store",
-                        "type": "Store<literal type>",
+                        "type": "Store<AppStateModel>",
                         "deprecated": false,
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 18,
+                "line": 19,
                 "jsdoctags": [
                     {
                         "name": "boardsService",
@@ -2538,7 +2622,7 @@
                     },
                     {
                         "name": "store",
-                        "type": "Store<literal type>",
+                        "type": "Store<AppStateModel>",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -3599,7 +3683,7 @@
         },
         {
             "name": "CreateListCardsModalWindowComponent",
-            "id": "component-CreateListCardsModalWindowComponent-3311421961ea84a448e91b9e8a68a0b0c74654606352360867181e245b6dbbe7bdeec82564b7d25465b801955f1f5035ffbeb1f9c58d66b01d30c1096f1aaf3d",
+            "id": "component-CreateListCardsModalWindowComponent-da801b42f2deb9685d3292dcae05803ff46eb0c73f91bc6455e3f52f2a6e166bcb855f32b86cfbc7470097986fa33c65743015a73056140763fc4d5994edb0df",
             "file": "src/app/_components/lists-cards/create-list-modal-window/create-list-modal-window.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -3626,7 +3710,7 @@
                     "type": "NgForm | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 18,
+                    "line": 15,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -3644,7 +3728,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 24,
+                    "line": 21,
                     "decorators": [
                         {
                             "name": "Inject",
@@ -3663,7 +3747,7 @@
                     "type": "MatDialogRef<CreateListCardsModalWindowComponent>",
                     "optional": false,
                     "description": "",
-                    "line": 23,
+                    "line": 20,
                     "modifierKind": [
                         125
                     ]
@@ -3676,7 +3760,7 @@
                     "type": "string[]",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 16
                 },
                 {
                     "name": "listCardsModel",
@@ -3686,7 +3770,7 @@
                     "type": "CreateListCardsModel",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 14
                 }
             ],
             "methodsClass": [
@@ -3696,7 +3780,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 59,
+                    "line": 56,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3706,7 +3790,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 31,
+                    "line": 28,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3716,7 +3800,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 27,
+                    "line": 24,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -3730,7 +3814,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, Inject, OnInit, ViewChild } from '@angular/core';\r\nimport { MatDialogRef } from '@angular/material/dialog';\r\nimport { UpdateCardModel } from 'src/app/_models/card/updateCardModel';\r\nimport { CardsService } from 'src/app/_services/cards.service';\r\nimport {MAT_DIALOG_DATA} from '@angular/material/dialog';\r\nimport { ListsCardsService } from 'src/app/_services/lists-cards.service';\r\nimport { DatePipe } from '@angular/common';\r\nimport { NgForm } from '@angular/forms';\r\nimport { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsModel';\r\n\r\n@Component({\r\n  selector: 'app-create-list-modal-window',\r\n  templateUrl: './create-list-modal-window.component.html',\r\n  styleUrls: ['./create-list-modal-window.component.css']\r\n})\r\nexport class CreateListCardsModalWindowComponent implements OnInit{\r\n  listCardsModel: CreateListCardsModel = {name: '', boardId: 0};\r\n  @ViewChild('createForm') createForm: NgForm | undefined;\r\n  errors: string[] = [];\r\n\r\n  constructor(\r\n    private listsCardsService: ListsCardsService,\r\n    public dialogRef: MatDialogRef<CreateListCardsModalWindowComponent>, \r\n    @Inject(MAT_DIALOG_DATA) public data: any){}\r\n\r\n\r\n  ngOnInit(): void {\r\n    this.listCardsModel.boardId = Number(this.data.boardResponse);\r\n  }\r\n\r\n  createListCards(){\r\n      this.listsCardsService.createListCards(this.createForm?.value).subscribe(\r\n        next => {\r\n          this.closeModal();\r\n          window.location.reload();\r\n      },\r\n        err =>{\r\n          this.errors = [];\r\n          console.log(err.error);\r\n          try{\r\n            let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));\r\n            for (var fieldName in validationErrorDictionary) {\r\n              if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n                this.errors.push(validationErrorDictionary[fieldName]);\r\n              }\r\n          }\r\n          }\r\n          catch{\r\n            let validationErrorDictionary = JSON.parse(JSON.stringify(err.error));\r\n            for (var fieldName in validationErrorDictionary) {\r\n              if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n                this.errors.push(validationErrorDictionary[fieldName]);\r\n              }\r\n          }\r\n          }\r\n      })\r\n  }\r\n    \r\n  closeModal() {\r\n    this.dialogRef.close();\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, Inject, OnInit, ViewChild } from '@angular/core';\r\nimport { MatDialogRef } from '@angular/material/dialog';\r\nimport {MAT_DIALOG_DATA} from '@angular/material/dialog';\r\nimport { ListsCardsService } from 'src/app/_services/lists-cards.service';\r\nimport { NgForm } from '@angular/forms';\r\nimport { CreateListCardsModel } from 'src/app/_models/listCards/createListCardsModel';\r\n\r\n@Component({\r\n  selector: 'app-create-list-modal-window',\r\n  templateUrl: './create-list-modal-window.component.html',\r\n  styleUrls: ['./create-list-modal-window.component.css']\r\n})\r\nexport class CreateListCardsModalWindowComponent implements OnInit{\r\n  listCardsModel: CreateListCardsModel = {name: '', boardId: 0};\r\n  @ViewChild('createForm') createForm: NgForm | undefined;\r\n  errors: string[] = [];\r\n\r\n  constructor(\r\n    private listsCardsService: ListsCardsService,\r\n    public dialogRef: MatDialogRef<CreateListCardsModalWindowComponent>, \r\n    @Inject(MAT_DIALOG_DATA) public data: any){}\r\n\r\n\r\n  ngOnInit(): void {\r\n    this.listCardsModel.boardId = Number(this.data.boardResponse);\r\n  }\r\n\r\n  createListCards(){\r\n      this.listsCardsService.createListCards(this.createForm?.value).subscribe(\r\n        next => {\r\n          this.closeModal();\r\n          window.location.reload();\r\n      },\r\n        err =>{\r\n          this.errors = [];\r\n          console.log(err.error);\r\n          try{\r\n            let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));\r\n            for (var fieldName in validationErrorDictionary) {\r\n              if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n                this.errors.push(validationErrorDictionary[fieldName]);\r\n              }\r\n          }\r\n          }\r\n          catch{\r\n            let validationErrorDictionary = JSON.parse(JSON.stringify(err.error));\r\n            for (var fieldName in validationErrorDictionary) {\r\n              if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n                this.errors.push(validationErrorDictionary[fieldName]);\r\n              }\r\n          }\r\n          }\r\n      })\r\n  }\r\n    \r\n  closeModal() {\r\n    this.dialogRef.close();\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -3764,7 +3848,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 19,
+                "line": 16,
                 "jsdoctags": [
                     {
                         "name": "listsCardsService",
@@ -4784,7 +4868,7 @@
         },
         {
             "name": "EditListModalWindowComponent",
-            "id": "component-EditListModalWindowComponent-d655b6fa99e3632db90ed4dc412443665c933852625619005281a390a2dbd2ba3ec61dbd8715f322abb1067083a86b3889d498175a670fe3e176f2452ffc5fbc",
+            "id": "component-EditListModalWindowComponent-3246401ed4dae75c2324c5aaca22ff9891713491f6087aceaa2ed051022e79af17ee43f6ecf95860c04e9981cdf9a1b00b70c228fbff2403afdece4454fbc6fb",
             "file": "src/app/_components/lists-cards/edit-list-modal-window/edit-list-modal-window.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -4811,7 +4895,7 @@
                     "type": "any",
                     "optional": false,
                     "description": "",
-                    "line": 24,
+                    "line": 25,
                     "decorators": [
                         {
                             "name": "Inject",
@@ -4830,7 +4914,7 @@
                     "type": "MatDialogRef<EditListModalWindowComponent>",
                     "optional": false,
                     "description": "",
-                    "line": 23,
+                    "line": 24,
                     "modifierKind": [
                         125
                     ]
@@ -4842,7 +4926,7 @@
                     "type": "NgForm | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 18,
+                    "line": 19,
                     "decorators": [
                         {
                             "name": "ViewChild",
@@ -4861,7 +4945,7 @@
                     "type": "string[]",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 20
                 },
                 {
                     "name": "listCardsModel",
@@ -4871,7 +4955,7 @@
                     "type": "UpdateListCardsModel",
                     "optional": false,
                     "description": "",
-                    "line": 17
+                    "line": 18
                 }
             ],
             "methodsClass": [
@@ -4891,7 +4975,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 30,
+                    "line": 32,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -4901,7 +4985,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 26,
+                    "line": 28,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -4925,7 +5009,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';\r\nimport { MatDialogRef } from '@angular/material/dialog';\r\nimport { CardsService } from 'src/app/_services/cards.service';\r\nimport {MAT_DIALOG_DATA} from '@angular/material/dialog';\r\nimport { ListsCardsService } from 'src/app/_services/lists-cards.service';\r\nimport { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';\r\nimport { Observable } from 'rxjs';\r\nimport { NgForm } from '@angular/forms';\r\nimport { UpdateListCardsModel } from 'src/app/_models/listCards/updateListCardsModel';\r\n\r\n@Component({\r\n  selector: 'app-edit-list-modal-window',\r\n  templateUrl: './edit-list-modal-window.component.html',\r\n  styleUrls: ['./edit-list-modal-window.component.css']\r\n})\r\nexport class EditListModalWindowComponent implements OnInit{\r\n  listCardsModel: UpdateListCardsModel = {id: 0, name:''};\r\n  @ViewChild('editForm') editForm: NgForm | undefined;\r\n  errors: string[] = [];\r\n\r\n  constructor(\r\n    private listsCardsService: ListsCardsService,\r\n    public dialogRef: MatDialogRef<EditListModalWindowComponent>, \r\n    @Inject(MAT_DIALOG_DATA) public data: any,private changeDetectorRef: ChangeDetectorRef){}\r\n\r\n  ngOnInit(): void {\r\n      this.loadListCards();\r\n  }\r\n\r\n  loadListCards(){\r\n    this.listsCardsService.getListCards(Number(this.data.listResponse)).subscribe({\r\n      next: resp => this.listCardsModel = resp\r\n    })\r\n    this.changeDetectorRef.detectChanges();\r\n  }\r\n\r\n  updateListCards(){\r\n    this.listsCardsService.updateListCards(this.editForm?.value).subscribe( next => {\r\n      this.closeModal();\r\n      window.location.reload();\r\n  },\r\n    err =>{\r\n      this.errors = [];\r\n      console.log(err.error);\r\n      try{\r\n        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));\r\n        for (var fieldName in validationErrorDictionary) {\r\n          if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n            this.errors.push(validationErrorDictionary[fieldName]);\r\n          }\r\n      }\r\n      }\r\n      catch{\r\n        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error));\r\n        for (var fieldName in validationErrorDictionary) {\r\n          if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n            this.errors.push(validationErrorDictionary[fieldName]);\r\n          }\r\n      }\r\n      }\r\n  })\r\n  }\r\n    \r\n  closeModal() {\r\n    this.dialogRef.close();\r\n  }\r\n}\r\n",
+            "sourceCode": "import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';\r\nimport { MatDialogRef } from '@angular/material/dialog';\r\nimport { CardsService } from 'src/app/_services/cards.service';\r\nimport {MAT_DIALOG_DATA} from '@angular/material/dialog';\r\nimport { ListsCardsService } from 'src/app/_services/lists-cards.service';\r\nimport { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';\r\nimport { Observable } from 'rxjs';\r\nimport { NgForm } from '@angular/forms';\r\nimport { UpdateListCardsModel } from 'src/app/_models/listCards/updateListCardsModel';\r\nimport { Store } from '@ngrx/store';\r\n\r\n@Component({\r\n  selector: 'app-edit-list-modal-window',\r\n  templateUrl: './edit-list-modal-window.component.html',\r\n  styleUrls: ['./edit-list-modal-window.component.css']\r\n})\r\nexport class EditListModalWindowComponent implements OnInit{\r\n  listCardsModel: UpdateListCardsModel = {id: 0, name:''};\r\n  @ViewChild('editForm') editForm: NgForm | undefined;\r\n  errors: string[] = [];\r\n\r\n  constructor(\r\n    private listsCardsService: ListsCardsService,\r\n    public dialogRef: MatDialogRef<EditListModalWindowComponent>, \r\n    @Inject(MAT_DIALOG_DATA) public data: any,private changeDetectorRef: ChangeDetectorRef,\r\n    private store: Store<{list:{list: ListCardsModel}}>){}\r\n\r\n  ngOnInit(): void {\r\n      this.loadListCards();\r\n  }\r\n\r\n  loadListCards(){\r\n    this.store.select('list').subscribe(data=> this.listCardsModel = data.list);\r\n    this.changeDetectorRef.detectChanges();\r\n  }\r\n\r\n  updateListCards(){\r\n    this.listsCardsService.updateListCards(this.editForm?.value).subscribe( next => {\r\n      this.closeModal();\r\n      window.location.reload();\r\n  },\r\n    err =>{\r\n      this.errors = [];\r\n      console.log(err.error);\r\n      try{\r\n        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error.errors));\r\n        for (var fieldName in validationErrorDictionary) {\r\n          if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n            this.errors.push(validationErrorDictionary[fieldName]);\r\n          }\r\n      }\r\n      }\r\n      catch{\r\n        let validationErrorDictionary = JSON.parse(JSON.stringify(err.error));\r\n        for (var fieldName in validationErrorDictionary) {\r\n          if (validationErrorDictionary.hasOwnProperty(fieldName)) {\r\n            this.errors.push(validationErrorDictionary[fieldName]);\r\n          }\r\n      }\r\n      }\r\n  })\r\n  }\r\n    \r\n  closeModal() {\r\n    this.dialogRef.close();\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -4963,9 +5047,15 @@
                         "type": "ChangeDetectorRef",
                         "deprecated": false,
                         "deprecationMessage": ""
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<literal type>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
-                "line": 19,
+                "line": 20,
                 "jsdoctags": [
                     {
                         "name": "listsCardsService",
@@ -4997,6 +5087,15 @@
                     {
                         "name": "changeDetectorRef",
                         "type": "ChangeDetectorRef",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<literal type>",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -5325,7 +5424,7 @@
         },
         {
             "name": "ListContextMenuComponent",
-            "id": "component-ListContextMenuComponent-c2d5bf6858121750b60714224190f502ff94539355065bbbd3464a1054b63ae7dc20c937dffdde6920494de931fae63ce7763015f5a4eead4c837a43778ae86b",
+            "id": "component-ListContextMenuComponent-89f1a9f8258a4b4de1311d4f91dcfd27685a4891d571dc3974469a8952f718a06186b70c4c40d2d6d4acbccd022afe1cd286568afd949aa311402584adf2b704",
             "file": "src/app/_components/lists-cards/list-context-menu/list-context-menu.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -5348,7 +5447,7 @@
                     "name": "id",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 17,
+                    "line": 20,
                     "type": "any",
                     "decorators": []
                 },
@@ -5356,7 +5455,7 @@
                     "name": "target",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 16,
+                    "line": 19,
                     "type": "any",
                     "decorators": []
                 }
@@ -5371,7 +5470,7 @@
                     "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 21
                 },
                 {
                     "name": "items",
@@ -5381,7 +5480,7 @@
                     "type": "MenuItem[]",
                     "optional": false,
                     "description": "",
-                    "line": 26
+                    "line": 29
                 },
                 {
                     "name": "matDialog",
@@ -5390,7 +5489,7 @@
                     "type": "MatDialog",
                     "optional": false,
                     "description": "",
-                    "line": 22,
+                    "line": 25,
                     "modifierKind": [
                         125
                     ]
@@ -5402,7 +5501,7 @@
                     "type": "MatDialogRef<DeleteListModalWindowComponent | any> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 23
                 },
                 {
                     "name": "modalDialogEdit",
@@ -5411,7 +5510,7 @@
                     "type": "MatDialogRef<EditListModalWindowComponent | any> | undefined",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 22
                 }
             ],
             "methodsClass": [
@@ -5421,7 +5520,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 54,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -5431,7 +5530,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 37,
+                    "line": 40,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -5445,7 +5544,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { ChangeDetectionStrategy, Component, Inject, Input, ViewChild } from '@angular/core';\r\nimport { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';\r\nimport { MenuItem } from 'primeng/api';\r\nimport { ListsCardsService } from 'src/app/_services/lists-cards.service';\r\nimport { EditListModalWindowComponent } from '../edit-list-modal-window/edit-list-modal-window.component';\r\nimport { DeleteListModalWindowComponent } from '../delete-list-modal-window/delete-list-modal-window.component';\r\n\r\n@Component({\r\n  selector: 'app-list-context-menu',\r\n  templateUrl: './list-context-menu.component.html',\r\n  styleUrls: ['./list-context-menu.component.css'],\r\n  changeDetection: ChangeDetectionStrategy.OnPush\r\n})\r\n\r\nexport class ListContextMenuComponent {\r\n  @Input() target: any;\r\n  @Input() id: any;\r\n  dialogConfig = new MatDialogConfig();\r\n  modalDialogEdit: MatDialogRef<EditListModalWindowComponent, any> | undefined;\r\n  modalDialogDelete: MatDialogRef<DeleteListModalWindowComponent, any> | undefined;\r\n\r\n  constructor(private listsCards: ListsCardsService, public matDialog: MatDialog){\r\n\r\n  }\r\n\r\n  items: MenuItem[] = [\r\n    {\r\n    label: 'Edit',\r\n    command: () => this.openEditForm()\r\n  },\r\n  {\r\n    label: 'Delete',\r\n    command: () => this.openDeletePopup()\r\n  }\r\n  ]\r\n\r\n  openEditForm(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialogEdit = this.matDialog.open(EditListModalWindowComponent, {\r\n      width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        listResponse: this.id\r\n      }\r\n    });\r\n  }\r\n\r\n  openDeletePopup(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialogDelete = this.matDialog.open(DeleteListModalWindowComponent, {\r\n      // width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        listResponse: this.id\r\n      }\r\n    });\r\n  }\r\n\r\n}\r\n",
+            "sourceCode": "import { ChangeDetectionStrategy, Component, Inject, Input, ViewChild } from '@angular/core';\r\nimport { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';\r\nimport { MenuItem } from 'primeng/api';\r\nimport { ListsCardsService } from 'src/app/_services/lists-cards.service';\r\nimport { EditListModalWindowComponent } from '../edit-list-modal-window/edit-list-modal-window.component';\r\nimport { DeleteListModalWindowComponent } from '../delete-list-modal-window/delete-list-modal-window.component';\r\nimport { Store } from '@ngrx/store';\r\nimport { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';\r\nimport { loadList } from 'src/app/store/list/list.actions';\r\n\r\n@Component({\r\n  selector: 'app-list-context-menu',\r\n  templateUrl: './list-context-menu.component.html',\r\n  styleUrls: ['./list-context-menu.component.css'],\r\n  changeDetection: ChangeDetectionStrategy.OnPush\r\n})\r\n\r\nexport class ListContextMenuComponent {\r\n  @Input() target: any;\r\n  @Input() id: any;\r\n  dialogConfig = new MatDialogConfig();\r\n  modalDialogEdit: MatDialogRef<EditListModalWindowComponent, any> | undefined;\r\n  modalDialogDelete: MatDialogRef<DeleteListModalWindowComponent, any> | undefined;\r\n\r\n  constructor(private listsCards: ListsCardsService, public matDialog: MatDialog, private store: Store<{list: ListCardsModel}>){\r\n\r\n  }\r\n\r\n  items: MenuItem[] = [\r\n    {\r\n    label: 'Edit',\r\n    command: () => this.openEditForm()\r\n  },\r\n  {\r\n    label: 'Delete',\r\n    command: () => this.openDeletePopup()\r\n  }\r\n  ]\r\n\r\n  openEditForm(){\r\n    this.store.dispatch(loadList({listId:this.id}));\r\n    setTimeout(() => {\r\n      this.dialogConfig.id = \"projects-modal-component\";\r\n      this.modalDialogEdit = this.matDialog.open(EditListModalWindowComponent, {\r\n        width: '500px',\r\n        // height: '550px',\r\n        data: {\r\n          listResponse: this.id\r\n        }\r\n      });\r\n    }, 100);\r\n  }\r\n\r\n  openDeletePopup(){\r\n    this.dialogConfig.id = \"projects-modal-component\";\r\n    this.modalDialogDelete = this.matDialog.open(DeleteListModalWindowComponent, {\r\n      // width: '500px',\r\n      // height: '550px',\r\n      data: {\r\n        listResponse: this.id\r\n      }\r\n    });\r\n  }\r\n\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -5471,9 +5570,15 @@
                         "type": "MatDialog",
                         "deprecated": false,
                         "deprecationMessage": ""
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<literal type>",
+                        "deprecated": false,
+                        "deprecationMessage": ""
                     }
                 ],
-                "line": 20,
+                "line": 23,
                 "jsdoctags": [
                     {
                         "name": "listsCards",
@@ -5487,6 +5592,15 @@
                     {
                         "name": "matDialog",
                         "type": "MatDialog",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<literal type>",
                         "deprecated": false,
                         "deprecationMessage": "",
                         "tagName": {
@@ -6132,13 +6246,13 @@
     "modules": [
         {
             "name": "AppModule",
-            "id": "module-AppModule-e3fcb9f21d93171c2710ee12e44c62e6cca14181bb943d40e610ee1e2cb6ec105002b66366b29fe1a0237b3b99cd4564667fb5afa76b5c34ae67535d20af9ddc",
+            "id": "module-AppModule-e111e8da597c52357f3f952aad369420a4319e734847c28864b67b0f1950b41438b8f3a2c92f0f99a3c31d626fb85b3779f4ed28ba60b07fdcc7fa95e989dea0",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/app.module.ts",
             "methods": [],
-            "sourceCode": "import { NgModule, isDevMode } from '@angular/core';\r\nimport { BrowserModule, provideClientHydration } from '@angular/platform-browser';\r\nimport { HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';\r\nimport { AppRoutingModule } from './app-routing.module';\r\nimport { AppComponent } from './app.component';\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\nimport { HomeComponent } from './_components/home/home.component';\r\nimport { CardComponent } from './_components/cards/card/card.component';\r\nimport { ListCardsComponent } from './_components/lists-cards/list-cards/list-cards.component';\r\nimport { NavComponent } from './_components/nav/nav.component';\r\nimport { ActionsSidebarComponent } from './_components/actions/actions-sidebar/actions-sidebar.component';\r\nimport { FormsModule } from '@angular/forms';\r\nimport { EditCardModalWindowComponent } from './_components/cards/edit-card-modal-window/edit-card-modal-window.component';\r\nimport { TooltipModule } from 'ngx-bootstrap/tooltip';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { MatDialogModule } from '@angular/material/dialog';\r\nimport {ButtonModule} from 'primeng/button';\r\nimport { ContextMenuModule } from 'primeng/contextmenu';\r\nimport { CreateCardModalWindowComponent } from './_components/cards/create-card-modal-window/create-card-modal-window.component';\r\nimport { DeleteCardModalWindowComponent } from './_components/cards/delete-card-modal-window/delete-card-modal-window.component';\r\nimport { ListContextMenuComponent } from './_components/lists-cards/list-context-menu/list-context-menu.component';\r\nimport { CardContextMenuComponent } from './_components/cards/card-context-menu/card-context-menu.component';\r\nimport { EditListModalWindowComponent } from './_components/lists-cards/edit-list-modal-window/edit-list-modal-window.component';\r\nimport { DeleteListModalWindowComponent } from './_components/lists-cards/delete-list-modal-window/delete-list-modal-window.component';\r\nimport { CreateListCardsModalWindowComponent } from './_components/lists-cards/create-list-modal-window/create-list-modal-window.component';\r\nimport { ViewCardModalWindowComponent } from './_components/cards/view-card-modal-window/view-card-modal-window.component';\r\nimport { RouterModule } from '@angular/router';\r\nimport { BoardListComponent } from './_components/boards/board-list/board-list.component';\r\nimport { BoardComponent } from './_components/boards/board/board.component';\r\nimport { BoardContextMenuComponent } from './_components/boards/board-context-menu/board-context-menu.component';\r\nimport { CreateBoardModalWindowComponent } from './_components/boards/create-board-modal-window/create-board-modal-window.component';\r\nimport { DeleteBoardModalWindowComponent } from './_components/boards/delete-board-modal-window/delete-board-modal-window.component';\r\nimport { EditBoardModalWindowComponent } from './_components/boards/edit-board-modal-window/edit-board-modal-window.component';\r\nimport { StoreModule } from '@ngrx/store';\r\nimport { StoreDevtoolsModule } from '@ngrx/store-devtools';\r\nimport { EffectsModule } from '@ngrx/effects';\r\nimport { ListsEffects } from './store/lists/lists.effects';\r\nimport { boardReducer } from './store/boards/board.reducer';\r\nimport { listsReducer } from './store/lists/lists.reducer';\r\nimport { cardReducer } from './store/cards/card.reducer';\r\nimport { CardEffects } from './store/cards/card.effects';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    AppComponent,\r\n    HomeComponent,\r\n    CardComponent,\r\n    ListCardsComponent,\r\n    NavComponent,\r\n    ActionsSidebarComponent,\r\n    EditCardModalWindowComponent,\r\n    EditListModalWindowComponent,\r\n    CardContextMenuComponent,\r\n    CreateCardModalWindowComponent,\r\n    CreateListCardsModalWindowComponent,\r\n    DeleteCardModalWindowComponent,\r\n    DeleteListModalWindowComponent,\r\n    ListContextMenuComponent,\r\n    ViewCardModalWindowComponent,\r\n    BoardListComponent,\r\n    BoardComponent,\r\n    BoardContextMenuComponent,\r\n    CreateBoardModalWindowComponent,\r\n    DeleteBoardModalWindowComponent,\r\n    EditBoardModalWindowComponent\r\n  ],\r\n  imports: [\r\n    BrowserModule,\r\n    AppRoutingModule,\r\n    BrowserAnimationsModule,\r\n    HttpClientModule,\r\n    FormsModule,\r\n    TooltipModule.forRoot(),\r\n    MatButtonModule,\r\n    MatDialogModule,\r\n    ContextMenuModule,\r\n    ButtonModule,\r\n    StoreModule.forRoot({id: boardReducer, lists: listsReducer, card: cardReducer}),\r\n    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),\r\n    EffectsModule.forRoot([ListsEffects, CardEffects])\r\n  ],\r\n  providers: [    ],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule { }\r\n",
+            "sourceCode": "import { NgModule, isDevMode } from '@angular/core';\r\nimport { BrowserModule, provideClientHydration } from '@angular/platform-browser';\r\nimport { HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';\r\nimport { AppRoutingModule } from './app-routing.module';\r\nimport { AppComponent } from './app.component';\r\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\r\nimport { HomeComponent } from './_components/home/home.component';\r\nimport { CardComponent } from './_components/cards/card/card.component';\r\nimport { ListCardsComponent } from './_components/lists-cards/list-cards/list-cards.component';\r\nimport { NavComponent } from './_components/nav/nav.component';\r\nimport { ActionsSidebarComponent } from './_components/actions/actions-sidebar/actions-sidebar.component';\r\nimport { FormsModule } from '@angular/forms';\r\nimport { EditCardModalWindowComponent } from './_components/cards/edit-card-modal-window/edit-card-modal-window.component';\r\nimport { TooltipModule } from 'ngx-bootstrap/tooltip';\r\nimport { MatButtonModule } from '@angular/material/button';\r\nimport { MatDialogModule } from '@angular/material/dialog';\r\nimport {ButtonModule} from 'primeng/button';\r\nimport { ContextMenuModule } from 'primeng/contextmenu';\r\nimport { CreateCardModalWindowComponent } from './_components/cards/create-card-modal-window/create-card-modal-window.component';\r\nimport { DeleteCardModalWindowComponent } from './_components/cards/delete-card-modal-window/delete-card-modal-window.component';\r\nimport { ListContextMenuComponent } from './_components/lists-cards/list-context-menu/list-context-menu.component';\r\nimport { CardContextMenuComponent } from './_components/cards/card-context-menu/card-context-menu.component';\r\nimport { EditListModalWindowComponent } from './_components/lists-cards/edit-list-modal-window/edit-list-modal-window.component';\r\nimport { DeleteListModalWindowComponent } from './_components/lists-cards/delete-list-modal-window/delete-list-modal-window.component';\r\nimport { CreateListCardsModalWindowComponent } from './_components/lists-cards/create-list-modal-window/create-list-modal-window.component';\r\nimport { ViewCardModalWindowComponent } from './_components/cards/view-card-modal-window/view-card-modal-window.component';\r\nimport { RouterModule } from '@angular/router';\r\nimport { BoardListComponent } from './_components/boards/board-list/board-list.component';\r\nimport { BoardComponent } from './_components/boards/board/board.component';\r\nimport { BoardContextMenuComponent } from './_components/boards/board-context-menu/board-context-menu.component';\r\nimport { CreateBoardModalWindowComponent } from './_components/boards/create-board-modal-window/create-board-modal-window.component';\r\nimport { DeleteBoardModalWindowComponent } from './_components/boards/delete-board-modal-window/delete-board-modal-window.component';\r\nimport { EditBoardModalWindowComponent } from './_components/boards/edit-board-modal-window/edit-board-modal-window.component';\r\nimport { StoreModule } from '@ngrx/store';\r\nimport { StoreDevtoolsModule } from '@ngrx/store-devtools';\r\nimport { EffectsModule } from '@ngrx/effects';\r\nimport { ListsEffects } from './store/lists/lists.effects';\r\nimport { CardEffects } from './store/cards/card.effects';\r\nimport { AppState } from './store/global/App.state';\r\nimport { ListEffects } from './store/list/list.effects';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    AppComponent,\r\n    HomeComponent,\r\n    CardComponent,\r\n    ListCardsComponent,\r\n    NavComponent,\r\n    ActionsSidebarComponent,\r\n    EditCardModalWindowComponent,\r\n    EditListModalWindowComponent,\r\n    CardContextMenuComponent,\r\n    CreateCardModalWindowComponent,\r\n    CreateListCardsModalWindowComponent,\r\n    DeleteCardModalWindowComponent,\r\n    DeleteListModalWindowComponent,\r\n    ListContextMenuComponent,\r\n    ViewCardModalWindowComponent,\r\n    BoardListComponent,\r\n    BoardComponent,\r\n    BoardContextMenuComponent,\r\n    CreateBoardModalWindowComponent,\r\n    DeleteBoardModalWindowComponent,\r\n    EditBoardModalWindowComponent\r\n  ],\r\n  imports: [\r\n    BrowserModule,\r\n    AppRoutingModule,\r\n    BrowserAnimationsModule,\r\n    HttpClientModule,\r\n    FormsModule,\r\n    TooltipModule.forRoot(),\r\n    MatButtonModule,\r\n    MatDialogModule,\r\n    ContextMenuModule,\r\n    ButtonModule,\r\n    StoreModule.forRoot(AppState),\r\n    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),\r\n    EffectsModule.forRoot([ListsEffects, CardEffects, ListEffects])\r\n  ],\r\n  providers: [    ],\r\n  bootstrap: [AppComponent]\r\n})\r\nexport class AppModule { }\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -6285,7 +6399,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "createReducer(initialState, \r\n    on(openBoard,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            id: action.id\r\n        };\r\n    }),\r\n    on(closeBoard,\r\n        (state)=>{\r\n            return{\r\n                ...state,\r\n                id: 0\r\n            };\r\n        })\r\n    )"
+                "defaultValue": "createReducer(boardId, \r\n    on(openBoard,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            id: action.id\r\n        };\r\n    }),\r\n    on(closeBoard,\r\n        (state)=>{\r\n            return{\r\n                ...state,\r\n                id: 0\r\n            };\r\n        })\r\n    )"
             },
             {
                 "name": "_cardReducer",
@@ -6298,6 +6412,16 @@
                 "defaultValue": "createReducer(cardState, \r\n    on(loadCard, (state, action)=>{\r\n        return{\r\n            ...state,\r\n            cardId: action.cardId\r\n        }\r\n    }),\r\n    on(loadCardSuccess,(state, action) =>{\r\n        return{\r\n            ...state,\r\n            card:action.card\r\n        };\r\n    })\r\n    )"
             },
             {
+                "name": "_listReducer",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/list/list.reducer.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createReducer(listState, \r\n    on(loadList, (state, action)=>{\r\n        return{\r\n            ...state,\r\n            listId: action.listId\r\n        }\r\n    }),\r\n    on(loadListSuccess,(state, action) =>{\r\n        return{\r\n            ...state,\r\n            list:action.list\r\n        };\r\n    }),\r\n    on(addListSuccess,(state,action)=>{\r\n        const _list={...action.listInput};\r\n        return{\r\n            ...state,\r\n            bloglist:_list\r\n        }\r\n    }),\r\n    )"
+            },
+            {
                 "name": "_listsReducer",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -6305,47 +6429,47 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "createReducer(listsState, \r\n    on(loadLists,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            boardId: action.boardId\r\n        };\r\n    }),\r\n    on(loadListsSuccess,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            lists:action.lists\r\n        };\r\n    }),\r\n    //     on(addList,(state, action)=>{\r\n    //     const _list = {...action.listInput}\r\n    //     return{\r\n    //         ...state,\r\n    //         boardId: action.listInput\r\n    //     };\r\n    // }),\r\n    on(addListSuccess,(state, action)=>{\r\n        const _list = {...action.list}\r\n        return{\r\n            ...state,\r\n            lists:[...state, _list]\r\n        };\r\n    })\r\n    )"
+                "defaultValue": "createReducer(listsState, \r\n    on(loadLists,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            boardId: action.boardId\r\n        };\r\n    }),\r\n    on(loadListsSuccess,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            lists:action.lists\r\n        };\r\n    }),\r\n    )"
             },
             {
                 "name": "ADD_LIST",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/store/lists/lists.action.ts",
+                "file": "src/app/store/list/list.actions.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "string",
-                "defaultValue": "'[list component] add list'"
+                "defaultValue": "'[create list component] add list'"
             },
             {
                 "name": "ADD_LIST_SUCCESS",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/store/lists/lists.action.ts",
+                "file": "src/app/store/list/list.actions.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "string",
-                "defaultValue": "'[list component] add list success'"
+                "defaultValue": "'[create list component] add list success'"
             },
             {
                 "name": "addList",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/store/lists/lists.action.ts",
+                "file": "src/app/store/list/list.actions.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "createAction(ADD_LIST, props<{listInput: CreateListCardsModel}>())"
+                "defaultValue": "createAction(ADD_LIST,props<{listinput:CreateListCardsModel}>())"
             },
             {
                 "name": "addListSuccess",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/store/lists/lists.action.ts",
+                "file": "src/app/store/list/list.actions.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "createAction(ADD_LIST_SUCCESS, props<{list: CreateListCardsModel}>())"
+                "defaultValue": "createAction(ADD_LIST_SUCCESS,props<{listInput:CreateListCardsModel}>())"
             },
             {
                 "name": "AppState",
@@ -6355,7 +6479,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "object",
-                "defaultValue": "{\r\n    boardId: boardReducer, \r\n    lists: listsReducer\r\n}"
+                "defaultValue": "{\r\n    id: boardReducer, \r\n    lists: listsReducer,\r\n    card: cardReducer,\r\n    list: listReducer\r\n}"
+            },
+            {
+                "name": "boardId",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/boards/board.state.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "object",
+                "defaultValue": "{\r\n    id:0\r\n}"
             },
             {
                 "name": "cardState",
@@ -6418,16 +6552,6 @@
                 "defaultValue": "createFeatureSelector<ListCardsModel[]>('listsoo')"
             },
             {
-                "name": "initialState",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/store/boards/board.state.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "object",
-                "defaultValue": "{\r\n    id:0\r\n}"
-            },
-            {
                 "name": "listsState",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -6436,6 +6560,16 @@
                 "deprecationMessage": "",
                 "type": "ListCardsModel[]",
                 "defaultValue": "[]"
+            },
+            {
+                "name": "listState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/list/list.state.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "ListCardsModel",
+                "defaultValue": "{id: 0, cards:[], name:'', boardId:0}"
             },
             {
                 "name": "LOAD_CARD",
@@ -6456,6 +6590,26 @@
                 "deprecationMessage": "",
                 "type": "string",
                 "defaultValue": "'[view card component] load card success'"
+            },
+            {
+                "name": "LOAD_LIST",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/list/list.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "string",
+                "defaultValue": "'[edit list component] load list'"
+            },
+            {
+                "name": "LOAD_LIST_SUCCESS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/list/list.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "string",
+                "defaultValue": "'[edit list component] load list success'"
             },
             {
                 "name": "LOAD_LISTS",
@@ -6498,6 +6652,16 @@
                 "defaultValue": "createAction(LOAD_CARD_SUCCESS, props<{card: CardModel}>())"
             },
             {
+                "name": "loadList",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/list/list.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(LOAD_LIST, props<{listId: number}>())"
+            },
+            {
                 "name": "loadLists",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -6516,6 +6680,16 @@
                 "deprecationMessage": "",
                 "type": "",
                 "defaultValue": "createAction(LOAD_LISTS_SUCCESS, props<{lists: ListCardsModel[]}>())"
+            },
+            {
+                "name": "loadListSuccess",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/list/list.actions.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "createAction(LOAD_LIST_SUCCESS, props<{list: ListCardsModel}>())"
             },
             {
                 "name": "openBoard",
@@ -6585,6 +6759,49 @@
             {
                 "name": "cardReducer",
                 "file": "src/app/store/cards/card.reducer.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    },
+                    {
+                        "name": "action",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "type": "any",
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "listReducer",
+                "file": "src/app/store/list/list.reducer.ts",
                 "ctype": "miscellaneous",
                 "subtype": "function",
                 "deprecated": false,
@@ -6711,7 +6928,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "createReducer(initialState, \r\n    on(openBoard,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            id: action.id\r\n        };\r\n    }),\r\n    on(closeBoard,\r\n        (state)=>{\r\n            return{\r\n                ...state,\r\n                id: 0\r\n            };\r\n        })\r\n    )"
+                    "defaultValue": "createReducer(boardId, \r\n    on(openBoard,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            id: action.id\r\n        };\r\n    }),\r\n    on(closeBoard,\r\n        (state)=>{\r\n            return{\r\n                ...state,\r\n                id: 0\r\n            };\r\n        })\r\n    )"
                 }
             ],
             "src/app/store/cards/card.reducer.ts": [
@@ -6726,6 +6943,18 @@
                     "defaultValue": "createReducer(cardState, \r\n    on(loadCard, (state, action)=>{\r\n        return{\r\n            ...state,\r\n            cardId: action.cardId\r\n        }\r\n    }),\r\n    on(loadCardSuccess,(state, action) =>{\r\n        return{\r\n            ...state,\r\n            card:action.card\r\n        };\r\n    })\r\n    )"
                 }
             ],
+            "src/app/store/list/list.reducer.ts": [
+                {
+                    "name": "_listReducer",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/list/list.reducer.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createReducer(listState, \r\n    on(loadList, (state, action)=>{\r\n        return{\r\n            ...state,\r\n            listId: action.listId\r\n        }\r\n    }),\r\n    on(loadListSuccess,(state, action) =>{\r\n        return{\r\n            ...state,\r\n            list:action.list\r\n        };\r\n    }),\r\n    on(addListSuccess,(state,action)=>{\r\n        const _list={...action.listInput};\r\n        return{\r\n            ...state,\r\n            bloglist:_list\r\n        }\r\n    }),\r\n    )"
+                }
+            ],
             "src/app/store/lists/lists.reducer.ts": [
                 {
                     "name": "_listsReducer",
@@ -6735,89 +6964,89 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "createReducer(listsState, \r\n    on(loadLists,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            boardId: action.boardId\r\n        };\r\n    }),\r\n    on(loadListsSuccess,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            lists:action.lists\r\n        };\r\n    }),\r\n    //     on(addList,(state, action)=>{\r\n    //     const _list = {...action.listInput}\r\n    //     return{\r\n    //         ...state,\r\n    //         boardId: action.listInput\r\n    //     };\r\n    // }),\r\n    on(addListSuccess,(state, action)=>{\r\n        const _list = {...action.list}\r\n        return{\r\n            ...state,\r\n            lists:[...state, _list]\r\n        };\r\n    })\r\n    )"
+                    "defaultValue": "createReducer(listsState, \r\n    on(loadLists,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            boardId: action.boardId\r\n        };\r\n    }),\r\n    on(loadListsSuccess,(state, action)=>{\r\n        return{\r\n            ...state,\r\n            lists:action.lists\r\n        };\r\n    }),\r\n    )"
                 }
             ],
-            "src/app/store/lists/lists.action.ts": [
+            "src/app/store/list/list.actions.ts": [
                 {
                     "name": "ADD_LIST",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
-                    "defaultValue": "'[list component] add list'"
+                    "defaultValue": "'[create list component] add list'"
                 },
                 {
                     "name": "ADD_LIST_SUCCESS",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
-                    "defaultValue": "'[list component] add list success'"
+                    "defaultValue": "'[create list component] add list success'"
                 },
                 {
                     "name": "addList",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "createAction(ADD_LIST, props<{listInput: CreateListCardsModel}>())"
+                    "defaultValue": "createAction(ADD_LIST,props<{listinput:CreateListCardsModel}>())"
                 },
                 {
                     "name": "addListSuccess",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "createAction(ADD_LIST_SUCCESS, props<{list: CreateListCardsModel}>())"
+                    "defaultValue": "createAction(ADD_LIST_SUCCESS,props<{listInput:CreateListCardsModel}>())"
                 },
                 {
-                    "name": "LOAD_LISTS",
+                    "name": "LOAD_LIST",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
-                    "defaultValue": "'[card component] load lists'"
+                    "defaultValue": "'[edit list component] load list'"
                 },
                 {
-                    "name": "LOAD_LISTS_SUCCESS",
+                    "name": "LOAD_LIST_SUCCESS",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "string",
-                    "defaultValue": "'[card component] load lists success'"
+                    "defaultValue": "'[edit list component] load list success'"
                 },
                 {
-                    "name": "loadLists",
+                    "name": "loadList",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "createAction(LOAD_LISTS, props<{boardId: number}>())"
+                    "defaultValue": "createAction(LOAD_LIST, props<{listId: number}>())"
                 },
                 {
-                    "name": "loadListsSuccess",
+                    "name": "loadListSuccess",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/store/lists/lists.action.ts",
+                    "file": "src/app/store/list/list.actions.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "createAction(LOAD_LISTS_SUCCESS, props<{lists: ListCardsModel[]}>())"
+                    "defaultValue": "createAction(LOAD_LIST_SUCCESS, props<{list: ListCardsModel}>())"
                 }
             ],
             "src/app/store/global/App.state.ts": [
@@ -6829,7 +7058,19 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "object",
-                    "defaultValue": "{\r\n    boardId: boardReducer, \r\n    lists: listsReducer\r\n}"
+                    "defaultValue": "{\r\n    id: boardReducer, \r\n    lists: listsReducer,\r\n    card: cardReducer,\r\n    list: listReducer\r\n}"
+                }
+            ],
+            "src/app/store/boards/board.state.ts": [
+                {
+                    "name": "boardId",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/boards/board.state.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "object",
+                    "defaultValue": "{\r\n    id:0\r\n}"
                 }
             ],
             "src/app/store/cards/card.state.ts": [
@@ -6912,18 +7153,6 @@
                     "defaultValue": "createFeatureSelector<ListCardsModel[]>('listsoo')"
                 }
             ],
-            "src/app/store/boards/board.state.ts": [
-                {
-                    "name": "initialState",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/store/boards/board.state.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "object",
-                    "defaultValue": "{\r\n    id:0\r\n}"
-                }
-            ],
             "src/app/store/lists/lists.state.ts": [
                 {
                     "name": "listsState",
@@ -6934,6 +7163,18 @@
                     "deprecationMessage": "",
                     "type": "ListCardsModel[]",
                     "defaultValue": "[]"
+                }
+            ],
+            "src/app/store/list/list.state.ts": [
+                {
+                    "name": "listState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/list/list.state.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ListCardsModel",
+                    "defaultValue": "{id: 0, cards:[], name:'', boardId:0}"
                 }
             ],
             "src/app/store/cards/card.actions.ts": [
@@ -6976,6 +7217,48 @@
                     "deprecationMessage": "",
                     "type": "",
                     "defaultValue": "createAction(LOAD_CARD_SUCCESS, props<{card: CardModel}>())"
+                }
+            ],
+            "src/app/store/lists/lists.action.ts": [
+                {
+                    "name": "LOAD_LISTS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/lists/lists.action.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "defaultValue": "'[card component] load lists'"
+                },
+                {
+                    "name": "LOAD_LISTS_SUCCESS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/lists/lists.action.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "defaultValue": "'[card component] load lists success'"
+                },
+                {
+                    "name": "loadLists",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/lists/lists.action.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(LOAD_LISTS, props<{boardId: number}>())"
+                },
+                {
+                    "name": "loadListsSuccess",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/lists/lists.action.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "createAction(LOAD_LISTS_SUCCESS, props<{lists: ListCardsModel[]}>())"
                 }
             ],
             "src/app/_models/priority/priority.ts": [
@@ -7041,6 +7324,51 @@
                 {
                     "name": "cardReducer",
                     "file": "src/app/store/cards/card.reducer.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "action",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "action",
+                            "type": "any",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "src/app/store/list/list.reducer.ts": [
+                {
+                    "name": "listReducer",
+                    "file": "src/app/store/list/list.reducer.ts",
                     "ctype": "miscellaneous",
                     "subtype": "function",
                     "deprecated": false,
@@ -7609,7 +7937,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "initialState",
+                "name": "boardId",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -7709,11 +8037,11 @@
                 "linktype": "interface",
                 "name": "AppStateModel",
                 "coveragePercent": 0,
-                "coverageCount": "0/3",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
-                "filePath": "src/app/store/lists/lists.action.ts",
+                "filePath": "src/app/store/list/list.actions.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -7723,7 +8051,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/store/lists/lists.action.ts",
+                "filePath": "src/app/store/list/list.actions.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -7733,7 +8061,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/store/lists/lists.action.ts",
+                "filePath": "src/app/store/list/list.actions.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -7743,11 +8071,90 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/store/lists/lists.action.ts",
+                "filePath": "src/app/store/list/list.actions.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "addListSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LOAD_LIST",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LOAD_LIST_SUCCESS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "loadList",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "loadListSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.effects.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "ListEffects",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.reducer.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "listReducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.reducer.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "_listReducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/list/list.state.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "listState",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -7798,7 +8205,7 @@
                 "linktype": "injectable",
                 "name": "ListsEffects",
                 "coveragePercent": 0,
-                "coverageCount": "0/4",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {

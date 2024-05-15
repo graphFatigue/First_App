@@ -4,6 +4,9 @@ import { MenuItem } from 'primeng/api';
 import { ListsCardsService } from 'src/app/_services/lists-cards.service';
 import { EditListModalWindowComponent } from '../edit-list-modal-window/edit-list-modal-window.component';
 import { DeleteListModalWindowComponent } from '../delete-list-modal-window/delete-list-modal-window.component';
+import { Store } from '@ngrx/store';
+import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
+import { loadList } from 'src/app/store/list/list.actions';
 
 @Component({
   selector: 'app-list-context-menu',
@@ -19,7 +22,7 @@ export class ListContextMenuComponent {
   modalDialogEdit: MatDialogRef<EditListModalWindowComponent, any> | undefined;
   modalDialogDelete: MatDialogRef<DeleteListModalWindowComponent, any> | undefined;
 
-  constructor(private listsCards: ListsCardsService, public matDialog: MatDialog){
+  constructor(private listsCards: ListsCardsService, public matDialog: MatDialog, private store: Store<{list: ListCardsModel}>){
 
   }
 
@@ -35,14 +38,17 @@ export class ListContextMenuComponent {
   ]
 
   openEditForm(){
-    this.dialogConfig.id = "projects-modal-component";
-    this.modalDialogEdit = this.matDialog.open(EditListModalWindowComponent, {
-      width: '500px',
-      // height: '550px',
-      data: {
-        listResponse: this.id
-      }
-    });
+    this.store.dispatch(loadList({listId:this.id}));
+    setTimeout(() => {
+      this.dialogConfig.id = "projects-modal-component";
+      this.modalDialogEdit = this.matDialog.open(EditListModalWindowComponent, {
+        width: '500px',
+        // height: '550px',
+        data: {
+          listResponse: this.id
+        }
+      });
+    }, 100);
   }
 
   openDeletePopup(){

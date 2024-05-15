@@ -1,3 +1,3 @@
-export const initialState={
+export const boardId={
     id:0
 }
