@@ -4,12 +4,8 @@ import { CardModel } from 'src/app/_models/card/cardModel';
 import { CardsService } from 'src/app/_services/cards.service';
 import { UpdateCardModel } from 'src/app/_models/card/updateCardModel';
 import { ListCardsModel } from 'src/app/_models/listCards/listCardsModel';
-import { Observable } from 'rxjs';
-import { ListsCardsService } from 'src/app/_services/lists-cards.service';
 import { ViewCardModalWindowComponent } from '../view-card-modal-window/view-card-modal-window.component';
 import { Store } from '@ngrx/store';
-import { loadLists } from 'src/app/store/lists/lists.action';
-import { getlists } from 'src/app/store/lists/lists.selector';
 import { loadCard } from 'src/app/store/cards/card.actions';
 
 @Component({

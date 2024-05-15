@@ -66,7 +66,6 @@ namespace TaskBoard.Tests.IntegrationTests.Controllers
             // Assert
             deleteResponse.StatusCode.Should().Be(HttpStatusCode.NoContent); // Status Code 204
 
-            // Verify that attempting to retrieve the deleted list cards results in a Not Found response
             var getResponse = await _client.GetAsync($"/api/listCards/{createdListCards.Id}");
             getResponse.StatusCode.Should().Be(HttpStatusCode.NotFound); // Status Code 404
         }

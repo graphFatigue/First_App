@@ -30,13 +30,11 @@
            </div> 
         </div>
         <div class="box b">
-            <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
                 <select disabled="true" name="listCardsName" class="form-control" [(ngModel)]="cardModel.listCardsName">
-                    <option *ngFor="let listCards of listsCards" [ngValue]="listCards.name">
-                    {{listCards.name}}
+                    <option selected [ngValue]="card.listCardsName">
+                        {{card.listCardsName}}
                     </option>
                 </select>
-            </ng-container>
         </div>
         <div class="box c">
             <div class="row-prop">

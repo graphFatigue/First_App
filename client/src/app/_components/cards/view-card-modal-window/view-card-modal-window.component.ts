@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { CardsService } from 'src/app/_services/cards.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CardModel } from 'src/app/_models/card/cardModel';
 import { ListsCardsService } from 'src/app/_services/lists-cards.service';
@@ -29,7 +28,6 @@ export class ViewCardModalWindowComponent implements OnInit{
   @ViewChild('editForm') editForm: NgForm | undefined
 
   constructor(
-    private cardsService: CardsService, 
     private listsCardsService: ListsCardsService,
     private actionsService: ActionsService,
     public dialogRef: MatDialogRef<ViewCardModalWindowComponent>, 
