@@ -1,59 +1,57 @@
-.col{
-    display:inline-flex;
-    flex-direction: column;
-    border-top: 2px;
-    border-bottom: 2px;
-    border-color: rgba(0,0,0,0.1);;
-    border-bottom-style:solid;
-    margin-bottom: 10px;
-    width: 100%;
+.col {
+  display: inline-flex;
+  flex-direction: column;
+  border-top: 2px;
+  border-bottom: 2px;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-bottom-style: solid;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
-.sdbar{
-    width: 100%;
-    overflow-x: hidden;
+.sdbar {
+  width: 100%;
+  overflow-x: hidden;
 }
 
-p{
-    padding: 0px;
+p {
+  padding: 0px;
 }
 
-.scrollSidebar{
-    max-height: calc(100vh - 3.5rem);
-    overflow-y: auto;
+.scrollSidebar {
+  max-height: calc(100vh - 3.5rem);
+  overflow-y: auto;
 }
 
-.date{
-    color: grey;
-    margin-bottom: 10px;
+.date {
+  color: grey;
+  margin-bottom: 10px;
 }
 
-.message{
-    margin-bottom: 3px;
+.message {
+  margin-bottom: 3px;
 }
 
-.history{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 2.22px;
-    border-style: dashed;
-    border-color: gray;
-    background-color: white;
+.history {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 2.22px;
+  border-style: dashed;
+  border-color: gray;
+  background-color: white;
 }
 
-.history:hover{
-    background-color: rgba(0,0,0,0.05);
+.history:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-svg{
-    padding-top: 2px;
-    margin: 0px;
+svg {
+  padding-top: 2px;
+  margin: 0px;
 }
-
-

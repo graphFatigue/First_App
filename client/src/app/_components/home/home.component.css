@@ -1,68 +1,10 @@
-
-  .dots {
-	  border: 2.22px;
-    border-style: dashed;
-    border-color: gray;
-    background-color: white;
-    width: 15rem;
-    margin-bottom: 20px;
-    margin-left: 0px;
-    padding: 5px;
-    font-size: large;
-  }
-
-.dots:hover{
-  background-color: rgba(0,0,0,0.05);
-}
-
-.column-container{
+.column-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   gap: 10px;
 }
 
-
-.col{
-  width: 25%;
-  align-items: self-start;
-  display: inline;
-}
-
-.lCards{
-  display: grid; 
-  gap:50px;
-  justify-content: space-between;
-  grid-template-columns: repeat(4, 23%);
-  width: 100%;
-}
-
-@media screen and (max-width: 1300px) {
-  .lCards {
-    display: grid; 
-    justify-content: space-between;
-    column-gap: 50px;
-    grid-template-columns: repeat(3, 30%);
-  }
-}
-
-@media screen and (max-width: 880px) {
-  .lCards {
-    display: grid; 
-    justify-content: space-between;
-    column-gap: 50px;
-    grid-template-columns: repeat(2, 48%);
-  }
-}
-
-@media screen and (max-width: 580px) {
-  .lCards {
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
-    grid-template-columns: repeat(1, 100%);
-  }
-  .column-container{
-    padding-left: 70px;
-  }
+h1 {
+  font-size: xx-large;
 }
