@@ -1,11 +1,11 @@
-.sdbar{
-    width: 100%;
-    overflow-x: hidden;
-    min-width: 300px;
+.sdbar {
+  width: 100%;
+  overflow-x: hidden;
+  min-width: 300px;
 }
 
 @media screen and (max-width: 580px) {
-    .navbar-brand{
-      padding-left: 70px;
-    }
+  .navbar-brand {
+    padding-left: 70px;
   }
+}

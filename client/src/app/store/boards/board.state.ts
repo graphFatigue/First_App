@@ -1,3 +1,3 @@
-export const boardId={
-    id:0
-}
+export const boardId = {
+  id: 0,
+};

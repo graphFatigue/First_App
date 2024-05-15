@@ -1,53 +1,55 @@
-.card{
-    margin-right:20px!important;
-    margin-top:10px!important;
-    }
+.card {
+  margin-right: 20px !important;
+  margin-top: 10px !important;
+}
 
-.row-container{
+.row-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: first baseline;
 }
 
-h4{
+h4 {
   width: 170px;
 }
 
-.bi:hover, bi:focus{
-  fill: darkslategrey
+.bi:hover,
+bi:focus {
+  fill: darkslategrey;
 }
 
-.selectStyle{
+.selectStyle {
   background-color: rgba(0, 0, 0, 0.05);
   font-size: medium;
 }
 
-.optionStyle{
+.optionStyle {
   font-size: medium;
 }
 
-.card-priority{
+.card-priority {
   font-size: medium;
   padding: 5px;
   width: max-content;
-  color:rgba(0, 0, 0, 0.4);
-  background-color:aliceblue;
+  color: rgba(0, 0, 0, 0.4);
+  background-color: aliceblue;
   border-radius: 20%;
   margin-bottom: 5px;
 }
 
-h4, .card-description{
+h4,
+.card-description {
   margin-bottom: 5px;
   margin-left: 5px;
 }
 
-.card-description{
+.card-description {
   font-size: small;
   color: lightslategray;
 }
 
-.dueDate{
+.dueDate {
   display: flex;
   width: fit-content;
   flex-direction: row;
@@ -57,53 +59,53 @@ h4, .card-description{
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.h6dd{
+.h6dd {
   font-size: medium;
   margin: 0px;
 }
 
-.col{
-width: 20%;
-align-items: self-start;
-display: inline;
-gap: 10px;
-}
-  
-.bi:hover, bi:focus{
-fill: darkslategrey
+.col {
+  width: 20%;
+  align-items: self-start;
+  display: inline;
+  gap: 10px;
 }
 
-svg{
-margin-bottom: 3px;
-margin-left: 15px;
+.bi:hover,
+bi:focus {
+  fill: darkslategrey;
 }
 
-.row-container{
-display: flex;
-width:min-content;
-flex-direction: row;
-justify-content: space-between;
-align-items: first baseline;
-margin-right: 15px;
-padding-left: 8px;
-padding-right: 5px;
-border-radius: 0%;
-vertical-align: middle;
+svg {
+  margin-bottom: 3px;
+  margin-left: 15px;
 }
 
-h2{
-margin-bottom: 5px;
-width: 185px;
+.row-container {
+  display: flex;
+  width: min-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: first baseline;
+  margin-right: 15px;
+  padding-left: 8px;
+  padding-right: 5px;
+  border-radius: 0%;
+  vertical-align: middle;
 }
 
-h3{
-margin-top: 0px;
-margin-bottom: 5px;
+h2 {
+  margin-bottom: 5px;
+  width: 185px;
 }
 
+h3 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
 
 .dots {
-    border: 2.22px;
+  border: 2.22px;
   border-style: dashed;
   border-color: gray;
   background-color: white;
@@ -114,58 +116,57 @@ margin-bottom: 5px;
   font-size: large;
 }
 
-.dots:hover{
-background-color: rgba(0,0,0,0.05);
+.dots:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.column-container{
-display: flex;
-justify-content: center;
-flex-direction: column;
-gap: 10px;
+.column-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 }
 
-
-.col{
-width: 25%;
-align-items: self-start;
-display: inline;
+.col {
+  width: 25%;
+  align-items: self-start;
+  display: inline;
 }
 
-.lCards{
-display: grid; 
-gap:50px;
-justify-content: space-between;
-grid-template-columns: repeat(4, 23%);
-width: 100%;
+.lCards {
+  display: grid;
+  gap: 50px;
+  justify-content: space-between;
+  grid-template-columns: repeat(4, 23%);
+  width: 100%;
 }
 
 @media screen and (max-width: 1300px) {
-.lCards {
-  display: grid; 
-  justify-content: space-between;
-  column-gap: 50px;
-  grid-template-columns: repeat(3, 30%);
-}
+  .lCards {
+    display: grid;
+    justify-content: space-between;
+    column-gap: 50px;
+    grid-template-columns: repeat(3, 30%);
+  }
 }
 
 @media screen and (max-width: 880px) {
-.lCards {
-  display: grid; 
-  justify-content: space-between;
-  column-gap: 50px;
-  grid-template-columns: repeat(2, 48%);
-}
+  .lCards {
+    display: grid;
+    justify-content: space-between;
+    column-gap: 50px;
+    grid-template-columns: repeat(2, 48%);
+  }
 }
 
 @media screen and (max-width: 580px) {
-.lCards {
-  display: flex; 
-  flex-direction: column;
-  justify-content: center;
-  grid-template-columns: repeat(1, 100%);
-}
-.column-container{
-  padding-left: 70px;
-}
+  .lCards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-template-columns: repeat(1, 100%);
+  }
+  .column-container {
+    padding-left: 70px;
+  }
 }

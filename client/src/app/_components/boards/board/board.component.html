@@ -1,10 +1,10 @@
 <div class="column-container">
-    <button (click)="openCreateForm()" class="dots" data-initialized="true">
-        Add list
-    </button>
-<div *ngIf="(board?.listsCards) as listsCards" class="lCards">
+  <button (click)="openCreateForm()" class="dots" data-initialized="true">
+    Add list
+  </button>
+  <div *ngIf="board?.listsCards as listsCards" class="lCards">
     <div class="col mb-4" *ngFor="let listCards of listsCards">
-        <app-list-cards [listCards]="listCards"></app-list-cards>
+      <app-list-cards [listCards]="listCards"></app-list-cards>
     </div>
-</div>
+  </div>
 </div>

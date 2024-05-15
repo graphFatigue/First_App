@@ -1,66 +1,72 @@
 #modal-content-wrapper {
-    background-color: white;
-    opacity: 100%;
-    width: 100%;
-    height: 100%;
-    display: flexbox;
-}#modal-title {
-    font-size: 22px;
-}#modal-footer {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content:center;
-    gap: 20px;
-    margin-top: 40px;
-    position: relative;
-}#modal-close-button {
-    background-color: #ce0909;
+  background-color: white;
+  opacity: 100%;
+  width: 100%;
+  height: 100%;
+  display: flexbox;
 }
 
-.row-container{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content:flex-start;
-    align-items: first baseline;
-  }
+#modal-title {
+  font-size: 22px;
+}
 
-  .form-control{
-    width: 40%;
-  }
+#modal-footer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  position: relative;
+}
 
-  button {
-    width: 150px;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+#modal-close-button {
+  background-color: #ce0909;
+}
 
-  form {
-    position: relative;
-    margin: 0 auto;
-    padding: 1em;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+.row-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: first baseline;
+}
 
-  .no-border {
-    border: none;
-    display: inline;
-    font-family: inherit;
-    font-size: inherit;
-    padding: none;
-    width: 100%;
-    outline: none;
-  }
+.form-control {
+  width: 40%;
+}
 
-  input:focus{
-    outline: none;
-  }
+button {
+  width: 150px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
-  label{
-    width: 100px;
-  }
+form {
+  position: relative;
+  margin: 0 auto;
+  padding: 1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-border {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: 100%;
+  outline: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  width: 100px;
+}

@@ -1,61 +1,117 @@
 <div class="p-4" id="modal-content-wrapper">
-    <div class="alert alert-warning alert-dismissible fade show" *ngIf="createForm.dirty">
-        <strong>You made changes. Any unsaved changes will be lost</strong>
+  <div
+    class="alert alert-warning alert-dismissible fade show"
+    *ngIf="createForm.dirty"
+  >
+    <strong>You made changes. Any unsaved changes will be lost</strong>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="errors.length > 0">
+    <ul style="margin-bottom: 0px">
+      <li *ngFor="let error of errors">
+        {{ error }}
+      </li>
+    </ul>
+  </div>
+  <form (ngSubmit)="createCard()" id="createForm" #createForm="ngForm">
+    <input
+      [hidden]="true"
+      type="text"
+      name="boardId"
+      [(ngModel)]="cardModel.boardId"
+    />
+    <h2>
+      <input
+        name="name"
+        class="no-border"
+        value="New card"
+        [(ngModel)]="cardModel.name"
+        placeholder="Enter card's name"
+        (focus)="(false)"
+        type="text"
+      />
+    </h2>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">List</label>
+      <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
+        <select
+          placeholder="Choose list"
+          name="listCardsName"
+          class="form-control"
+          [(ngModel)]="cardModel.listCardsName"
+        >
+          <option *ngFor="let listCards of listsCards">
+            {{ listCards.name }}
+          </option>
+        </select>
+      </ng-container>
     </div>
-    <div class="alert alert-danger" role="alert" *ngIf="errors.length > 0">
-        <ul style="margin-bottom: 0px;">
-          <li *ngFor="let error of errors">
-            {{ error }}
-          </li>
-        </ul>
-      </div>
-    <form (ngSubmit)="createCard()" id="createForm" #createForm="ngForm">
-        <input [hidden]="true" type="text" name="boardId" [(ngModel)]="cardModel.boardId">
-        <h2><input name="name" class="no-border" value="New card" [(ngModel)]="cardModel.name" placeholder="Enter card's name" (focus)="false" type="text" /></h2>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">List</label>
-            <ng-container class="col-sm-10" *ngIf="listsCards$ | async as listsCards">
-                <select placeholder="Choose list" name="listCardsName" class="form-control" [(ngModel)]="cardModel.listCardsName">
-                    <option *ngFor="let listCards of listsCards">
-                    {{listCards.name}}
-                    </option>
-                </select>
-            </ng-container>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Priority</label>
-            <ng-container class="col-sm-10" *ngIf="priorityStrings as priorities">
-                <select name="priority" class="form-control" [(ngModel)]="cardModel.priority">
-                    <option value="" hidden selected disabled>Choose Priority</option>
-                    <option *ngFor="let priority of priorities" [ngValue]="priority.toString()">
-                     {{priority.toString()}}
-                   </option>
-                </select>
-            </ng-container>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Due date</label>
-            <ng-container>
-            <div style="width: fit-content;" class="col-sm-10 mt-1">
-                <input
-                type="date"
-                value="{{cardModel.dueDate}}"
-                [min]="dateMin"
-                ngModel="{{cardModel.dueDate}}"
-                name="dueDate"
-			/>
-            </div></ng-container>
-        </div>
-        <div style="display: flex; flex-direction: column;" class="form-group">
-            <label style="font-size: medium;" class="col-sm-2 col-form-label">Description</label>
-            <ng-container>
-                <textarea style="resize: vertical; min-height: 50px; max-height: 120px;" placeholder="Write description for the card" name="description" [(ngModel)]="cardModel.description" cols="50" rows="3">
-                </textarea>
-            </ng-container>
-        </div>
-    </form>
-    <footer id="modal-footer">
-        <button mat-raised-button [disabled]="!createForm.dirty || cardModel.name==='' || cardModel.dueDate==='' || cardModel.priority==='' || cardModel.listCardsName===''|| cardModel.description===''" form="createForm" type="submit" id="modal-close-button" >Save</button>
-        <button mat-raised-button id="modal-save-button" (click)="closeModal()">Cancel</button>
-    </footer>
-</div> 
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Priority</label>
+      <ng-container class="col-sm-10" *ngIf="priorityStrings as priorities">
+        <select
+          name="priority"
+          class="form-control"
+          [(ngModel)]="cardModel.priority"
+        >
+          <option value="" hidden selected disabled>Choose Priority</option>
+          <option
+            *ngFor="let priority of priorities"
+            [ngValue]="priority.toString()"
+          >
+            {{ priority.toString() }}
+          </option>
+        </select>
+      </ng-container>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Due date</label>
+      <ng-container>
+        <div style="width: fit-content" class="col-sm-10 mt-1">
+          <input
+            type="date"
+            value="{{ cardModel.dueDate }}"
+            [min]="dateMin"
+            ngModel="{{ cardModel.dueDate }}"
+            name="dueDate"
+          /></div
+      ></ng-container>
+    </div>
+    <div style="display: flex; flex-direction: column" class="form-group">
+      <label style="font-size: medium" class="col-sm-2 col-form-label"
+        >Description</label
+      >
+      <ng-container>
+        <textarea
+          style="resize: vertical; min-height: 50px; max-height: 120px"
+          placeholder="Write description for the card"
+          name="description"
+          [(ngModel)]="cardModel.description"
+          cols="50"
+          rows="3"
+        >
+        </textarea>
+      </ng-container>
+    </div>
+  </form>
+  <footer id="modal-footer">
+    <button
+      mat-raised-button
+      [disabled]="
+        !createForm.dirty ||
+        cardModel.name === '' ||
+        cardModel.dueDate === '' ||
+        cardModel.priority === '' ||
+        cardModel.listCardsName === '' ||
+        cardModel.description === ''
+      "
+      form="createForm"
+      type="submit"
+      id="modal-close-button"
+    >
+      Save
+    </button>
+    <button mat-raised-button id="modal-save-button" (click)="closeModal()">
+      Cancel
+    </button>
+  </footer>
+</div>

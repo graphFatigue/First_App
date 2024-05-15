@@ -1,4 +1,4 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
-export const openBoard=createAction("openBoard", props<{id: number}>())
-export const closeBoard=createAction("closeBoard")
+export const openBoard = createAction('openBoard', props<{ id: number }>());
+export const closeBoard = createAction('closeBoard');

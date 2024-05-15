@@ -1,6 +1,13 @@
 import { NgModule, isDevMode } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule, provideHttpClient, withFetch} from '@angular/common/http';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withFetch,
+} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,7 +21,7 @@ import { EditCardModalWindowComponent } from './_components/cards/edit-card-moda
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { CreateCardModalWindowComponent } from './_components/cards/create-card-modal-window/create-card-modal-window.component';
 import { DeleteCardModalWindowComponent } from './_components/cards/delete-card-modal-window/delete-card-modal-window.component';
@@ -24,7 +31,6 @@ import { EditListModalWindowComponent } from './_components/lists-cards/edit-lis
 import { DeleteListModalWindowComponent } from './_components/lists-cards/delete-list-modal-window/delete-list-modal-window.component';
 import { CreateListCardsModalWindowComponent } from './_components/lists-cards/create-list-modal-window/create-list-modal-window.component';
 import { ViewCardModalWindowComponent } from './_components/cards/view-card-modal-window/view-card-modal-window.component';
-import { RouterModule } from '@angular/router';
 import { BoardListComponent } from './_components/boards/board-list/board-list.component';
 import { BoardComponent } from './_components/boards/board/board.component';
 import { BoardContextMenuComponent } from './_components/boards/board-context-menu/board-context-menu.component';
@@ -61,7 +67,7 @@ import { ListEffects } from './store/list/list.effects';
     BoardContextMenuComponent,
     CreateBoardModalWindowComponent,
     DeleteBoardModalWindowComponent,
-    EditBoardModalWindowComponent
+    EditBoardModalWindowComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,9 +82,9 @@ import { ListEffects } from './store/list/list.effects';
     ButtonModule,
     StoreModule.forRoot(AppState),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([ListsEffects, CardEffects, ListEffects])
+    EffectsModule.forRoot([ListsEffects, CardEffects, ListEffects]),
   ],
-  providers: [    ],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

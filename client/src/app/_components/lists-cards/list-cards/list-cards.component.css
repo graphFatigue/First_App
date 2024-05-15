@@ -1,46 +1,47 @@
 .dots {
-	  border: 2.22px;
-    border-style: dashed;
-    border-color: gray;
-    background-color: white;
-    width: 15rem;
-    margin-bottom: 10px;
-    padding: 5px;
-    font-size: large;
-  }
+  border: 2.22px;
+  border-style: dashed;
+  border-color: gray;
+  background-color: white;
+  width: 15rem;
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: large;
+}
 
-.col{
+.col {
   width: 20%;
   align-items: self-start;
   display: inline;
   gap: 10px;
 }
 
-.dots:hover{
-  background-color: rgba(0,0,0,0.05);
-}
-    
-.bi:hover, bi:focus{
-  fill: darkslategrey
+.dots:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-svg{
+.bi:hover,
+bi:focus {
+  fill: darkslategrey;
+}
+
+svg {
   margin-bottom: 3px;
   margin-left: 15px;
 }
 
-.row-container{
+.row-container {
   display: flex;
-  width:min-content;
+  width: min-content;
   flex-direction: row;
   justify-content: space-between;
   align-items: first baseline;
   margin-right: 15px;
   border-top: 2px;
   border-bottom: 2px;
-  border-color: rgba(0,0,0,0.1);;
-  border-top-style:solid;
-  border-bottom-style:solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-top-style: solid;
+  border-bottom-style: solid;
   padding-left: 8px;
   padding-right: 5px;
   border-radius: 0%;
@@ -48,12 +49,12 @@ svg{
   vertical-align: middle;
 }
 
-h2{
+h2 {
   margin-bottom: 5px;
   width: 185px;
 }
 
-h3{
+h3 {
   margin-top: 0px;
   margin-bottom: 5px;
 }
