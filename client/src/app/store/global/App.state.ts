@@ -7,5 +7,5 @@ export const AppState = {
   id: boardReducer,
   lists: listsReducer,
   card: cardReducer,
-  list: listReducer,
+  list: listReducer
 };
