@@ -5,8 +5,6 @@ using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
-using TaskBoard.Common.Models.Board;
-using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Infrastructure;

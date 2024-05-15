@@ -1,5 +1,4 @@
 ﻿using TaskBoard.Common.Mappings;
-using TaskBoard.Domain.Enum;
 
 namespace TaskBoard.Common.Models.Action
 {

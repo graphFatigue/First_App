@@ -1,6 +1,5 @@
 ﻿using Sieve.Models;
 using TaskBoard.Common;
-using TaskBoard.Common.Models.Card;
 using TaskBoard.Common.Models.ListCards;
 
 namespace TaskBoard.Abstractions.Application

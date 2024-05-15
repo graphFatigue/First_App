@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using TaskBoard.Common.Mappings;
+﻿using TaskBoard.Common.Mappings;
 
 namespace TaskBoard.Common.Models.Card
 {
-    public class CreateCardModel: IMapTo<Domain.Entities.Card>
+    public class CreateCardModel : IMapTo<Domain.Entities.Card>
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

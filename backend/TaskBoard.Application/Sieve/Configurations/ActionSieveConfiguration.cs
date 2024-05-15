@@ -1,5 +1,4 @@
 ﻿using Sieve.Services;
-using TaskBoard.Domain.Entities;
 
 namespace TaskBoard.Application.Sieve.Configurations
 {

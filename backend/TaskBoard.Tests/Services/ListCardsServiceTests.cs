@@ -6,8 +6,6 @@ using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using System;
 using TaskBoard.Application.Services;
 using TaskBoard.Common.Exceptions;
 using Npgsql;

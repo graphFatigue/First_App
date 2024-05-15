@@ -3,7 +3,7 @@ using TaskBoard.Common.Models.Board;
 
 namespace TaskBoard.API.Validators.Board
 {
-    public class UpdateBoardModelValidator: AbstractValidator<UpdateBoardModel>
+    public class UpdateBoardModelValidator : AbstractValidator<UpdateBoardModel>
     {
         public UpdateBoardModelValidator()
         {

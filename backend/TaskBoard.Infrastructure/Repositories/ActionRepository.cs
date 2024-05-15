@@ -5,7 +5,7 @@ using Action = TaskBoard.Domain.Entities.Action;
 
 namespace TaskBoard.Infrastructure.Repositories
 {
-    public class ActionRepository: GenericRepository<Action>, IActionRepository
+    public class ActionRepository : GenericRepository<Action>, IActionRepository
     {
         public ActionRepository(
             AppDbContext context,
@@ -15,7 +15,7 @@ namespace TaskBoard.Infrastructure.Repositories
 
         public async Task<IEnumerable<Action>> GetAllByCardIdAsync(int cardId)
         {
-            return await _dbSet.Where(c => c.CardId==cardId).OrderByDescending(c => c.ActionTime).ToListAsync();
+            return await _dbSet.Where(c => c.CardId == cardId).OrderByDescending(c => c.ActionTime).ToListAsync();
         }
 
         public async Task<Action?> GetByIdAsync(int id)

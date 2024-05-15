@@ -4,14 +4,11 @@ using TaskBoard.Abstractions.Application;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
-using TaskBoard.Common.Models.Board;
 using TaskBoard.Common.Models.Card;
-using TaskBoard.Common.Models.ListCards;
 using TaskBoard.Domain.Entities;
 using TaskBoard.Domain.Enum;
 using TaskBoard.Infrastructure;
 using TaskBoard.Infrastructure.Extensions;
-using TaskBoard.Infrastructure.Repositories;
 using Action = TaskBoard.Domain.Entities.Action;
 
 namespace TaskBoard.Application.Services
@@ -104,7 +101,7 @@ namespace TaskBoard.Application.Services
             var card = await _cardRepository.GetByIdAsync(updateCardModel.Id)
                        ?? throw new NotFoundException($"Card with id {updateCardModel.Id} was not found");
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.Name)&&updateCardModel.Name!=card.Name)
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Name) && updateCardModel.Name != card.Name)
             {
                 Action action = new Action()
                 {
@@ -119,7 +116,7 @@ namespace TaskBoard.Application.Services
                 card.Name = updateCardModel.Name;
             }
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.Description)&&updateCardModel.Description!=card.Description)
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Description) && updateCardModel.Description != card.Description)
             {
                 Action action = new Action()
                 {
@@ -134,7 +131,7 @@ namespace TaskBoard.Application.Services
                 card.Description = updateCardModel.Description;
             }
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.Priority)&&updateCardModel.Priority!=card.Priority.ToString())
+            if (!string.IsNullOrWhiteSpace(updateCardModel.Priority) && updateCardModel.Priority != card.Priority.ToString())
             {
                 Action action = new Action()
                 {
@@ -150,7 +147,7 @@ namespace TaskBoard.Application.Services
                 card.Priority = priority;
             }
 
-            if (updateCardModel.DueDate>=DateTime.Now&&updateCardModel.DueDate.Year<=DateTime.Now.Year+1&&card.DueDate!=updateCardModel.DueDate)
+            if (updateCardModel.DueDate >= DateTime.Now && updateCardModel.DueDate.Year <= DateTime.Now.Year + 1 && card.DueDate != updateCardModel.DueDate)
             {
                 Action action = new Action()
                 {
@@ -165,7 +162,7 @@ namespace TaskBoard.Application.Services
                 card.DueDate = updateCardModel.DueDate;
             }
 
-            if (!string.IsNullOrWhiteSpace(updateCardModel.ListCardsName)&&updateCardModel.ListCardsName!=card?.ListCards?.Name)
+            if (!string.IsNullOrWhiteSpace(updateCardModel.ListCardsName) && updateCardModel.ListCardsName != card?.ListCards?.Name)
             {
                 var listCards = await _listCardsRepository.GetByNameAsync(updateCardModel.ListCardsName)
                     ?? throw new NotFoundException($"List with cards with name {updateCardModel.ListCardsName} was not found");
@@ -197,7 +194,7 @@ namespace TaskBoard.Application.Services
             Action action = new Action()
             {
                 ActionTime = DateTime.Now.SetKindUtc(),
-                Message = new string($"You deleted card ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards.Name}</strong>" ),
+                Message = new string($"You deleted card ◉<strong>{card.Name}</strong> from ◆<strong>{card.ListCards.Name}</strong>"),
                 Board = card.Board,
             };
 

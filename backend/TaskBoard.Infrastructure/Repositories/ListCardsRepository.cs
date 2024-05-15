@@ -1,16 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sieve.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Domain.Entities;
 
 namespace TaskBoard.Infrastructure.Repositories
 {
-    public class ListCardsRepository: GenericRepository<ListCards>, IListCardsRepository
+    public class ListCardsRepository : GenericRepository<ListCards>, IListCardsRepository
     {
         public ListCardsRepository(
             AppDbContext context,
@@ -20,7 +15,7 @@ namespace TaskBoard.Infrastructure.Repositories
 
         public async Task<IEnumerable<ListCards?>> GetByBoardId(int id)
         {
-            return await _dbSet.Where(x=> x.Board.Id == id).ToListAsync();
+            return await _dbSet.Where(x => x.Board.Id == id).ToListAsync();
         }
 
         public async Task<ListCards?> GetByIdAsync(int id)

@@ -6,11 +6,11 @@ using Action = TaskBoard.Domain.Entities.Action;
 
 namespace TaskBoard.Infrastructure
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            
+
         }
 
         static AppDbContext()

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NpgsqlTypes;
 using Sieve.Models;
 using TaskBoard.Abstractions.Application;
 using TaskBoard.Common.Models.ListCards;
@@ -25,7 +24,7 @@ namespace TaskBoard.API.Controllers
         }
 
         [HttpGet("allBy/{boardId}")]
-        public async Task<IActionResult> GetAllByBoardId(int boardId) 
+        public async Task<IActionResult> GetAllByBoardId(int boardId)
         {
             var listCards = await _listCardsService.GetAllByBoardIdAsync(boardId);
             return Ok(listCards);

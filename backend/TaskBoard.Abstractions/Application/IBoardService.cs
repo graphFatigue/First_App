@@ -1,7 +1,6 @@
 ﻿using Sieve.Models;
 using TaskBoard.Common;
 using TaskBoard.Common.Models.Board;
-using TaskBoard.Domain.Entities;
 
 namespace TaskBoard.Abstractions.Application
 {

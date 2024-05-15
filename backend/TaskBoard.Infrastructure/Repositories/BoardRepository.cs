@@ -5,10 +5,10 @@ using TaskBoard.Domain.Entities;
 
 namespace TaskBoard.Infrastructure.Repositories
 {
-    public class BoardRepository: GenericRepository<Board>, IBoardRepository
+    public class BoardRepository : GenericRepository<Board>, IBoardRepository
     {
         public BoardRepository(
-            AppDbContext context, 
+            AppDbContext context,
             ISieveProcessor sieveProcessor) : base(context, sieveProcessor)
         {
         }

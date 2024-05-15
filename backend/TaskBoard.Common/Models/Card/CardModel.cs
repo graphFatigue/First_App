@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using TaskBoard.Common.Mappings;
 using TaskBoard.Common.Models.Action;
-using TaskBoard.Common.Models.ListCards;
 
 namespace TaskBoard.Common.Models.Card
 {
-    public class CardModel: IMapFrom<Domain.Entities.Card>
+    public class CardModel : IMapFrom<Domain.Entities.Card>
     {
         public int Id { get; set; }
         public string? Name { get; set; }

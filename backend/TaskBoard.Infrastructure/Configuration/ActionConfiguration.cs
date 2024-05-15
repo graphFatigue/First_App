@@ -9,8 +9,6 @@ namespace TaskBoard.Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<Action> builder)
         {
             builder.ToTable("actions");
-                //t =>
-                    //t.Metadata.AddCheckConstraint("CHK_action_action_type", "action_type IN ('Create', 'Update', 'Delete', 'AddCardToList')"));
 
             builder
                 .HasKey(c => c.Id);

@@ -8,9 +8,7 @@ namespace TaskBoard.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Card> builder)
         {
-            builder.ToTable("cards"); 
-                //t => 
-                    //t.Metadata.AddCheckConstraint("CHK_card_priority", "priority IN ('High', 'Medium', 'Low')"));
+            builder.ToTable("cards");
 
             builder
                 .HasKey(c => c.Id);

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TaskBoard.Common.Extensions;
 using TaskBoard.Common.Mappings;
 
 namespace TaskBoard.Common.Models.Action

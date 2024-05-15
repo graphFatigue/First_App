@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Npgsql;
 using TaskBoard.Common.Exceptions;
 

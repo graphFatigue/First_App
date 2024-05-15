@@ -8,7 +8,7 @@ using TaskBoard.Infrastructure;
 
 namespace TaskBoard.Tests.IntegrationTests
 {
-    internal class TaskBoardWebApplicationFactory: WebApplicationFactory<Program>
+    internal class TaskBoardWebApplicationFactory : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {

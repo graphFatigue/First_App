@@ -5,7 +5,6 @@ using TaskBoard.Abstractions.Infrastructure;
 using TaskBoard.Common;
 using TaskBoard.Common.Exceptions;
 using TaskBoard.Common.Models.Action;
-using TaskBoard.Common.Models.Card;
 using TaskBoard.Infrastructure;
 
 namespace TaskBoard.Application.Services

@@ -1,6 +1,4 @@
-﻿using TaskBoard.Domain.Enum;
-
-namespace TaskBoard.Domain.Entities
+﻿namespace TaskBoard.Domain.Entities
 {
     public class Action
     {
